@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: smplayer_web\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-19 00:27+0100\n"
+"POT-Creation-Date: 2013-03-22 17:02+0100\n"
 "PO-Revision-Date: 2013-01-18 11:15+0000\n"
 "Last-Translator: rvm <rvm3000@gmail.com>\n"
 "Language-Team: Catalan (http://www.transifex.com/projects/p/smplayer_web/"
@@ -109,19 +109,7 @@ msgstr "Canvis en SMPlayer"
 msgid "Youtube browser changes"
 msgstr "Canvis en el cercador de vídeos de Youtube"
 
-#: ../changes.php:41 ../upgrade.php:73
-msgid "Learn interesting things about SMPlayer in %1."
-msgstr "Assabenta't de coses interessants sobre SMPlayer en %1."
-
-#: ../changes.php:44 ../upgrade.php:76
-msgid "our blog"
-msgstr "el nostre blog"
-
-#: ../changes.php:51 ../upgrade.php:83
-msgid "If you like SMPlayer, recommend it to your friends:"
-msgstr "Si t'agrada SMPlayer, recomana-ho als teus amics:"
-
-#: ../changes.php:58
+#: ../changes.php:40
 msgid "Download the latest version of SMPlayer"
 msgstr "Descarrega l'última versió de SMPlayer"
 
@@ -823,11 +811,11 @@ msgstr ""
 msgid "You'll find here a quick guide to start using SMPlayer."
 msgstr "Aquí trobaràs una guia ràpida per començar a usar SMPlayer."
 
-#: ../guide.php:56
+#: ../guide.php:40 ../guide.php:137
 msgid "Play a movie file"
 msgstr "Reproduir un fitxer de vídeo"
 
-#: ../guide.php:58
+#: ../guide.php:42
 msgid ""
 "To open a file, just click on the first button in the toolbar \n"
 "or select the option <b>File...</b> in the <b>Open</b> menu."
@@ -835,7 +823,7 @@ msgstr ""
 "Per obrir un fitxer, simplement prem en el primer botó de la barra d'eines o "
 "selecciona l'opció <b>Fitxer...</b> del menú <b>Obrir</b>."
 
-#: ../guide.php:61
+#: ../guide.php:45
 msgid ""
 "You can select any file from the formats supported by SMPlayer, like avi, "
 "mp4, mkv, ts, mpg..."
@@ -843,7 +831,7 @@ msgstr ""
 "Pots seleccionar qualsevol fitxer dels formats suportats per SMPlayer, com "
 "avi, mp4, mkv, ts, mpg..."
 
-#: ../guide.php:63
+#: ../guide.php:47
 msgid ""
 "The movie will begin to play. You can use the control at the botton of the "
 "player to pause it, rewind, seek..."
@@ -851,7 +839,7 @@ msgstr ""
 "El vídeo començarà a veure's. Pots usar el control que hi ha en la part "
 "inferior del reproductor per pausarlo, rebobinar, avançar..."
 
-#: ../guide.php:79
+#: ../guide.php:63
 msgid ""
 "To switch to fullscreen mode, click on the fullscreen button (%1) in the "
 "control bar or press <b>F</b>."
@@ -859,7 +847,7 @@ msgstr ""
 "Per anar a la manera de pantalla completa, fes clic en el botó de pantalla "
 "completa (fullscreen button) en la barra de control o prem <b>F</b>."
 
-#: ../guide.php:82
+#: ../guide.php:66
 msgid ""
 "In fullscreen mode, when you move the mouse to the bottom of the screen a "
 "floating control will appear."
@@ -867,7 +855,7 @@ msgstr ""
 "En la manera de pantalla completa, apareixerà un control flotant si mous el "
 "ratolí a la part d'a baix de la pantalla."
 
-#: ../guide.php:84
+#: ../guide.php:68
 msgid ""
 "To return to window mode, click on the fullscreen button in the floating "
 "control or press <b>F</b> or <b>ESC</b>."
@@ -876,14 +864,14 @@ msgstr ""
 "pantalla completa que hi ha en el control flotant o prem <b>F</b> o <b>ESC</"
 "b>."
 
-#: ../guide.php:86
+#: ../guide.php:70
 msgid ""
 "You can also right click at any moment on the video to get a context menu."
 msgstr ""
 "També pots prémer en qualsevol moment amb el botó dret del ratolí perquè "
 "aparegui un menú contextual."
 
-#: ../guide.php:88
+#: ../guide.php:72
 msgid ""
 "It's very easy to change the audio track, select subtitles, enable a video "
 "filter, change the playback speed... \n"
@@ -893,11 +881,11 @@ msgstr ""
 "filtre de vídeo, canviar la velocitat de reproducció... simplement explora "
 "els menús del reproductor."
 
-#: ../guide.php:96
+#: ../guide.php:79 ../guide.php:138
 msgid "Play or download a Youtube video"
 msgstr "Reproduir o descarregar un vídeo de Youtube"
 
-#: ../guide.php:98
+#: ../guide.php:81
 msgid ""
 "To play or download a Youtube video, just select <b>Youtube browser</b> in "
 "the <b>Options</b> menu."
@@ -905,15 +893,15 @@ msgstr ""
 "Per veure o descarregar un vídeo de Youtube, simplement selecciona <b>Buscar "
 "vídeos en Youtube</b> en el menú <b>Opcions</b>."
 
-#: ../guide.php:100
+#: ../guide.php:83
 msgid "That will open the %1 window."
 msgstr "S'obrirà la finestra del %1."
 
-#: ../guide.php:101 ../screenshots.php:87
+#: ../guide.php:84 ../screenshots.php:87
 msgid "Youtube browser"
 msgstr "Navegador de Youtube"
 
-#: ../guide.php:103 ../smtube.php:52
+#: ../guide.php:86 ../smtube.php:48
 msgid ""
 "This tool allows you to browse among the most popular, most viewed and most "
 "rated videos."
@@ -921,7 +909,7 @@ msgstr ""
 "Aquesta eina et permet veure els vídeos més populars, més vists i millor "
 "valorats."
 
-#: ../guide.php:105 ../smtube.php:53
+#: ../guide.php:88 ../smtube.php:49
 msgid ""
 "You can search for a video typing a term in the search field at the bottom "
 "of the window."
@@ -929,11 +917,11 @@ msgstr ""
 "Pots buscar un vídeo teclejant el que vols buscar en el camp de cerca en la "
 "part inferior de la finestra."
 
-#: ../guide.php:107 ../smtube.php:54
+#: ../guide.php:90 ../smtube.php:50
 msgid "To play a video, just double click on it."
 msgstr "Per veure un vídeo, simplement feix doble clic en ell."
 
-#: ../guide.php:109 ../smtube.php:59
+#: ../guide.php:92 ../smtube.php:55
 msgid ""
 "To download a Youtube video, right click on a video and select <i>Record "
 "video</i>."
@@ -941,23 +929,23 @@ msgstr ""
 "Per descarregar un vídeo de Youtube, prem amb el botó dret sobre un vídeo i "
 "selecciona <i>Gravar vídeo</i>."
 
-#: ../guide.php:111 ../smtube.php:60
+#: ../guide.php:94 ../smtube.php:56
 msgid "You can download several videos at a time."
 msgstr "És possible descarregar diversos vídeos al mateix temps."
 
-#: ../guide.php:119
+#: ../guide.php:102 ../guide.php:139
 msgid "Change the skin"
 msgstr "Canviar la pell (skin)"
 
-#: ../guide.php:121
+#: ../guide.php:104
 msgid "By default SMPlayer uses a basic interface."
 msgstr "SMPlayer usa per defecte un interfície bàsic."
 
-#: ../guide.php:123
+#: ../guide.php:106
 msgid "You can change the skin very easily."
 msgstr "Pots canviar la pell fàcilment."
 
-#: ../guide.php:125
+#: ../guide.php:108
 msgid ""
 "Click on the screwdriver button (%1) in the toolbar or select\n"
 "the option <b>Preferences</b> under the <b>Options</b> menu."
@@ -965,21 +953,33 @@ msgstr ""
 "Fes clic en el botó amb un tornavís (%1) en la barra d'eines o selecciona "
 "l'opció <b>Preferències</b> del menú <b>Opcions</b>."
 
-#: ../guide.php:129
+#: ../guide.php:112
 msgid "That will open the preferences dialog."
 msgstr "Apareixerà el diàleg de preferències."
 
-#: ../guide.php:131
+#: ../guide.php:114
 msgid "Now click on the <b>Interface</b> section on the left."
 msgstr "Ara fes clic en la secció <b>Interfície</b> en la part esquerra."
 
-#: ../guide.php:133
+#: ../guide.php:116
 msgid "Now select <b>Skinnable GUI</b> in the <b>GUI</b> option."
 msgstr "Selecciona <b>GUI amb suport de pells</b> en l'opció <b>GUI</b>."
 
-#: ../guide.php:135
+#: ../guide.php:118
 msgid "Finally select the skin you want to use under the <b>Skin</b> option."
 msgstr "I finalment escull la pell que vulguis usar en l'opció <b>Skin</b>."
+
+#: ../guide.php:149 ../guide.php:171 ../upgrade.php:74 ../upgrade.php:86
+msgid "Advertisement"
+msgstr "Publicitat"
+
+#: ../inc/blog.php:6
+msgid "Learn interesting things about SMPlayer in %1."
+msgstr "Assabenta't de coses interessants sobre SMPlayer en %1."
+
+#: ../inc/blog.php:9
+msgid "our blog"
+msgstr "el nostre blog"
 
 #: ../inc/features.php:2
 msgid ""
@@ -1231,6 +1231,10 @@ msgstr "Opinions"
 #: ../inc/header.php:164 ../sitemap.php:19
 msgid "FAQ"
 msgstr "Preguntes freqüents"
+
+#: ../inc/recommend.php:3
+msgid "If you like SMPlayer, recommend it to your friends:"
+msgstr "Si t'agrada SMPlayer, recomana-ho als teus amics:"
 
 #: ../inc/reviews_box.php:28
 msgid "Read all reviews"
@@ -1495,7 +1499,7 @@ msgid ""
 "please take a look at these projects maintained by %1:"
 msgstr ""
 
-#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:88
+#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:84
 msgid "Download SMPlayer"
 msgstr "Descàrrega SMPlayer"
 
@@ -1687,19 +1691,15 @@ msgstr ""
 "<i>Buscar vídeos en Youtube</i> en el menú <i>Opcions</i> de SMPlayer, o "
 "simplement prem <i>F11</i>."
 
-#: ../smtube.php:43
-msgid "SMTube is based on some code from %1."
-msgstr "SMTube es basa en codi de %1."
-
-#: ../smtube.php:51
+#: ../smtube.php:47
 msgid "The Youtube Browser"
 msgstr "El cercador de vídeos de Youtube"
 
-#: ../smtube.php:58
+#: ../smtube.php:54
 msgid "Download Youtube videos"
 msgstr "Descarregar vídeos de Youtube"
 
-#: ../smtube.php:61
+#: ../smtube.php:57
 msgid ""
 "Click on the blue arrow to play a video or click on the <i>Open folder</i> "
 "button \n"
@@ -1708,30 +1708,30 @@ msgstr ""
 "Prem en la fletxa blava per reproduir un vídeo o prem en el botó <i>Obrir "
 "carpeta</i> per veure els vídeos en la carpeta on s'han guardat."
 
-#: ../smtube.php:65
+#: ../smtube.php:61
 msgid "Choose the quality"
 msgstr "Escull la qualitat"
 
-#: ../smtube.php:66
+#: ../smtube.php:62
 msgid ""
 "The quality and format (mp4/flv) can be selected in the settings window."
 msgstr ""
 "Es pot seleccionar la qualitat i el format (mp4/flv) en la finestra "
 "d'opcions."
 
-#: ../smtube.php:67
+#: ../smtube.php:63
 msgid "It's possible to download HD videos."
 msgstr "És possible descarregar vídeos en HD."
 
-#: ../smtube.php:68
+#: ../smtube.php:64
 msgid "The available qualities are:"
 msgstr "Les qualitats disponibles són:"
 
-#: ../smtube.php:81
+#: ../smtube.php:77
 msgid "How to get SMTube"
 msgstr "Com aconseguir SMTube"
 
-#: ../smtube.php:85
+#: ../smtube.php:81
 msgid ""
 "SMTube is included along with SMPlayer in the Windows packages. Just install "
 "SMPlayer."
@@ -1739,23 +1739,35 @@ msgstr ""
 "SMTube s'inclou juntament amb SMPlayer en els paquets per Windows. "
 "Simplement instal·la SMPlayer."
 
-#: ../smtube.php:92
+#: ../smtube.php:88
 msgid "On Linux, SMTube is available in a separated package."
 msgstr "En Linux, SMTube es troba en un paquet independent."
 
-#: ../smtube.php:94
+#: ../smtube.php:90
 msgid "To install it, run these commands in a terminal (ubuntu):"
 msgstr "Per instal·lar-ho, executa aquestes ordres en un terminal (ubuntu):"
 
-#: ../smtube.php:102 ../umplayer.php:77
+#: ../smtube.php:98 ../umplayer.php:77
 msgid "Sources:"
 msgstr "Codi font:"
 
-#: ../smtube.php:107
+#: ../smtube.php:102
+msgid "License and credits"
+msgstr ""
+
+#: ../smtube.php:104
+msgid "SMTube is free and open source. SMTube is under the GPL license."
+msgstr ""
+
+#: ../smtube.php:106
+msgid "SMTube is based on some code from %1 by %2."
+msgstr ""
+
+#: ../smtube.php:115
 msgid "Changes"
 msgstr "Canvis"
 
-#: ../smtube.php:109
+#: ../smtube.php:116
 msgid ""
 "The SMPlayer team has made several improvements to the original code from "
 "umplayer:"
@@ -1763,7 +1775,7 @@ msgstr ""
 "L'equip del SMPlayer ha realitzat unes quantes millores al codi original de "
 "umplayer:"
 
-#: ../smtube.php:112
+#: ../smtube.php:119
 msgid ""
 "It's now a stand-alone application and you can select the video player to "
 "use \n"
@@ -1772,15 +1784,15 @@ msgstr ""
 "Ara és una aplicació independent i és possible seleccionar el reproductor "
 "(smplayer, mplayer, vlc, dragon player, totem o gnome-mplayer)."
 
-#: ../smtube.php:114
+#: ../smtube.php:121
 msgid "It's possible to translate the application to other languages."
 msgstr "L'aplicació es pot traduir a altres idiomes."
 
-#: ../smtube.php:115
+#: ../smtube.php:122
 msgid "A configuration dialog has been added."
 msgstr "S'ha afegit un diàleg de configuració."
 
-#: ../smtube.php:116
+#: ../smtube.php:123
 msgid "A few fixes."
 msgstr "S'han corregit uns quants errors."
 
@@ -1970,9 +1982,12 @@ msgstr ""
 msgid "Would you like to upgrade?"
 msgstr ""
 
-#: ../upgrade.php:59
+#: ../upgrade.php:60
 msgid "Download SMPlayer %1"
 msgstr ""
+
+#~ msgid "SMTube is based on some code from %1."
+#~ msgstr "SMTube es basa en codi de %1."
 
 #~ msgid "A free media player with built-in codecs and Youtube support"
 #~ msgstr ""

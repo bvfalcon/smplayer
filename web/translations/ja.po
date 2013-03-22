@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SMPlayer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-19 00:27+0100\n"
+"POT-Creation-Date: 2013-03-22 17:02+0100\n"
 "PO-Revision-Date: 2013-02-09 02:27+0900\n"
 "Last-Translator: Nardog <alphisation@gmail.com>\n"
 "Language-Team: Nardog <alphisation@gmail.com>\n"
@@ -105,19 +105,7 @@ msgstr "SMPlayer の変更点"
 msgid "Youtube browser changes"
 msgstr "YouTube ブラウザーの変更点"
 
-#: ../changes.php:41 ../upgrade.php:73
-msgid "Learn interesting things about SMPlayer in %1."
-msgstr "%1で SMPlayer に関する情報を公開しています。"
-
-#: ../changes.php:44 ../upgrade.php:76
-msgid "our blog"
-msgstr "私たちのブログ"
-
-#: ../changes.php:51 ../upgrade.php:83
-msgid "If you like SMPlayer, recommend it to your friends:"
-msgstr "SMPlayer がお好きでしたら、お友だちに広めてください:"
-
-#: ../changes.php:58
+#: ../changes.php:40
 msgid "Download the latest version of SMPlayer"
 msgstr "SMPlayer の最新版をダウンロードする"
 
@@ -797,11 +785,11 @@ msgstr ""
 msgid "You'll find here a quick guide to start using SMPlayer."
 msgstr "こちらは SMPlayer のご使用を開始するにあたってのクイックガイドです。"
 
-#: ../guide.php:56
+#: ../guide.php:40 ../guide.php:137
 msgid "Play a movie file"
 msgstr "ムービーファイルを再生する"
 
-#: ../guide.php:58
+#: ../guide.php:42
 msgid ""
 "To open a file, just click on the first button in the toolbar \n"
 "or select the option <b>File...</b> in the <b>Open</b> menu."
@@ -809,7 +797,7 @@ msgstr ""
 "ファイルを開くには、ツールバーの 1 番目のボタンをクリックするか、[<b>開く</"
 "b>] メニューの [<b>ファイル</b>] を選択します。"
 
-#: ../guide.php:61
+#: ../guide.php:45
 msgid ""
 "You can select any file from the formats supported by SMPlayer, like avi, "
 "mp4, mkv, ts, mpg..."
@@ -817,7 +805,7 @@ msgstr ""
 "AVI、MP4、MKV、TS、MPEG など、SMPlayer が対応しているフォーマットのファイルを"
 "選ぶことができます。"
 
-#: ../guide.php:63
+#: ../guide.php:47
 msgid ""
 "The movie will begin to play. You can use the control at the botton of the "
 "player to pause it, rewind, seek..."
@@ -825,41 +813,41 @@ msgstr ""
 "するとムービーが再生されます。プレイヤー下部のボタンを使えば、一時停止、巻き"
 "戻し、シークなどの操作を行うことができます。"
 
-#: ../guide.php:79
+#: ../guide.php:63
 msgid ""
 "To switch to fullscreen mode, click on the fullscreen button (%1) in the "
 "control bar or press <b>F</b>."
 msgstr ""
 
-#: ../guide.php:82
+#: ../guide.php:66
 msgid ""
 "In fullscreen mode, when you move the mouse to the bottom of the screen a "
 "floating control will appear."
 msgstr ""
 
-#: ../guide.php:84
+#: ../guide.php:68
 msgid ""
 "To return to window mode, click on the fullscreen button in the floating "
 "control or press <b>F</b> or <b>ESC</b>."
 msgstr ""
 
-#: ../guide.php:86
+#: ../guide.php:70
 msgid ""
 "You can also right click at any moment on the video to get a context menu."
 msgstr ""
 
-#: ../guide.php:88
+#: ../guide.php:72
 msgid ""
 "It's very easy to change the audio track, select subtitles, enable a video "
 "filter, change the playback speed... \n"
 "just explore the menus of the player."
 msgstr ""
 
-#: ../guide.php:96
+#: ../guide.php:79 ../guide.php:138
 msgid "Play or download a Youtube video"
 msgstr "YouTube 動画を再生/ダウンロードする"
 
-#: ../guide.php:98
+#: ../guide.php:81
 msgid ""
 "To play or download a Youtube video, just select <b>Youtube browser</b> in "
 "the <b>Options</b> menu."
@@ -867,32 +855,32 @@ msgstr ""
 "YouTube 動画を再生したりダウンロードしたりするには、[<b>オプション</b>] メ"
 "ニューの [<b>YouTube ブラウザー</b>] を選択してください。"
 
-#: ../guide.php:100
+#: ../guide.php:83
 msgid "That will open the %1 window."
 msgstr "%1のウィンドウが開きます。"
 
-#: ../guide.php:101 ../screenshots.php:87
+#: ../guide.php:84 ../screenshots.php:87
 msgid "Youtube browser"
 msgstr "YouTube ブラウザー"
 
-#: ../guide.php:103 ../smtube.php:52
+#: ../guide.php:86 ../smtube.php:48
 msgid ""
 "This tool allows you to browse among the most popular, most viewed and most "
 "rated videos."
 msgstr ""
 "人気の動画、注目動画、評価の高い動画の中から好きな動画を探すことができます。"
 
-#: ../guide.php:105 ../smtube.php:53
+#: ../guide.php:88 ../smtube.php:49
 msgid ""
 "You can search for a video typing a term in the search field at the bottom "
 "of the window."
 msgstr "ウィンドウの下部にある検索欄に入力して動画を検索することもできます。"
 
-#: ../guide.php:107 ../smtube.php:54
+#: ../guide.php:90 ../smtube.php:50
 msgid "To play a video, just double click on it."
 msgstr "動画をダブルクリックすると、再生が始まります。"
 
-#: ../guide.php:109 ../smtube.php:59
+#: ../guide.php:92 ../smtube.php:55
 msgid ""
 "To download a Youtube video, right click on a video and select <i>Record "
 "video</i>."
@@ -900,23 +888,23 @@ msgstr ""
 "YouTube 動画をダウンロードするには、動画を右クリックして [動画を録画] を選択"
 "します。"
 
-#: ../guide.php:111 ../smtube.php:60
+#: ../guide.php:94 ../smtube.php:56
 msgid "You can download several videos at a time."
 msgstr "同時に複数の動画をダウンロードできます。"
 
-#: ../guide.php:119
+#: ../guide.php:102 ../guide.php:139
 msgid "Change the skin"
 msgstr "スキンを変える"
 
-#: ../guide.php:121
+#: ../guide.php:104
 msgid "By default SMPlayer uses a basic interface."
 msgstr "SMPlayer はデフォルトにベーシックなインターフェイスを使用します。"
 
-#: ../guide.php:123
+#: ../guide.php:106
 msgid "You can change the skin very easily."
 msgstr "スキンを変えるのはとても簡単です。"
 
-#: ../guide.php:125
+#: ../guide.php:108
 msgid ""
 "Click on the screwdriver button (%1) in the toolbar or select\n"
 "the option <b>Preferences</b> under the <b>Options</b> menu."
@@ -924,22 +912,34 @@ msgstr ""
 "ツールバーのねじ回しのボタン (%1) をクリックするか、[<b>オプション</b>] メ"
 "ニューの [<b>環境設定</b>] を選択します。"
 
-#: ../guide.php:129
+#: ../guide.php:112
 msgid "That will open the preferences dialog."
 msgstr "すると環境設定ダイアログが表示されます。"
 
-#: ../guide.php:131
+#: ../guide.php:114
 msgid "Now click on the <b>Interface</b> section on the left."
 msgstr "次に左側の [<b>インターフェイス</b>] セクションをクリックします。"
 
-#: ../guide.php:133
+#: ../guide.php:116
 msgid "Now select <b>Skinnable GUI</b> in the <b>GUI</b> option."
 msgstr ""
 "続いて [<b>GUI</b>] オプションの [<b>スキン対応 GUI</b>] を選択します。"
 
-#: ../guide.php:135
+#: ../guide.php:118
 msgid "Finally select the skin you want to use under the <b>Skin</b> option."
 msgstr "最後に [<b>スキン</b>] オプションから好きなスキンを選んでください。"
+
+#: ../guide.php:149 ../guide.php:171 ../upgrade.php:74 ../upgrade.php:86
+msgid "Advertisement"
+msgstr ""
+
+#: ../inc/blog.php:6
+msgid "Learn interesting things about SMPlayer in %1."
+msgstr "%1で SMPlayer に関する情報を公開しています。"
+
+#: ../inc/blog.php:9
+msgid "our blog"
+msgstr "私たちのブログ"
 
 #: ../inc/features.php:2
 msgid ""
@@ -1183,6 +1183,10 @@ msgstr "レビュー"
 #: ../inc/header.php:164 ../sitemap.php:19
 msgid "FAQ"
 msgstr "FAQ"
+
+#: ../inc/recommend.php:3
+msgid "If you like SMPlayer, recommend it to your friends:"
+msgstr "SMPlayer がお好きでしたら、お友だちに広めてください:"
 
 #: ../inc/reviews_box.php:28
 msgid "Read all reviews"
@@ -1462,7 +1466,7 @@ msgstr ""
 "それよりも新しい MPlayer や MPlayer2 のビルドをお探しの場合は、%1 氏のこれら"
 "のプロジェクトをご覧ください:"
 
-#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:88
+#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:84
 msgid "Download SMPlayer"
 msgstr "SMPlayer をダウンロードする"
 
@@ -1651,19 +1655,15 @@ msgstr ""
 "ら [<b>オプション</b>] メニューの [YouTube ブラウザー] を選択するか、F11 キー"
 "を押して起動してください。"
 
-#: ../smtube.php:43
-msgid "SMTube is based on some code from %1."
-msgstr "SMTube は %1 のコードから作成されました"
-
-#: ../smtube.php:51
+#: ../smtube.php:47
 msgid "The Youtube Browser"
 msgstr "YouTube ブラウザー"
 
-#: ../smtube.php:58
+#: ../smtube.php:54
 msgid "Download Youtube videos"
 msgstr "YouTube 動画をダウンロードする"
 
-#: ../smtube.php:61
+#: ../smtube.php:57
 msgid ""
 "Click on the blue arrow to play a video or click on the <i>Open folder</i> "
 "button \n"
@@ -1672,28 +1672,28 @@ msgstr ""
 "青い矢印をクリックすると動画が再生され、[フォルダーを開く] ボタンをクリックす"
 "ると動画が保存されるフォルダーが開きます。"
 
-#: ../smtube.php:65
+#: ../smtube.php:61
 msgid "Choose the quality"
 msgstr "品質を選ぶ"
 
-#: ../smtube.php:66
+#: ../smtube.php:62
 msgid ""
 "The quality and format (mp4/flv) can be selected in the settings window."
 msgstr "設定ウィンドウで動画の品質とフォーマット (mp4/flv) が選べます。"
 
-#: ../smtube.php:67
+#: ../smtube.php:63
 msgid "It's possible to download HD videos."
 msgstr "HD 動画もダウンロードできます。"
 
-#: ../smtube.php:68
+#: ../smtube.php:64
 msgid "The available qualities are:"
 msgstr "ダウンロード可能な品質:"
 
-#: ../smtube.php:81
+#: ../smtube.php:77
 msgid "How to get SMTube"
 msgstr "SMTube を入手する"
 
-#: ../smtube.php:85
+#: ../smtube.php:81
 msgid ""
 "SMTube is included along with SMPlayer in the Windows packages. Just install "
 "SMPlayer."
@@ -1701,30 +1701,42 @@ msgstr ""
 "SMTube は SMPlayer の Windows 用パッケージに同梱されています。SMPlayer をイン"
 "ストールしてください。"
 
-#: ../smtube.php:92
+#: ../smtube.php:88
 msgid "On Linux, SMTube is available in a separated package."
 msgstr "Linux では、SMTube は単体のパッケージとして提供されています。"
 
-#: ../smtube.php:94
+#: ../smtube.php:90
 msgid "To install it, run these commands in a terminal (ubuntu):"
 msgstr ""
 "インストールするにはターミナルでこれらのコマンドを実行してください (Ubuntu):"
 
-#: ../smtube.php:102 ../umplayer.php:77
+#: ../smtube.php:98 ../umplayer.php:77
 msgid "Sources:"
 msgstr "ソース:"
 
-#: ../smtube.php:107
+#: ../smtube.php:102
+msgid "License and credits"
+msgstr ""
+
+#: ../smtube.php:104
+msgid "SMTube is free and open source. SMTube is under the GPL license."
+msgstr ""
+
+#: ../smtube.php:106
+msgid "SMTube is based on some code from %1 by %2."
+msgstr ""
+
+#: ../smtube.php:115
 msgid "Changes"
 msgstr "変更点"
 
-#: ../smtube.php:109
+#: ../smtube.php:116
 msgid ""
 "The SMPlayer team has made several improvements to the original code from "
 "umplayer:"
 msgstr "SMPlayer チームは UMPlayer のコードから以下の改良を施しました:"
 
-#: ../smtube.php:112
+#: ../smtube.php:119
 msgid ""
 "It's now a stand-alone application and you can select the video player to "
 "use \n"
@@ -1734,15 +1746,15 @@ msgstr ""
 "mplayer、vlc、dragon player、totem、gnome-mplayer のいずれかから選択できるよ"
 "うになりました。"
 
-#: ../smtube.php:114
+#: ../smtube.php:121
 msgid "It's possible to translate the application to other languages."
 msgstr "他言語への翻訳が可能になりました。"
 
-#: ../smtube.php:115
+#: ../smtube.php:122
 msgid "A configuration dialog has been added."
 msgstr "構成ダイアログが追加されました。"
 
-#: ../smtube.php:116
+#: ../smtube.php:123
 msgid "A few fixes."
 msgstr "細部の修正。"
 
@@ -1951,6 +1963,9 @@ msgstr "多数のバグ修正と改善"
 msgid "Would you like to upgrade?"
 msgstr "アップグレートしませんか?"
 
-#: ../upgrade.php:59
+#: ../upgrade.php:60
 msgid "Download SMPlayer %1"
 msgstr "SMPlayer %1 をダウンロードする"
+
+#~ msgid "SMTube is based on some code from %1."
+#~ msgstr "SMTube は %1 のコードから作成されました"

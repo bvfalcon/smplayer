@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: smplayer_web\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-19 00:27+0100\n"
+"POT-Creation-Date: 2013-03-22 17:02+0100\n"
 "PO-Revision-Date: 2013-02-19 05:06+0000\n"
 "Last-Translator: Bendihua <opensource@bendihua.org>\n"
 "Language-Team:  <>\n"
@@ -105,19 +105,7 @@ msgstr "SMPlayer 的更改"
 msgid "Youtube browser changes"
 msgstr "YouTube 浏览器更改"
 
-#: ../changes.php:41 ../upgrade.php:73
-msgid "Learn interesting things about SMPlayer in %1."
-msgstr "在我们的%1中了解关于 SMPlayer 的趣事."
-
-#: ../changes.php:44 ../upgrade.php:76
-msgid "our blog"
-msgstr "我们的博客"
-
-#: ../changes.php:51 ../upgrade.php:83
-msgid "If you like SMPlayer, recommend it to your friends:"
-msgstr "如果您喜欢 SMPlayer, 请推荐它给您的朋友:"
-
-#: ../changes.php:58
+#: ../changes.php:40
 msgid "Download the latest version of SMPlayer"
 msgstr "下载最新版本的 SMPlayer"
 
@@ -779,11 +767,11 @@ msgstr "SMPlayer 团队希望您能喜欢我们的播放器."
 msgid "You'll find here a quick guide to start using SMPlayer."
 msgstr "您可以在这里找到一个快速指南以开始使用 SMPlayer."
 
-#: ../guide.php:56
+#: ../guide.php:40 ../guide.php:137
 msgid "Play a movie file"
 msgstr "播放影片文件"
 
-#: ../guide.php:58
+#: ../guide.php:42
 msgid ""
 "To open a file, just click on the first button in the toolbar \n"
 "or select the option <b>File...</b> in the <b>Open</b> menu."
@@ -791,54 +779,54 @@ msgstr ""
 "要打开一个文件, 只需单击工具栏上的首个按钮或选择\n"
 "<b>打开</b> 菜单中的 <b>文件...</b> 选项."
 
-#: ../guide.php:61
+#: ../guide.php:45
 msgid ""
 "You can select any file from the formats supported by SMPlayer, like avi, "
 "mp4, mkv, ts, mpg..."
 msgstr ""
 "您可以根据 SMPlayer 所支持的格式选择任何文件, 如 avi、mp4、mkv、ts、mpg..."
 
-#: ../guide.php:63
+#: ../guide.php:47
 msgid ""
 "The movie will begin to play. You can use the control at the botton of the "
 "player to pause it, rewind, seek..."
 msgstr "影片将开始播放. 您可以使用播放器的控制按钮来暂停、快退、定位..."
 
-#: ../guide.php:79
+#: ../guide.php:63
 msgid ""
 "To switch to fullscreen mode, click on the fullscreen button (%1) in the "
 "control bar or press <b>F</b>."
 msgstr ""
 
-#: ../guide.php:82
+#: ../guide.php:66
 msgid ""
 "In fullscreen mode, when you move the mouse to the bottom of the screen a "
 "floating control will appear."
 msgstr ""
 
-#: ../guide.php:84
+#: ../guide.php:68
 msgid ""
 "To return to window mode, click on the fullscreen button in the floating "
 "control or press <b>F</b> or <b>ESC</b>."
 msgstr ""
 
-#: ../guide.php:86
+#: ../guide.php:70
 msgid ""
 "You can also right click at any moment on the video to get a context menu."
 msgstr ""
 
-#: ../guide.php:88
+#: ../guide.php:72
 msgid ""
 "It's very easy to change the audio track, select subtitles, enable a video "
 "filter, change the playback speed... \n"
 "just explore the menus of the player."
 msgstr ""
 
-#: ../guide.php:96
+#: ../guide.php:79 ../guide.php:138
 msgid "Play or download a Youtube video"
 msgstr "播放或下载 YouTube 视频"
 
-#: ../guide.php:98
+#: ../guide.php:81
 msgid ""
 "To play or download a Youtube video, just select <b>Youtube browser</b> in "
 "the <b>Options</b> menu."
@@ -846,53 +834,53 @@ msgstr ""
 "要播放或下载 YouTube 视频, 只需选择 <b>选项</b> 菜单中的 <b>YouTube 浏览器</"
 "b>."
 
-#: ../guide.php:100
+#: ../guide.php:83
 msgid "That will open the %1 window."
 msgstr "这将打开 %1 窗口."
 
-#: ../guide.php:101 ../screenshots.php:87
+#: ../guide.php:84 ../screenshots.php:87
 msgid "Youtube browser"
 msgstr "YouTube 浏览器"
 
-#: ../guide.php:103 ../smtube.php:52
+#: ../guide.php:86 ../smtube.php:48
 msgid ""
 "This tool allows you to browse among the most popular, most viewed and most "
 "rated videos."
 msgstr "此工具允许您浏览时下最受欢迎、最多观看和最多评价的视频。"
 
-#: ../guide.php:105 ../smtube.php:53
+#: ../guide.php:88 ../smtube.php:49
 msgid ""
 "You can search for a video typing a term in the search field at the bottom "
 "of the window."
 msgstr "您可以在窗口底部的搜索字段中输入一个条件来搜索视频."
 
-#: ../guide.php:107 ../smtube.php:54
+#: ../guide.php:90 ../smtube.php:50
 msgid "To play a video, just double click on it."
 msgstr "若要播放视频, 只需双击它."
 
-#: ../guide.php:109 ../smtube.php:59
+#: ../guide.php:92 ../smtube.php:55
 msgid ""
 "To download a Youtube video, right click on a video and select <i>Record "
 "video</i>."
 msgstr "要下载 YouTube 视频, 请在一个视频上右键单击并选择 <i>录制视频</i>."
 
-#: ../guide.php:111 ../smtube.php:60
+#: ../guide.php:94 ../smtube.php:56
 msgid "You can download several videos at a time."
 msgstr "您可以同时下载多个视频."
 
-#: ../guide.php:119
+#: ../guide.php:102 ../guide.php:139
 msgid "Change the skin"
 msgstr "更改皮肤"
 
-#: ../guide.php:121
+#: ../guide.php:104
 msgid "By default SMPlayer uses a basic interface."
 msgstr "默认情况下 SMPlayer 使用基本界面."
 
-#: ../guide.php:123
+#: ../guide.php:106
 msgid "You can change the skin very easily."
 msgstr "您可以非常容易地更改皮肤."
 
-#: ../guide.php:125
+#: ../guide.php:108
 msgid ""
 "Click on the screwdriver button (%1) in the toolbar or select\n"
 "the option <b>Preferences</b> under the <b>Options</b> menu."
@@ -900,21 +888,33 @@ msgstr ""
 "单击工具栏中的螺丝刀按钮 (%1)\n"
 "或选择 <b>选项</b> 菜单下的 <b>首选项</b> 选项."
 
-#: ../guide.php:129
+#: ../guide.php:112
 msgid "That will open the preferences dialog."
 msgstr "这将打开首选项对话框."
 
-#: ../guide.php:131
+#: ../guide.php:114
 msgid "Now click on the <b>Interface</b> section on the left."
 msgstr "现在单击左侧的 <b>界面</b> 部分."
 
-#: ../guide.php:133
+#: ../guide.php:116
 msgid "Now select <b>Skinnable GUI</b> in the <b>GUI</b> option."
 msgstr "现在选择 <b>GUI</b> 选项中的 <b>可换肤 GUI</b>."
 
-#: ../guide.php:135
+#: ../guide.php:118
 msgid "Finally select the skin you want to use under the <b>Skin</b> option."
 msgstr "最后在 <b>皮肤</b> 选项下选择您想要使用的皮肤."
+
+#: ../guide.php:149 ../guide.php:171 ../upgrade.php:74 ../upgrade.php:86
+msgid "Advertisement"
+msgstr ""
+
+#: ../inc/blog.php:6
+msgid "Learn interesting things about SMPlayer in %1."
+msgstr "在我们的%1中了解关于 SMPlayer 的趣事."
+
+#: ../inc/blog.php:9
+msgid "our blog"
+msgstr "我们的博客"
 
 #: ../inc/features.php:2
 msgid ""
@@ -1158,6 +1158,10 @@ msgstr "评论"
 #: ../inc/header.php:164 ../sitemap.php:19
 msgid "FAQ"
 msgstr "FAQ"
+
+#: ../inc/recommend.php:3
+msgid "If you like SMPlayer, recommend it to your friends:"
+msgstr "如果您喜欢 SMPlayer, 请推荐它给您的朋友:"
 
 #: ../inc/reviews_box.php:28
 msgid "Read all reviews"
@@ -1439,7 +1443,7 @@ msgstr ""
 "但如果您正在寻找更新的 MPlayer 或 MPlayer2 构建,\n"
 "请看看这些由 %1 维护的项目:"
 
-#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:88
+#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:84
 msgid "Download SMPlayer"
 msgstr "下载 SMPlayer"
 
@@ -1616,19 +1620,15 @@ msgid ""
 "i>."
 msgstr ""
 
-#: ../smtube.php:43
-msgid "SMTube is based on some code from %1."
-msgstr ""
-
-#: ../smtube.php:51
+#: ../smtube.php:47
 msgid "The Youtube Browser"
 msgstr "YouTube 浏览器"
 
-#: ../smtube.php:58
+#: ../smtube.php:54
 msgid "Download Youtube videos"
 msgstr "下载 YouTube 视频"
 
-#: ../smtube.php:61
+#: ../smtube.php:57
 msgid ""
 "Click on the blue arrow to play a video or click on the <i>Open folder</i> "
 "button \n"
@@ -1637,56 +1637,68 @@ msgstr ""
 "单击蓝色箭头可播放视频, 单击 <i>打开文件夹</i>\n"
 "按钮可打开保存视频的文件夹."
 
-#: ../smtube.php:65
+#: ../smtube.php:61
 msgid "Choose the quality"
 msgstr "选择质量"
 
-#: ../smtube.php:66
+#: ../smtube.php:62
 msgid ""
 "The quality and format (mp4/flv) can be selected in the settings window."
 msgstr "可在设置窗口中选择质量和格式 (mp4/flv)."
 
-#: ../smtube.php:67
+#: ../smtube.php:63
 msgid "It's possible to download HD videos."
 msgstr "它提供了下载高清视频的可能性."
 
-#: ../smtube.php:68
+#: ../smtube.php:64
 msgid "The available qualities are:"
 msgstr "可用的质量是:"
 
-#: ../smtube.php:81
+#: ../smtube.php:77
 msgid "How to get SMTube"
 msgstr ""
 
-#: ../smtube.php:85
+#: ../smtube.php:81
 msgid ""
 "SMTube is included along with SMPlayer in the Windows packages. Just install "
 "SMPlayer."
 msgstr ""
 
-#: ../smtube.php:92
+#: ../smtube.php:88
 msgid "On Linux, SMTube is available in a separated package."
 msgstr ""
 
-#: ../smtube.php:94
+#: ../smtube.php:90
 msgid "To install it, run these commands in a terminal (ubuntu):"
 msgstr ""
 
-#: ../smtube.php:102 ../umplayer.php:77
+#: ../smtube.php:98 ../umplayer.php:77
 msgid "Sources:"
 msgstr "源代码:"
 
-#: ../smtube.php:107
+#: ../smtube.php:102
+msgid "License and credits"
+msgstr ""
+
+#: ../smtube.php:104
+msgid "SMTube is free and open source. SMTube is under the GPL license."
+msgstr ""
+
+#: ../smtube.php:106
+msgid "SMTube is based on some code from %1 by %2."
+msgstr ""
+
+#: ../smtube.php:115
 msgid "Changes"
 msgstr "更改"
 
-#: ../smtube.php:109
+#: ../smtube.php:116
 msgid ""
 "The SMPlayer team has made several improvements to the original code from "
 "umplayer:"
 msgstr "SMPlayer 团队对来自 UMPlayer 的原始代码作出的几项改进:"
 
-#: ../smtube.php:112
+#: ../smtube.php:119
 msgid ""
 "It's now a stand-alone application and you can select the video player to "
 "use \n"
@@ -1695,15 +1707,15 @@ msgstr ""
 "它现在是一个独立的应用程序, 您可以选择要使用的视频播放器\n"
 "(SMPlayer、MPlayer、VLC、Dragon Player、Totem 或 Gnome-MPlayer)."
 
-#: ../smtube.php:114
+#: ../smtube.php:121
 msgid "It's possible to translate the application to other languages."
 msgstr "可以将应用程序翻译成其他语言."
 
-#: ../smtube.php:115
+#: ../smtube.php:122
 msgid "A configuration dialog has been added."
 msgstr "添加了一个配置对话框."
 
-#: ../smtube.php:116
+#: ../smtube.php:123
 msgid "A few fixes."
 msgstr "一些修正."
 
@@ -1904,7 +1916,7 @@ msgstr "大量的 Bug 修复和改进."
 msgid "Would you like to upgrade?"
 msgstr "您想要升级吗?"
 
-#: ../upgrade.php:59
+#: ../upgrade.php:60
 msgid "Download SMPlayer %1"
 msgstr "下载 SMPlayer %1"
 

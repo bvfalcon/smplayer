@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: smplayer_web\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-19 00:27+0100\n"
+"POT-Creation-Date: 2013-03-22 17:02+0100\n"
 "PO-Revision-Date: 2013-03-03 01:42+0000\n"
 "Last-Translator: rvm <rvm3000@gmail.com>\n"
 "Language-Team: Lithuanian (http://www.transifex.com/projects/p/smplayer_web/"
@@ -111,19 +111,7 @@ msgstr "SMPlayer pakeitimai"
 msgid "Youtube browser changes"
 msgstr "Youtube naršyklės pakeitimai"
 
-#: ../changes.php:41 ../upgrade.php:73
-msgid "Learn interesting things about SMPlayer in %1."
-msgstr "Sužinokite įdomių dalykų apie SMPlayer %1."
-
-#: ../changes.php:44 ../upgrade.php:76
-msgid "our blog"
-msgstr "mūsų tinklaraštyje"
-
-#: ../changes.php:51 ../upgrade.php:83
-msgid "If you like SMPlayer, recommend it to your friends:"
-msgstr ""
-
-#: ../changes.php:58
+#: ../changes.php:40
 msgid "Download the latest version of SMPlayer"
 msgstr "Atsisiųsti naujausią SMPlayer versiją"
 
@@ -792,77 +780,77 @@ msgstr ""
 msgid "You'll find here a quick guide to start using SMPlayer."
 msgstr ""
 
-#: ../guide.php:56
+#: ../guide.php:40 ../guide.php:137
 msgid "Play a movie file"
 msgstr ""
 
-#: ../guide.php:58
+#: ../guide.php:42
 msgid ""
 "To open a file, just click on the first button in the toolbar \n"
 "or select the option <b>File...</b> in the <b>Open</b> menu."
 msgstr ""
 
-#: ../guide.php:61
+#: ../guide.php:45
 msgid ""
 "You can select any file from the formats supported by SMPlayer, like avi, "
 "mp4, mkv, ts, mpg..."
 msgstr ""
 
-#: ../guide.php:63
+#: ../guide.php:47
 msgid ""
 "The movie will begin to play. You can use the control at the botton of the "
 "player to pause it, rewind, seek..."
 msgstr ""
 
-#: ../guide.php:79
+#: ../guide.php:63
 msgid ""
 "To switch to fullscreen mode, click on the fullscreen button (%1) in the "
 "control bar or press <b>F</b>."
 msgstr ""
 
-#: ../guide.php:82
+#: ../guide.php:66
 msgid ""
 "In fullscreen mode, when you move the mouse to the bottom of the screen a "
 "floating control will appear."
 msgstr ""
 
-#: ../guide.php:84
+#: ../guide.php:68
 msgid ""
 "To return to window mode, click on the fullscreen button in the floating "
 "control or press <b>F</b> or <b>ESC</b>."
 msgstr ""
 
-#: ../guide.php:86
+#: ../guide.php:70
 msgid ""
 "You can also right click at any moment on the video to get a context menu."
 msgstr ""
 
-#: ../guide.php:88
+#: ../guide.php:72
 msgid ""
 "It's very easy to change the audio track, select subtitles, enable a video "
 "filter, change the playback speed... \n"
 "just explore the menus of the player."
 msgstr ""
 
-#: ../guide.php:96
+#: ../guide.php:79 ../guide.php:138
 msgid "Play or download a Youtube video"
 msgstr ""
 
-#: ../guide.php:98
+#: ../guide.php:81
 msgid ""
 "To play or download a Youtube video, just select <b>Youtube browser</b> in "
 "the <b>Options</b> menu."
 msgstr ""
 
-#: ../guide.php:100
+#: ../guide.php:83
 msgid "That will open the %1 window."
 msgstr ""
 
-#: ../guide.php:101 ../screenshots.php:87
+#: ../guide.php:84 ../screenshots.php:87
 msgid "Youtube browser"
 msgstr "Youtube naršyklė"
 
-#: ../guide.php:103 ../smtube.php:52
+#: ../guide.php:86 ../smtube.php:48
 msgid ""
 "This tool allows you to browse among the most popular, most viewed and most "
 "rated videos."
@@ -870,17 +858,17 @@ msgstr ""
 "Šis įrankis jums leidžia naršyti tarp populiariausių, daugiausiai žiūrimų ir "
 "geriausiai įvertintų video."
 
-#: ../guide.php:105 ../smtube.php:53
+#: ../guide.php:88 ../smtube.php:49
 msgid ""
 "You can search for a video typing a term in the search field at the bottom "
 "of the window."
 msgstr "Video galite ieškoti lango apačioje įrašę paieškos žodį."
 
-#: ../guide.php:107 ../smtube.php:54
+#: ../guide.php:90 ../smtube.php:50
 msgid "To play a video, just double click on it."
 msgstr "Norėdami atkurti video, tiesiog dukart spustelėkite ant jo."
 
-#: ../guide.php:109 ../smtube.php:59
+#: ../guide.php:92 ../smtube.php:55
 msgid ""
 "To download a Youtube video, right click on a video and select <i>Record "
 "video</i>."
@@ -888,43 +876,55 @@ msgstr ""
 "Norėdami parsisiųsti Youtube video, paspauskite dešinį pelės mygtuką ir "
 "pasirinkite <i>Įrašyti video</i>."
 
-#: ../guide.php:111 ../smtube.php:60
+#: ../guide.php:94 ../smtube.php:56
 msgid "You can download several videos at a time."
 msgstr "Vienu metu galite atsisiųsti kelis video."
 
-#: ../guide.php:119
+#: ../guide.php:102 ../guide.php:139
 msgid "Change the skin"
 msgstr ""
 
-#: ../guide.php:121
+#: ../guide.php:104
 msgid "By default SMPlayer uses a basic interface."
 msgstr ""
 
-#: ../guide.php:123
+#: ../guide.php:106
 msgid "You can change the skin very easily."
 msgstr ""
 
-#: ../guide.php:125
+#: ../guide.php:108
 msgid ""
 "Click on the screwdriver button (%1) in the toolbar or select\n"
 "the option <b>Preferences</b> under the <b>Options</b> menu."
 msgstr ""
 
-#: ../guide.php:129
+#: ../guide.php:112
 msgid "That will open the preferences dialog."
 msgstr ""
 
-#: ../guide.php:131
+#: ../guide.php:114
 msgid "Now click on the <b>Interface</b> section on the left."
 msgstr ""
 
-#: ../guide.php:133
+#: ../guide.php:116
 msgid "Now select <b>Skinnable GUI</b> in the <b>GUI</b> option."
 msgstr ""
 
-#: ../guide.php:135
+#: ../guide.php:118
 msgid "Finally select the skin you want to use under the <b>Skin</b> option."
 msgstr ""
+
+#: ../guide.php:149 ../guide.php:171 ../upgrade.php:74 ../upgrade.php:86
+msgid "Advertisement"
+msgstr ""
+
+#: ../inc/blog.php:6
+msgid "Learn interesting things about SMPlayer in %1."
+msgstr "Sužinokite įdomių dalykų apie SMPlayer %1."
+
+#: ../inc/blog.php:9
+msgid "our blog"
+msgstr "mūsų tinklaraštyje"
 
 #: ../inc/features.php:2
 msgid ""
@@ -1179,6 +1179,10 @@ msgstr "Apžvalgos"
 #: ../inc/header.php:164 ../sitemap.php:19
 msgid "FAQ"
 msgstr "DUK"
+
+#: ../inc/recommend.php:3
+msgid "If you like SMPlayer, recommend it to your friends:"
+msgstr ""
 
 #: ../inc/reviews_box.php:28
 msgid "Read all reviews"
@@ -1449,7 +1453,7 @@ msgid ""
 "please take a look at these projects maintained by %1:"
 msgstr ""
 
-#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:88
+#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:84
 msgid "Download SMPlayer"
 msgstr "Atsisiųsti SMPlayer"
 
@@ -1631,19 +1635,15 @@ msgid ""
 "i>."
 msgstr ""
 
-#: ../smtube.php:43
-msgid "SMTube is based on some code from %1."
-msgstr ""
-
-#: ../smtube.php:51
+#: ../smtube.php:47
 msgid "The Youtube Browser"
 msgstr "Youtube naršyklė"
 
-#: ../smtube.php:58
+#: ../smtube.php:54
 msgid "Download Youtube videos"
 msgstr "Atsisiųsti Youtube video"
 
-#: ../smtube.php:61
+#: ../smtube.php:57
 msgid ""
 "Click on the blue arrow to play a video or click on the <i>Open folder</i> "
 "button \n"
@@ -1653,56 +1653,68 @@ msgstr ""
 "<i>Atverti aplanką</i> mygtuką ir bus atvertas aplankas kuriame bus saugomi "
 "video."
 
-#: ../smtube.php:65
+#: ../smtube.php:61
 msgid "Choose the quality"
 msgstr "Pasirinkite kokybę"
 
-#: ../smtube.php:66
+#: ../smtube.php:62
 msgid ""
 "The quality and format (mp4/flv) can be selected in the settings window."
 msgstr "Kokybę ir formatą(mp4/flv) galima pasirinkti nustatymų lange."
 
-#: ../smtube.php:67
+#: ../smtube.php:63
 msgid "It's possible to download HD videos."
 msgstr "Galima parsisiųsti HD video."
 
-#: ../smtube.php:68
+#: ../smtube.php:64
 msgid "The available qualities are:"
 msgstr "Prieinamos kokybės:"
 
-#: ../smtube.php:81
+#: ../smtube.php:77
 msgid "How to get SMTube"
 msgstr ""
 
-#: ../smtube.php:85
+#: ../smtube.php:81
 msgid ""
 "SMTube is included along with SMPlayer in the Windows packages. Just install "
 "SMPlayer."
 msgstr ""
 
-#: ../smtube.php:92
+#: ../smtube.php:88
 msgid "On Linux, SMTube is available in a separated package."
 msgstr ""
 
-#: ../smtube.php:94
+#: ../smtube.php:90
 msgid "To install it, run these commands in a terminal (ubuntu):"
 msgstr ""
 
-#: ../smtube.php:102 ../umplayer.php:77
+#: ../smtube.php:98 ../umplayer.php:77
 msgid "Sources:"
 msgstr ""
 
-#: ../smtube.php:107
+#: ../smtube.php:102
+msgid "License and credits"
+msgstr ""
+
+#: ../smtube.php:104
+msgid "SMTube is free and open source. SMTube is under the GPL license."
+msgstr ""
+
+#: ../smtube.php:106
+msgid "SMTube is based on some code from %1 by %2."
+msgstr ""
+
+#: ../smtube.php:115
 msgid "Changes"
 msgstr "Pakeitimai"
 
-#: ../smtube.php:109
+#: ../smtube.php:116
 msgid ""
 "The SMPlayer team has made several improvements to the original code from "
 "umplayer:"
 msgstr "SMPlayer komanda padarė kelis originalaus umplayer pakeitimus:"
 
-#: ../smtube.php:112
+#: ../smtube.php:119
 msgid ""
 "It's now a stand-alone application and you can select the video player to "
 "use \n"
@@ -1711,15 +1723,15 @@ msgstr ""
 "Dabar tai savarankiška programa, jūs galite pasirinkti kurį grotuvą naudoti\n"
 "(smplayer, mplayer, vlc, dragon player, totem ar gnome-mplayer)."
 
-#: ../smtube.php:114
+#: ../smtube.php:121
 msgid "It's possible to translate the application to other languages."
 msgstr "Programą įmanoma išversti ir į kitas kalbas."
 
-#: ../smtube.php:115
+#: ../smtube.php:122
 msgid "A configuration dialog has been added."
 msgstr "Pridėtas konfigūracijos dialogas."
 
-#: ../smtube.php:116
+#: ../smtube.php:123
 msgid "A few fixes."
 msgstr "Keli pataisymai."
 
@@ -1908,7 +1920,7 @@ msgstr ""
 msgid "Would you like to upgrade?"
 msgstr ""
 
-#: ../upgrade.php:59
+#: ../upgrade.php:60
 msgid "Download SMPlayer %1"
 msgstr ""
 

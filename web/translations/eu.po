@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SM Player Webgunea\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-19 00:27+0100\n"
+"POT-Creation-Date: 2013-03-22 17:02+0100\n"
 "PO-Revision-Date: 2013-03-15 12:55+0100\n"
 "Last-Translator: Xabier Aramendi (Azpidatziak) <azpidatziak@gmail.com>\n"
 "Language-Team: (EUS_Xabier Aramendi) <azpidatziak@gmail.com>\n"
@@ -105,19 +105,7 @@ msgstr "SMPlayer aldaketak"
 msgid "Youtube browser changes"
 msgstr "Youtube nabigatzaile aldaketak"
 
-#: ../changes.php:41 ../upgrade.php:73
-msgid "Learn interesting things about SMPlayer in %1."
-msgstr "Jakin gauza interesgarriak SMPlayerri buruz hemen: %1."
-
-#: ../changes.php:44 ../upgrade.php:76
-msgid "our blog"
-msgstr "gure bloga"
-
-#: ../changes.php:51 ../upgrade.php:83
-msgid "If you like SMPlayer, recommend it to your friends:"
-msgstr "SMPlayer gogoko baduzu, gomendatu diezaiezu zure lagunei:"
-
-#: ../changes.php:58
+#: ../changes.php:40
 msgid "Download the latest version of SMPlayer"
 msgstr "Jeitsi SMPlayerren azken bertsioa"
 
@@ -813,11 +801,11 @@ msgstr "SMPlayer taldeak gure irakurgailuaz gozatuko duzula itxaroten du."
 msgid "You'll find here a quick guide to start using SMPlayer."
 msgstr "Hemen SMPlayer erabiltzen hasteko gida azkar bat aurkituko duzu."
 
-#: ../guide.php:56
+#: ../guide.php:40 ../guide.php:137
 msgid "Play a movie file"
 msgstr "Irakurri filma agiri bat"
 
-#: ../guide.php:58
+#: ../guide.php:42
 msgid ""
 "To open a file, just click on the first button in the toolbar \n"
 "or select the option <b>File...</b> in the <b>Open</b> menu."
@@ -825,7 +813,7 @@ msgstr ""
 "Agiri bat irekitzeko, klikatu tresnabarrako lehen botoia \n"
 "edo hautatu <b>Agiria...</b> aukera <b>Ireki</b> menuan."
 
-#: ../guide.php:61
+#: ../guide.php:45
 msgid ""
 "You can select any file from the formats supported by SMPlayer, like avi, "
 "mp4, mkv, ts, mpg..."
@@ -833,7 +821,7 @@ msgstr ""
 "SMPlayerrek sostengatzen duen edozein heuskarriko agiria hautatu dezakezu, "
 "adibidez avi, mp4, mkv, ts, mpg..."
 
-#: ../guide.php:63
+#: ../guide.php:47
 msgid ""
 "The movie will begin to play. You can use the control at the botton of the "
 "player to pause it, rewind, seek..."
@@ -841,41 +829,41 @@ msgstr ""
 "Filma irakurtzen hasiko da. Irakurgailuaren behereneko agintea erabili "
 "dezakezu pausatzeko, atzerabiltzeko,bilatzeko..."
 
-#: ../guide.php:79
+#: ../guide.php:63
 msgid ""
 "To switch to fullscreen mode, click on the fullscreen button (%1) in the "
 "control bar or press <b>F</b>."
 msgstr ""
 
-#: ../guide.php:82
+#: ../guide.php:66
 msgid ""
 "In fullscreen mode, when you move the mouse to the bottom of the screen a "
 "floating control will appear."
 msgstr ""
 
-#: ../guide.php:84
+#: ../guide.php:68
 msgid ""
 "To return to window mode, click on the fullscreen button in the floating "
 "control or press <b>F</b> or <b>ESC</b>."
 msgstr ""
 
-#: ../guide.php:86
+#: ../guide.php:70
 msgid ""
 "You can also right click at any moment on the video to get a context menu."
 msgstr ""
 
-#: ../guide.php:88
+#: ../guide.php:72
 msgid ""
 "It's very easy to change the audio track, select subtitles, enable a video "
 "filter, change the playback speed... \n"
 "just explore the menus of the player."
 msgstr ""
 
-#: ../guide.php:96
+#: ../guide.php:79 ../guide.php:138
 msgid "Play or download a Youtube video"
 msgstr "Irakurri edo jeitsi Youtube bideo bat"
 
-#: ../guide.php:98
+#: ../guide.php:81
 msgid ""
 "To play or download a Youtube video, just select <b>Youtube browser</b> in "
 "the <b>Options</b> menu."
@@ -883,15 +871,15 @@ msgstr ""
 "Youtube bideoa bat irakurri edo jeisteko, hautatu <b>Youtube nabigatzailea</"
 "b> <b>Aukerak</b> menuan."
 
-#: ../guide.php:100
+#: ../guide.php:83
 msgid "That will open the %1 window."
 msgstr "Horrek %1 leihoa irekiko du."
 
-#: ../guide.php:101 ../screenshots.php:87
+#: ../guide.php:84 ../screenshots.php:87
 msgid "Youtube browser"
 msgstr "Youtube nabigatzailea"
 
-#: ../guide.php:103 ../smtube.php:52
+#: ../guide.php:86 ../smtube.php:48
 msgid ""
 "This tool allows you to browse among the most popular, most viewed and most "
 "rated videos."
@@ -899,7 +887,7 @@ msgstr ""
 "Tresna honek bideo ezagunenak, ikusienak eta mailatuenak artean bilatzea "
 "ahalbidetzen dizu."
 
-#: ../guide.php:105 ../smtube.php:53
+#: ../guide.php:88 ../smtube.php:49
 msgid ""
 "You can search for a video typing a term in the search field at the bottom "
 "of the window."
@@ -907,11 +895,11 @@ msgstr ""
 "Bideo bat bilatu dezakezu leihoaren behealdeko bilaketa eramuan hitz bat "
 "idatziz."
 
-#: ../guide.php:107 ../smtube.php:54
+#: ../guide.php:90 ../smtube.php:50
 msgid "To play a video, just double click on it."
 msgstr "Bideo bat irakurtzeko, egin klik bikoitza bertan."
 
-#: ../guide.php:109 ../smtube.php:59
+#: ../guide.php:92 ../smtube.php:55
 msgid ""
 "To download a Youtube video, right click on a video and select <i>Record "
 "video</i>."
@@ -919,23 +907,23 @@ msgstr ""
 "Youtube bideo bat jeisteko, eskuin klikatu bideo bat eta hautatu <i>Grabatu "
 "bideoa</i>."
 
-#: ../guide.php:111 ../smtube.php:60
+#: ../guide.php:94 ../smtube.php:56
 msgid "You can download several videos at a time."
 msgstr "Bideo anitz jeitsi ditzakezu aldiberean."
 
-#: ../guide.php:119
+#: ../guide.php:102 ../guide.php:139
 msgid "Change the skin"
 msgstr "Aldatu azala"
 
-#: ../guide.php:121
+#: ../guide.php:104
 msgid "By default SMPlayer uses a basic interface."
 msgstr "SMPlayerrek berez ohinarrizko interfaze bat erabiltzen du."
 
-#: ../guide.php:123
+#: ../guide.php:106
 msgid "You can change the skin very easily."
 msgstr "Azala oso erraz aldatu dezakezu."
 
-#: ../guide.php:125
+#: ../guide.php:108
 msgid ""
 "Click on the screwdriver button (%1) in the toolbar or select\n"
 "the option <b>Preferences</b> under the <b>Options</b> menu."
@@ -943,21 +931,33 @@ msgstr ""
 "Klikatu bihurkin botoian (%1) tresnabarran edo hautatu\n"
 "<b>Hobespenak</b> aukera <b>Aukerak</b> menuan."
 
-#: ../guide.php:129
+#: ../guide.php:112
 msgid "That will open the preferences dialog."
 msgstr "Horrek hobespen elkarrizketa irekiko du."
 
-#: ../guide.php:131
+#: ../guide.php:114
 msgid "Now click on the <b>Interface</b> section on the left."
 msgstr "Orain klikatu <b>Interfazea</b> atala ezkerraldean."
 
-#: ../guide.php:133
+#: ../guide.php:116
 msgid "Now select <b>Skinnable GUI</b> in the <b>GUI</b> option."
 msgstr "Orain hautatu <b>EIG Azalgarria</b> <b>EIG</b> aukeran."
 
-#: ../guide.php:135
+#: ../guide.php:118
 msgid "Finally select the skin you want to use under the <b>Skin</b> option."
 msgstr "Azkenik hautatu erabiltzea nahi duzun azala <b>Azala</b> aukeran."
+
+#: ../guide.php:149 ../guide.php:171 ../upgrade.php:74 ../upgrade.php:86
+msgid "Advertisement"
+msgstr ""
+
+#: ../inc/blog.php:6
+msgid "Learn interesting things about SMPlayer in %1."
+msgstr "Jakin gauza interesgarriak SMPlayerri buruz hemen: %1."
+
+#: ../inc/blog.php:9
+msgid "our blog"
+msgstr "gure bloga"
 
 #: ../inc/features.php:2
 msgid ""
@@ -1214,6 +1214,10 @@ msgstr "Berrikuspenak"
 #: ../inc/header.php:164 ../sitemap.php:19
 msgid "FAQ"
 msgstr "SEG"
+
+#: ../inc/recommend.php:3
+msgid "If you like SMPlayer, recommend it to your friends:"
+msgstr "SMPlayer gogoko baduzu, gomendatu diezaiezu zure lagunei:"
 
 #: ../inc/reviews_box.php:28
 msgid "Read all reviews"
@@ -1510,7 +1514,7 @@ msgstr ""
 "Baina MPlayer edo MPlayer2-ren eraiketa berrienaren bila bazabiltza, \n"
 "mesedez bota begirada bat %1-ek mantentzen dituen egitasmo hauei:"
 
-#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:88
+#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:84
 msgid "Download SMPlayer"
 msgstr "Jeitsi SMPlayer"
 
@@ -1707,19 +1711,15 @@ msgstr ""
 "hautatu <i>Youtube nabigatzailea</i> \n"
 "SMPlayerren leiho nagusiko <i>Aukerak</i> menuan , edo sakatu <i>F11</i>."
 
-#: ../smtube.php:43
-msgid "SMTube is based on some code from %1."
-msgstr "SMTube %1-tiko zenbait kodetan ohinarriturik dago."
-
-#: ../smtube.php:51
+#: ../smtube.php:47
 msgid "The Youtube Browser"
 msgstr "Youtube Nabigatzailea"
 
-#: ../smtube.php:58
+#: ../smtube.php:54
 msgid "Download Youtube videos"
 msgstr "Jeitsi Youtube bideoak"
 
-#: ../smtube.php:61
+#: ../smtube.php:57
 msgid ""
 "Click on the blue arrow to play a video or click on the <i>Open folder</i> "
 "button \n"
@@ -1729,28 +1729,28 @@ msgstr ""
 "i> botoia \n"
 "bideoak gordeta dauden agiritegia irekitzeko."
 
-#: ../smtube.php:65
+#: ../smtube.php:61
 msgid "Choose the quality"
 msgstr "Hautatu ontasuna"
 
-#: ../smtube.php:66
+#: ../smtube.php:62
 msgid ""
 "The quality and format (mp4/flv) can be selected in the settings window."
 msgstr "Ontasuna eta heuskarria (mp4/flv) ezarpen leihoan hautatu daitezke."
 
-#: ../smtube.php:67
+#: ../smtube.php:63
 msgid "It's possible to download HD videos."
 msgstr "HD bideoak jeitsi daitezke."
 
-#: ../smtube.php:68
+#: ../smtube.php:64
 msgid "The available qualities are:"
 msgstr "Ontasun eskuragarriak dira:"
 
-#: ../smtube.php:81
+#: ../smtube.php:77
 msgid "How to get SMTube"
 msgstr "Nola lortu SMTube"
 
-#: ../smtube.php:85
+#: ../smtube.php:81
 msgid ""
 "SMTube is included along with SMPlayer in the Windows packages. Just install "
 "SMPlayer."
@@ -1758,30 +1758,42 @@ msgstr ""
 "SMTube SMPlayerren barne dago Windows-rako paketeetan. Ezarri SMPlayer "
 "besterik gabe."
 
-#: ../smtube.php:92
+#: ../smtube.php:88
 msgid "On Linux, SMTube is available in a separated package."
 msgstr "Linux-en, SMTube pakete bereizi batean dago eskuragarri."
 
-#: ../smtube.php:94
+#: ../smtube.php:90
 msgid "To install it, run these commands in a terminal (ubuntu):"
 msgstr "Ezartzeko, ekin agindu hauek terminal batean (ubuntu):"
 
-#: ../smtube.php:102 ../umplayer.php:77
+#: ../smtube.php:98 ../umplayer.php:77
 msgid "Sources:"
 msgstr "Iturburuak:"
 
-#: ../smtube.php:107
+#: ../smtube.php:102
+msgid "License and credits"
+msgstr ""
+
+#: ../smtube.php:104
+msgid "SMTube is free and open source. SMTube is under the GPL license."
+msgstr ""
+
+#: ../smtube.php:106
+msgid "SMTube is based on some code from %1 by %2."
+msgstr ""
+
+#: ../smtube.php:115
 msgid "Changes"
 msgstr "Aldaketak"
 
-#: ../smtube.php:109
+#: ../smtube.php:116
 msgid ""
 "The SMPlayer team has made several improvements to the original code from "
 "umplayer:"
 msgstr ""
 "SMPlayer taldeak hobekuntza ugari egn ditu umplayerren jatorrizko kodean."
 
-#: ../smtube.php:112
+#: ../smtube.php:119
 msgid ""
 "It's now a stand-alone application and you can select the video player to "
 "use \n"
@@ -1791,15 +1803,15 @@ msgstr ""
 "hautatu dezakezu \n"
 "(smplayer, mplayer, vlc, dragon player, totem edo gnome-mplayer)."
 
-#: ../smtube.php:114
+#: ../smtube.php:121
 msgid "It's possible to translate the application to other languages."
 msgstr "Aplikazioa beste hizkuntza batzuetara itzuli daiteke."
 
-#: ../smtube.php:115
+#: ../smtube.php:122
 msgid "A configuration dialog has been added."
 msgstr "Itxurapen elkarrizketa bat gehitu da."
 
-#: ../smtube.php:116
+#: ../smtube.php:123
 msgid "A few fixes."
 msgstr "Zuzenketa gutxi batzuk."
 
@@ -2020,9 +2032,12 @@ msgstr "Akats zuzenketa pilo bat eta hobekuntzak."
 msgid "Would you like to upgrade?"
 msgstr "Eguneratzea nahi duzu?"
 
-#: ../upgrade.php:59
+#: ../upgrade.php:60
 msgid "Download SMPlayer %1"
 msgstr "Jeitsi SMPlayer %1"
+
+#~ msgid "SMTube is based on some code from %1."
+#~ msgstr "SMTube %1-tiko zenbait kodetan ohinarriturik dago."
 
 #~ msgid "A free media player with built-in codecs and Youtube support"
 #~ msgstr ""

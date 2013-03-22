@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: smplayer_web\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-19 00:27+0100\n"
+"POT-Creation-Date: 2013-03-22 17:02+0100\n"
 "PO-Revision-Date: 2013-03-13 08:37+0000\n"
 "Last-Translator: zubr139 <zubr139@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/projects/p/smplayer_web/"
@@ -113,19 +113,7 @@ msgstr "Зміни у SMPlayer"
 msgid "Youtube browser changes"
 msgstr "Зміни в переглядачі Youtube"
 
-#: ../changes.php:41 ../upgrade.php:73
-msgid "Learn interesting things about SMPlayer in %1."
-msgstr "Дізнатися цікаві речі про SMPlayer відвідавши %1."
-
-#: ../changes.php:44 ../upgrade.php:76
-msgid "our blog"
-msgstr "наш блоґ"
-
-#: ../changes.php:51 ../upgrade.php:83
-msgid "If you like SMPlayer, recommend it to your friends:"
-msgstr "Якщо вам подобається SMPlayer, порекомендуйте його своїм друзям:"
-
-#: ../changes.php:58
+#: ../changes.php:40
 msgid "Download the latest version of SMPlayer"
 msgstr "Завантажте останню версію SMPlayer"
 
@@ -808,17 +796,17 @@ msgstr "Команда SMPlayer сподівається, що вам сподо
 msgid "You'll find here a quick guide to start using SMPlayer."
 msgstr "Тут ви знайдете стислий посібник, щоб почати використовувати SMPlayer."
 
-#: ../guide.php:56
+#: ../guide.php:40 ../guide.php:137
 msgid "Play a movie file"
 msgstr "Відтворити відеофайл"
 
-#: ../guide.php:58
+#: ../guide.php:42
 msgid ""
 "To open a file, just click on the first button in the toolbar \n"
 "or select the option <b>File...</b> in the <b>Open</b> menu."
 msgstr ""
 
-#: ../guide.php:61
+#: ../guide.php:45
 msgid ""
 "You can select any file from the formats supported by SMPlayer, like avi, "
 "mp4, mkv, ts, mpg..."
@@ -826,78 +814,78 @@ msgstr ""
 "Ви можете вибрати будь-який формат файлу, що підтримуються SMPlayer, avi, "
 "mp4, mkv, ts, mpg..."
 
-#: ../guide.php:63
+#: ../guide.php:47
 msgid ""
 "The movie will begin to play. You can use the control at the botton of the "
 "player to pause it, rewind, seek..."
 msgstr ""
 
-#: ../guide.php:79
+#: ../guide.php:63
 msgid ""
 "To switch to fullscreen mode, click on the fullscreen button (%1) in the "
 "control bar or press <b>F</b>."
 msgstr ""
 
-#: ../guide.php:82
+#: ../guide.php:66
 msgid ""
 "In fullscreen mode, when you move the mouse to the bottom of the screen a "
 "floating control will appear."
 msgstr ""
 
-#: ../guide.php:84
+#: ../guide.php:68
 msgid ""
 "To return to window mode, click on the fullscreen button in the floating "
 "control or press <b>F</b> or <b>ESC</b>."
 msgstr ""
 
-#: ../guide.php:86
+#: ../guide.php:70
 msgid ""
 "You can also right click at any moment on the video to get a context menu."
 msgstr ""
 
-#: ../guide.php:88
+#: ../guide.php:72
 msgid ""
 "It's very easy to change the audio track, select subtitles, enable a video "
 "filter, change the playback speed... \n"
 "just explore the menus of the player."
 msgstr ""
 
-#: ../guide.php:96
+#: ../guide.php:79 ../guide.php:138
 msgid "Play or download a Youtube video"
 msgstr "Відтворити або завантажити відео з Youtube"
 
-#: ../guide.php:98
+#: ../guide.php:81
 msgid ""
 "To play or download a Youtube video, just select <b>Youtube browser</b> in "
 "the <b>Options</b> menu."
 msgstr ""
 
-#: ../guide.php:100
+#: ../guide.php:83
 msgid "That will open the %1 window."
 msgstr "Це відкриє %1 вікно."
 
-#: ../guide.php:101 ../screenshots.php:87
+#: ../guide.php:84 ../screenshots.php:87
 msgid "Youtube browser"
 msgstr "YouTube переглядач "
 
-#: ../guide.php:103 ../smtube.php:52
+#: ../guide.php:86 ../smtube.php:48
 msgid ""
 "This tool allows you to browse among the most popular, most viewed and most "
 "rated videos."
 msgstr ""
 
-#: ../guide.php:105 ../smtube.php:53
+#: ../guide.php:88 ../smtube.php:49
 msgid ""
 "You can search for a video typing a term in the search field at the bottom "
 "of the window."
 msgstr ""
 "Ви можете знайти відео ввівши запит у полі пошуку в нижній частині вікна."
 
-#: ../guide.php:107 ../smtube.php:54
+#: ../guide.php:90 ../smtube.php:50
 msgid "To play a video, just double click on it."
 msgstr "Для відтворення відео, просто двічі клацніть по ньому."
 
-#: ../guide.php:109 ../smtube.php:59
+#: ../guide.php:92 ../smtube.php:55
 msgid ""
 "To download a Youtube video, right click on a video and select <i>Record "
 "video</i>."
@@ -905,43 +893,55 @@ msgstr ""
 "Для завантаження відео з Youtube, натисніть правою кнопкою миші на відео і "
 "виберіть <i>Записати відео</i>."
 
-#: ../guide.php:111 ../smtube.php:60
+#: ../guide.php:94 ../smtube.php:56
 msgid "You can download several videos at a time."
 msgstr "Ви можете завантажити кілька відео одночасно."
 
-#: ../guide.php:119
+#: ../guide.php:102 ../guide.php:139
 msgid "Change the skin"
 msgstr "Змінення шкурок"
 
-#: ../guide.php:121
+#: ../guide.php:104
 msgid "By default SMPlayer uses a basic interface."
 msgstr "Типово SMPlayer використовує базовий інтерфейс."
 
-#: ../guide.php:123
+#: ../guide.php:106
 msgid "You can change the skin very easily."
 msgstr "Ви можете дуже легко змінити шкурку."
 
-#: ../guide.php:125
+#: ../guide.php:108
 msgid ""
 "Click on the screwdriver button (%1) in the toolbar or select\n"
 "the option <b>Preferences</b> under the <b>Options</b> menu."
 msgstr ""
 
-#: ../guide.php:129
+#: ../guide.php:112
 msgid "That will open the preferences dialog."
 msgstr "Це відкриє діалогове вікно налаштувань."
 
-#: ../guide.php:131
+#: ../guide.php:114
 msgid "Now click on the <b>Interface</b> section on the left."
 msgstr "Тепер натисніть на <b>інтерфейс</b> розділ зліва."
 
-#: ../guide.php:133
+#: ../guide.php:116
 msgid "Now select <b>Skinnable GUI</b> in the <b>GUI</b> option."
 msgstr ""
 
-#: ../guide.php:135
+#: ../guide.php:118
 msgid "Finally select the skin you want to use under the <b>Skin</b> option."
 msgstr ""
+
+#: ../guide.php:149 ../guide.php:171 ../upgrade.php:74 ../upgrade.php:86
+msgid "Advertisement"
+msgstr ""
+
+#: ../inc/blog.php:6
+msgid "Learn interesting things about SMPlayer in %1."
+msgstr "Дізнатися цікаві речі про SMPlayer відвідавши %1."
+
+#: ../inc/blog.php:9
+msgid "our blog"
+msgstr "наш блоґ"
 
 #: ../inc/features.php:2
 msgid ""
@@ -1196,6 +1196,10 @@ msgstr "Відгуки"
 #: ../inc/header.php:164 ../sitemap.php:19
 msgid "FAQ"
 msgstr "ЧаПи"
+
+#: ../inc/recommend.php:3
+msgid "If you like SMPlayer, recommend it to your friends:"
+msgstr "Якщо вам подобається SMPlayer, порекомендуйте його своїм друзям:"
 
 #: ../inc/reviews_box.php:28
 msgid "Read all reviews"
@@ -1481,7 +1485,7 @@ msgstr ""
 "Проте якщо ви шукаєте ще більш нових версіях MPlayer або MPlayer2, будь "
 "ласка, подивіться на ці проекти підтримки %1:"
 
-#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:88
+#: ../mplayer.php:112 ../sitemap.php:17 ../smtube.php:84
 msgid "Download SMPlayer"
 msgstr "Завантажити SMPlayer"
 
@@ -1666,77 +1670,85 @@ msgid ""
 "i>."
 msgstr ""
 
-#: ../smtube.php:43
-msgid "SMTube is based on some code from %1."
-msgstr "SMTube засновано на окремих кодах %1."
-
-#: ../smtube.php:51
+#: ../smtube.php:47
 msgid "The Youtube Browser"
 msgstr "Переглядач Youtube"
 
-#: ../smtube.php:58
+#: ../smtube.php:54
 msgid "Download Youtube videos"
 msgstr "Завантажити відео з Youtube"
 
-#: ../smtube.php:61
+#: ../smtube.php:57
 msgid ""
 "Click on the blue arrow to play a video or click on the <i>Open folder</i> "
 "button \n"
 "to open the folder where the videos have been saved."
 msgstr ""
 
-#: ../smtube.php:65
+#: ../smtube.php:61
 msgid "Choose the quality"
 msgstr "Виберіть якість"
 
-#: ../smtube.php:66
+#: ../smtube.php:62
 msgid ""
 "The quality and format (mp4/flv) can be selected in the settings window."
 msgstr "Якість і формат (mp4/flv) можна обрати у вікні налаштувань."
 
-#: ../smtube.php:67
+#: ../smtube.php:63
 msgid "It's possible to download HD videos."
 msgstr ""
 
-#: ../smtube.php:68
+#: ../smtube.php:64
 msgid "The available qualities are:"
 msgstr ""
 
-#: ../smtube.php:81
+#: ../smtube.php:77
 msgid "How to get SMTube"
 msgstr "Як одержати SMTube"
 
-#: ../smtube.php:85
+#: ../smtube.php:81
 msgid ""
 "SMTube is included along with SMPlayer in the Windows packages. Just install "
 "SMPlayer."
 msgstr ""
 "SMTube входить в пакет SMPlayer для Windows. Просто встановіть SMPlayer."
 
-#: ../smtube.php:92
+#: ../smtube.php:88
 msgid "On Linux, SMTube is available in a separated package."
 msgstr "У Linux, SMTube доступний в окремому пакеті."
 
-#: ../smtube.php:94
+#: ../smtube.php:90
 msgid "To install it, run these commands in a terminal (ubuntu):"
 msgstr ""
 
-#: ../smtube.php:102 ../umplayer.php:77
+#: ../smtube.php:98 ../umplayer.php:77
 msgid "Sources:"
 msgstr "Джерела:"
 
-#: ../smtube.php:107
+#: ../smtube.php:102
+msgid "License and credits"
+msgstr ""
+
+#: ../smtube.php:104
+msgid "SMTube is free and open source. SMTube is under the GPL license."
+msgstr ""
+
+#: ../smtube.php:106
+msgid "SMTube is based on some code from %1 by %2."
+msgstr ""
+
+#: ../smtube.php:115
 msgid "Changes"
 msgstr "Зміни"
 
-#: ../smtube.php:109
+#: ../smtube.php:116
 msgid ""
 "The SMPlayer team has made several improvements to the original code from "
 "umplayer:"
 msgstr ""
 "Команда SMPlayer зробили деякі вдосконалення у вихідному коді umplayer:"
 
-#: ../smtube.php:112
+#: ../smtube.php:119
 msgid ""
 "It's now a stand-alone application and you can select the video player to "
 "use \n"
@@ -1745,15 +1757,15 @@ msgstr ""
 "Тепер це окремий додаток, і ви можете вибрати програвач\n"
 "(smplayer, mplayer, vlc, dragon player, totem or gnome-mplayer)."
 
-#: ../smtube.php:114
+#: ../smtube.php:121
 msgid "It's possible to translate the application to other languages."
 msgstr "Можливість перекладу додатків на інші мови."
 
-#: ../smtube.php:115
+#: ../smtube.php:122
 msgid "A configuration dialog has been added."
 msgstr "Додано діалог налаштувань."
 
-#: ../smtube.php:116
+#: ../smtube.php:123
 msgid "A few fixes."
 msgstr "Декілька виправлень."
 
@@ -1959,6 +1971,9 @@ msgstr "Багато виправлень та покращення."
 msgid "Would you like to upgrade?"
 msgstr "Бажаєте оновити?"
 
-#: ../upgrade.php:59
+#: ../upgrade.php:60
 msgid "Download SMPlayer %1"
 msgstr "Завантажити SMPlayer %1"
+
+#~ msgid "SMTube is based on some code from %1."
+#~ msgstr "SMTube засновано на окремих кодах %1."
