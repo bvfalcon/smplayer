@@ -123,17 +123,17 @@
     <message>
         <location filename="../about.cpp" line="121"/>
         <source>Portuguese (Brazil)</source>
-        <translation type="unfinished"></translation>
+        <translation>Португальский (Бразилия)</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="122"/>
         <source>Ukrainian</source>
-        <translation type="unfinished"></translation>
+        <translation>Украинский</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="123"/>
         <source>Norwegian Nynorsk</source>
-        <translation type="unfinished"></translation>
+        <translation>Норвежский (Нюношк)</translation>
     </message>
     <message>
         <source>%1 and %2</source>
