@@ -1260,7 +1260,7 @@ The configuration dialog will be shown now, so you can do it.</source>
     <message>
         <location filename="../basegui.cpp" line="1876"/>
         <source>S&amp;hare SMPlayer with your friends</source>
-        <translation>Поділитися SMPlayer(ом) з друзями</translation>
+        <translation>П&amp;оділитися SMPlayer(ом) з друзями</translation>
     </message>
     <message>
         <location filename="../basegui.cpp" line="2830"/>
