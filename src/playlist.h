@@ -130,7 +130,7 @@ public:
 
 public slots:
 	void addItem(QString filename, QString name, double duration, double markerA, double markerB,
-				 QStringList params = QStringList(), QString video_url = QString::null, QString icon_url = QString::null);
+				 QStringList params = QStringList(), QString video_url = QString::null, QString icon_url = QString::null, int shuffle_pos = 0);
 
 	// Start playing, from item 0 if shuffle is off, or from
 	// a random item otherwise
@@ -194,7 +194,7 @@ public slots:
 
 	void setFilter(const QString & filter);
 
-	void shuffle();
+	void shuffle(bool enable);
 
 	// Slots to connect from basegui
 	void getMediaInfo(const MediaData &);

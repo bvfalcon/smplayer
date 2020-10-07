@@ -555,8 +555,8 @@ void Playlist::createActions() {
 	repeatAct->setCheckable(true);
 
 	shuffleAct = new MyAction(this, "pl_shuffle", false);
-	shuffleAct->setCheckable(false);
-	connect( shuffleAct, SIGNAL(triggered()), this, SLOT(shuffle()) );
+	shuffleAct->setCheckable(true);
+	connect( shuffleAct, SIGNAL(toggled(bool)), this, SLOT(shuffle(bool)) );
 
 	// Add actions
 	addCurrentAct = new MyAction(this, "pl_add_current", false);
@@ -952,7 +952,7 @@ void Playlist::changeItem(int row, const QString & filename, const QString name,
 }
 */
 
-void Playlist::addItem(QString filename, QString name, double duration, double markerA, double markerB, QStringList params, QString video_url, QString icon_url) {
+void Playlist::addItem(QString filename, QString name, double duration, double markerA, double markerB, QStringList params, QString video_url, QString icon_url, int shuffle_pos) {
 	//qDebug() << "Playlist::addItem:" << filename;
 
 	#if defined(Q_OS_WIN) || defined(Q_OS_OS2)
@@ -976,6 +976,7 @@ void Playlist::addItem(QString filename, QString name, double duration, double m
 	i->setVideoURL(video_url);
 	i->setIconURL(icon_url);
 	i->setPosition(count()+1);
+	i->setShufflePosition(shuffle_pos);
 	table->appendRow(i->items());
 
 	if (findCurrentItem() == -1) setCurrentItem(0);
@@ -1114,6 +1115,7 @@ void Playlist::load_m3u(QString file, M3UFormat format) {
 		setPlaylistFilename(file);
 		setModified( false );
 
+		if (shuffleAct->isChecked()) shuffle(true);
 		if (start_play_on_load) startPlay();
 	}
 }
@@ -1169,6 +1171,7 @@ void Playlist::load_pls(QString file) {
 	setPlaylistFilename(file);
 	setModified( false );
 
+	if (shuffleAct->isChecked()) shuffle(true);
 	if (set.status() == QSettings::NoError && start_play_on_load) startPlay();
 }
 
@@ -1227,6 +1230,8 @@ void Playlist::loadXSPF(const QString & filename) {
 		//list();
 		setPlaylistFilename(filename);
 		setModified( false );
+
+		if (shuffleAct->isChecked()) shuffle(true);
 		if (start_play_on_load) startPlay();
 	}
 }
@@ -1268,6 +1273,8 @@ void Playlist::loadYoutubeList(QByteArray & data) {
 		//list();
 		setPlaylistFilename(root.firstChildElement("title").text());
 		setModified( false );
+
+		if (shuffleAct->isChecked()) shuffle(true);
 		if (start_play_on_load) startPlay();
 	}
 }
@@ -1956,13 +1963,16 @@ void Playlist::clearPlayedTag() {
 	}
 }
 
-void Playlist::shuffle() {
-	for (int n = 0; n < count(); n++) {
-		PLItem * i = itemData(n);
-		i->setShufflePosition( qrand() % 1000000 );
+void Playlist::shuffle(bool enable) {
+	if (enable) {
+		for (int n = 0; n < count(); n++) {
+			PLItem * i = itemData(n);
+			i->setShufflePosition( qrand() % 1000000 );
+		}
+		listView->sortByColumn(COL_SHUFFLE, Qt::AscendingOrder);
+	} else {
+		listView->sortByColumn(COL_NUM, Qt::AscendingOrder);
 	}
-
-	listView->sortByColumn(COL_SHUFFLE, Qt::AscendingOrder);
 }
 
 void Playlist::upItem() {
@@ -2304,7 +2314,7 @@ void Playlist::saveSettings() {
 	set->beginGroup( "playlist");
 
 	set->setValue( "repeat", repeatAct->isChecked() );
-	//set->setValue( "shuffle", shuffleAct->isChecked() );
+	set->setValue( "shuffle", shuffleAct->isChecked() );
 
 	set->setValue( "auto_get_info", automatically_get_info );
 	set->setValue( "recursive_add_directory", recursive_add_directory );
@@ -2357,6 +2367,7 @@ void Playlist::saveSettings() {
 			set->setValue( QString("item_%1_params").arg(n), i->extraParams() );
 			set->setValue( QString("item_%1_video_url").arg(n), i->videoURL() );
 			set->setValue( QString("item_%1_icon_url").arg(n), i->iconURL() );
+			set->setValue( QString("item_%1_shuffle").arg(n), i->shufflePosition() );
 		}
 		set->endArray();
 		set->setValue( "current_item", findCurrentItem() );
@@ -2386,7 +2397,7 @@ void Playlist::loadSettings() {
 	set->beginGroup( "playlist");
 
 	repeatAct->setChecked( set->value( "repeat", repeatAct->isChecked() ).toBool() );
-	//shuffleAct->setChecked( set->value( "shuffle", shuffleAct->isChecked() ).toBool() );
+	shuffleAct->setChecked( set->value( "shuffle", shuffleAct->isChecked() ).toBool() );
 
 	automatically_get_info = set->value( "auto_get_info", automatically_get_info ).toBool();
 	recursive_add_directory = set->value( "recursive_add_directory", recursive_add_directory ).toBool();
@@ -2444,7 +2455,8 @@ void Playlist::loadSettings() {
 			QStringList params = set->value( QString("item_%1_params").arg(n), QStringList()).toStringList();
 			QString video_url = set->value( QString("item_%1_video_url").arg(n), "").toString();
 			QString icon_url = set->value( QString("item_%1_icon_url").arg(n), "").toString();
-			addItem( filename, name, duration, markerA, markerB, params, video_url, icon_url );
+			int shuffle_pos = set->value( QString("item_%1_shuffle").arg(n), n).toInt();
+			addItem( filename, name, duration, markerA, markerB, params, video_url, icon_url, shuffle_pos );
 		}
 		set->endArray();
 		setCurrentItem( set->value( "current_item", -1 ).toInt() );
