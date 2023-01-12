@@ -1618,7 +1618,8 @@ void Core::startMplayer( QString file, double seek, double end ) {
 #endif
 
 	proc->setExecutable(pref->mplayer_bin);
-	proc->setFixedOptions();
+	proc->setPredefinedOptions();
+	if (pref->disable_player_config) proc->disableConfig();
 
 #ifdef LOG_MPLAYER
 	if (pref->verbose_log) {
@@ -3456,6 +3457,10 @@ void Core::setVolume(int volume, bool force) {
 
 	displayMessage( tr("Volume: %1").arg(current_volume) );
 	emit volumeChanged( current_volume );
+}
+
+int Core::currentVolume() {
+	if (pref->global_volume) return pref->volume; else return mset.volume;
 }
 
 void Core::switchMute() {

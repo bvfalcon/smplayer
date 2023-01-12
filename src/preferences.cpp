@@ -378,7 +378,11 @@ void Preferences::reset() {
 	time_to_kill_mplayer = 5000;
 
 #ifdef MPRIS2
+	#ifdef Q_OS_LINUX
 	use_mpris2 = true;
+	#else
+	use_mpris2 = false;
+	#endif
 #endif
 
 #ifdef MPV_SUPPORT
@@ -393,6 +397,8 @@ void Preferences::reset() {
 #endif
 
 	use_native_open_dialog = true;
+
+	disable_player_config = true;
 
 
     /* *********
@@ -959,6 +965,8 @@ void Preferences::save() {
 #endif
 
 	set->setValue("use_native_open_dialog", use_native_open_dialog);
+
+	set->setValue("disable_player_config", disable_player_config);
 
 	set->endGroup(); // advanced
 
@@ -1556,6 +1564,8 @@ void Preferences::load() {
 #endif
 
 	use_native_open_dialog = set->value("use_native_open_dialog", use_native_open_dialog).toBool();
+
+	disable_player_config = set->value("disable_player_config", disable_player_config).toBool();
 
 	set->endGroup(); // advanced
 

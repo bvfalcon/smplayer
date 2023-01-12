@@ -115,7 +115,7 @@ void MediaPlayer2Player::Play() const {
 }
 
 void MediaPlayer2Player::SetPosition(const QDBusObjectPath& TrackId, qlonglong Position) const {
-	double secs = Position / 1000000;
+	double secs = (double) Position / 1000000.0;
 	qDebug() << "MediaPlayer2Player::SetPosition: TrackId:" << TrackId.path() << "Position:" << Position << "(secs:" << secs << ")";
 	if (TrackId.path().toLocal8Bit() == makeTrackId(m_core->mdat.filename)) {
 		m_core->goToSec(secs);
@@ -186,7 +186,7 @@ QVariantMap MediaPlayer2Player::Metadata() const {
 }
 
 double MediaPlayer2Player::Volume() const {
-	return static_cast<double>(m_core->mset.volume / 100.0);
+	return static_cast<double>(m_core->currentVolume() / 100.0);
 }
 
 void MediaPlayer2Player::setVolume(double volume) const {
