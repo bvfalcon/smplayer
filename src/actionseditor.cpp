@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -49,6 +49,10 @@
 
 #if QT_VERSION >= 0x050000
 #include "myscroller.h"
+#endif
+
+#if QT_VERSION >= 0x060000
+#include <QMenu>
 #endif
 
 /*
@@ -224,7 +228,7 @@ ActionsEditor::ActionsEditor(QWidget * parent, Qt::WindowFlags f)
 	buttonLayout->addWidget(saveButton);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout(this);
-	mainLayout->setMargin(8);
+	mainLayout->setContentsMargins(8, 8, 8, 8);
 	mainLayout->setSpacing(8);
 	mainLayout->addWidget(actionsTable);
 	mainLayout->addLayout(buttonLayout);

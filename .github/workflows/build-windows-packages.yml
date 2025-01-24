@@ -22,48 +22,53 @@ jobs:
       
     steps:
       - name: Checkout
-        run: svn co https://github.com/smplayer-dev/smplayer-build.git/trunk .
+        #run: svn co https://github.com/smplayer-dev/smplayer-build.git/trunk .
+        run: git clone https://github.com/smplayer-dev/smplayer-build.git .
 
       #- name: Install sources
       #  run: .\download_packages.cmd
 
       - name: Install sources (normal)
         if: ${{ matrix.config.portable == false }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: packages/smplayer
           fetch-depth: 0
 
       - name: Install sources (portable)
         if: ${{ matrix.config.portable == true }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: packages/smplayer-portable
           fetch-depth: 0
 
       - name: Install themes
         run: |
-            svn co https://github.com/smplayer-dev/smplayer-themes.git/trunk packages\smplayer-themes
-            svn co https://github.com/smplayer-dev/smplayer-skins.git/trunk packages\smplayer-skins
+            #svn co https://github.com/smplayer-dev/smplayer-themes.git/trunk packages\smplayer-themes
+            #svn co https://github.com/smplayer-dev/smplayer-skins.git/trunk packages\smplayer-skins
+            git clone --depth 1 https://github.com/smplayer-dev/smplayer-themes.git packages\smplayer-themes
+            git clone --depth 1 https://github.com/smplayer-dev/smplayer-skins.git packages\smplayer-skins
 
       - name: Install mplayer and mpv
         run: .\uncompress_players.cmd
         
       - name: Install Qt (32 bit)
         if: ${{ matrix.config.arch == 'win32' }}
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           version: '5.15.2'
           arch: 'win32_mingw81'
-          tools: 'tools_mingw,8.1.0-1,qt.tools.win32_mingw810 tools_openssl_x86,1.1.1-1,qt.tools.openssl.win_x86'
+          #tools: 'tools_mingw,8.1.0-1,qt.tools.win32_mingw810'
+          tools: 'tools_mingw,qt.tools.win32_mingw810'
 
       - name: Install Qt (64 bit)
         if: ${{ matrix.config.arch == 'x64' }}
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           version: '5.15.2'
           arch: 'win64_mingw81'
-          tools: 'tools_mingw,8.1.0-1,qt.tools.win64_mingw810 tools_openssl_x64,1.1.1-1,qt.tools.openssl.win_x64'
+          #tools: 'tools_mingw,8.1.0-1,qt.tools.win64_mingw810'
+          tools: 'tools_mingw,qt.tools.win64_mingw810'
 
       - name: Set mingw32 path (32 bit)
         if: ${{ matrix.config.arch == 'win32' }}
@@ -117,7 +122,7 @@ jobs:
 
       - name: Create artifact
         if: github.event_name != 'release'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PACKAGEFILENAME }}
           path: packages\BUILD\output\${{ env.PACKAGEFILENAME }}
@@ -127,7 +132,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: packages\BUILD\output\${{ env.PACKAGEFILENAME }}
+          file: packages/BUILD/output/${{ env.PACKAGEFILENAME }}
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true

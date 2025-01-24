@@ -2,8 +2,8 @@
 # deb packages at build.opensuse.org
 
 PACKAGE = smplayer
-VERSION = 22.7.0
-#DEPENDS = debhelper (>= 5), zlib1g-dev, qtbase5-dev, qt5-qmake, qtscript5-dev, qttools5-dev-tools, qtbase5-private-dev, qt5-default | nano
+VERSION = 24.5.0
+#DEPENDS = debhelper (>= 5), zlib1g-dev, qtbase5-dev, qt5-qmake, qtscript5-dev, qttools5-dev-tools, qtbase5-private-dev, qtdeclarative5-dev, qt5-default | nano
 DEPENDS = debhelper (>= 5), zlib1g-dev, libqt4-dev
 
 DSC_FILE = $(PACKAGE).dsc
@@ -12,7 +12,9 @@ DEBIAN_FILE = debian.tar.gz
 all: $(DEBIAN_FILE) $(DSC_FILE)
 
 $(DEBIAN_FILE): Makefile
-	svn export ../debian-orig debian
+	#svn export ../debian-orig debian
+	-mkdir debian
+	cp -R ../debian-orig/* debian
 	mv debian/changelog-orig debian/changelog
 	tar -cvzf $(DEBIAN_FILE) debian/
 

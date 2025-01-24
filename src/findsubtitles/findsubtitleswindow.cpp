@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -55,10 +55,11 @@
 
 #define COL_LANG 0
 #define COL_NAME 1
-#define COL_FORMAT 2
-#define COL_FILES 3
-#define COL_DATE 4
-#define COL_USER 5
+#define COL_DATE 2
+#define COL_USER 3
+
+#define DATA_LINK    Qt::UserRole + 1
+#define DATA_FILE_ID DATA_LINK + 1
 
 FindSubtitlesWindow::FindSubtitlesWindow( QWidget * parent, Qt::WindowFlags f )
 	: QWidget(parent,f)
@@ -143,6 +144,7 @@ FindSubtitlesWindow::FindSubtitlesWindow( QWidget * parent, Qt::WindowFlags f )
 	connect( osclient, SIGNAL(searchFinished()), this, SLOT(parseInfo()) );
 	connect( osclient, SIGNAL(loginFailed()), this, SLOT(showLoginFailed()) );
 	connect( osclient, SIGNAL(searchFailed()), this, SLOT(showSearchFailed()) );
+	connect( osclient, SIGNAL(getDownloadLinkFailed()), this, SLOT(showDownloadFailed()) );
 	connect( osclient, SIGNAL(errorFound(int, const QString &)), this, SLOT(showErrorOS(int, const QString &)) );
 	connect( osclient, SIGNAL(connecting()), this, SLOT(showConnecting()) );
 
@@ -177,11 +179,6 @@ FindSubtitlesWindow::FindSubtitlesWindow( QWidget * parent, Qt::WindowFlags f )
 	retranslateStrings();
 
 	language_filter->setCurrentIndex(0);
-
-	// Opensubtitles server
-	/* os_server = "http://www.opensubtitles.org"; */
-	os_server = "http://api.opensubtitles.org/xml-rpc";
-	osclient->setServer(os_server);
 
 #ifdef FS_USE_PROXY
 	// Proxy
@@ -229,8 +226,7 @@ void FindSubtitlesWindow::retranslateStrings() {
 	retranslateUi(this);
 
 	QStringList labels;
-	labels << tr("Language") << tr("Name") << tr("Format") 
-           << tr("Files") << tr("Date") << tr("Uploaded by");
+	labels << tr("Language") << tr("Name") << tr("Date") << tr("Uploaded by");
 
 	table->setHorizontalHeaderLabels( labels );
 
@@ -244,11 +240,11 @@ void FindSubtitlesWindow::retranslateStrings() {
 	while (i1.hasNext()) {
 		i1.next();
 		if (i1.key() == "es") {
-			language_filter->addItem( tr("Spanish") + " (es,sp,ea)", "es|sp|ea");
+			language_filter->addItem( tr("Spanish") + " (es,sp,ea)", "ea,es,sp");
 		}
 		else
 		if (i1.key() == "pt") {
-			language_filter->addItem( tr("Portuguese") + " (pt,pb,pm)", "pt|pb|pm");
+			language_filter->addItem( tr("Portuguese") + " (pt-pt,pt-br,pm)", "pm,pt-pb,pt-pt");
 		}
 		else {
 			language_filter->addItem( i1.value() + " (" + i1.key() + ")", i1.key() );
@@ -260,24 +256,12 @@ void FindSubtitlesWindow::retranslateStrings() {
 	language_filter->insertSeparator(language_filter->count());
 	#endif
 
-	QMap<QString,QString> l2 = Languages::list();
-	QMapIterator<QString, QString> i2(l2);
-	while (i2.hasNext()) {
-		i2.next();
-		if (language_filter->findData(i2.key()) == -1) {
-			if (i2.key() == "es") {
-				language_filter->addItem( tr("Spanish - Spain") + " (sp)", "sp");
-				language_filter->addItem( tr("Spanish - Latin America") + " (ea)", "ea");
-			}
-			else
-			if (i2.key() == "pt") {
-				language_filter->addItem( tr("Portuguese - Brasil") + " (pb)", "pb");
-			}
-			else {
-				language_filter->addItem( i2.value() + " (" + i2.key() + ")", i2.key() );
-			}
-		}
+	QMap<QString,QString> l2 = Languages::os_languages();
+	foreach (QString key, l2.keys()) {
+		QString lang = l2.value(key);
+		language_filter->addItem( lang + " (" + key + ")", key );
 	}
+
 	//language_filter->model()->sort(0);
 	language_filter->insertItem( 0, tr("All"), "" );
 	#if QT_VERSION >= 0x040400
@@ -312,7 +296,7 @@ void FindSubtitlesWindow::retranslateStrings() {
 #endif
 
 	credits_label->setText("<i>"+ tr("Subtitles service powered by %1")
-                           .arg("<a href=\"http://www.opensubtitles.org\">www.OpenSubtitles.org</a>") + "</i>");
+                           .arg("<a href=\"http://www.opensubtitles.com\">www.OpenSubtitles.com</a>") + "</i>");
 }
 
 void FindSubtitlesWindow::setMovie(QString filename) {
@@ -329,12 +313,13 @@ void FindSubtitlesWindow::setMovie(QString filename) {
 	if (hash.isEmpty()) {
 		qWarning("FindSubtitlesWindow::setMovie: hash invalid. Doing nothing.");
 	} else {
+		QString lang = language_filter->itemData(language_filter->currentIndex()).toString();
 		QFileInfo fi(filename);
 		qint64 file_size = fi.size();
 		QString basename;
 		basename = fi.completeBaseName(); // Filename without extension
 		search_edit->setText(basename);
-		osclient->search(hash, file_size, basename);
+		osclient->search(hash, file_size, basename, lang);
 		last_file = filename;
 	}
 }
@@ -344,7 +329,8 @@ void FindSubtitlesWindow::searchTitle() {
 	qDebug() << "FindSubtitlesWindow::searchTitle:" << t;
 
 	if (osclient->searchMethod() != OSClient::Hash) {
-		osclient->search("", 0, t);
+		QString lang = language_filter->itemData(language_filter->currentIndex()).toString();
+		osclient->search("", 0, t, lang);
 	}
 }
 
@@ -377,9 +363,11 @@ void FindSubtitlesWindow::applyFilter(const QString & filter) {
 }
 
 void FindSubtitlesWindow::applyCurrentFilter() {
+	#if 0
 	//proxy_model->setFilterWildcard(language_filter->currentText());
 	QString filter = language_filter->itemData( language_filter->currentIndex() ).toString();
 	applyFilter(filter);
+	#endif
 }
 
 void FindSubtitlesWindow::setLanguage(const QString & lang) {
@@ -419,8 +407,15 @@ void FindSubtitlesWindow::showSearchFailed() {
 	status->setText( tr("Search has failed") );
 }
 
+void FindSubtitlesWindow::showDownloadFailed() {
+	status->setText( tr("File URL not found") );
+}
+
 void FindSubtitlesWindow::showErrorOS(int, const QString & error) {
 	status->setText(error);
+	if (error.contains("299:")) {
+		status->setText(tr("Error: daily quota exceeded"));
+	}
 }
 
 void FindSubtitlesWindow::updateDataReadProgress(int done, int total) {
@@ -458,6 +453,7 @@ void FindSubtitlesWindow::parseInfo() {
 
 			QStandardItem * i_name = new QStandardItem(title_name);
 			i_name->setData( l[n].link );
+			i_name->setData( l[n].file_id, DATA_FILE_ID );
 			if (!l[n].comments.isEmpty()) i_name->setToolTip( l[n].comments );
 			#if QT_VERSION < 0x040400
 			i_name->setToolTip( l[n].link );
@@ -474,9 +470,8 @@ void FindSubtitlesWindow::parseInfo() {
 
 			table->setItem(n, COL_LANG, i_lang);
 			table->setItem(n, COL_NAME, i_name);
-			table->setItem(n, COL_FORMAT, new QStandardItem(l[n].format));
-			table->setItem(n, COL_FILES, new QStandardItem(l[n].files));
-			table->setItem(n, COL_DATE, new QStandardItem(l[n].date));
+			QString l_date = l[n].date.replace("T", " ").replace("Z", "");
+			table->setItem(n, COL_DATE, new QStandardItem(l_date));
 			table->setItem(n, COL_USER, new QStandardItem(l[n].user));
 
 		}
@@ -498,9 +493,22 @@ void FindSubtitlesWindow::parseInfo() {
 void FindSubtitlesWindow::itemActivated(const QModelIndex & index ) {
 	qDebug("FindSubtitlesWindow::itemActivated: row: %d, col %d", proxy_model->mapToSource(index).row(), proxy_model->mapToSource(index).column());
 
-	QString download_link = table->item(proxy_model->mapToSource(index).row(), COL_NAME)->data().toString();
+	QStandardItem * item = table->item(proxy_model->mapToSource(index).row(), COL_NAME);
+	QString download_link = item->data().toString();
+	QString file_id = item->data(DATA_FILE_ID).toString();
+	qDebug() << "FindSubtitlesWindow::itemActivated: file_id:" << file_id;
 
-	qDebug("FindSubtitlesWindow::itemActivated: download link: '%s'", download_link.toLatin1().constData());
+	int remaining_downloads;
+	if (download_link.isEmpty()) {
+		download_link = osclient->getDownloadLink(file_id, &remaining_downloads);
+		item->setData(download_link);
+	}
+	qDebug() << "FindSubtitlesWindow::itemActivated: download link:" << download_link;
+
+	if (download_link.isEmpty()) {
+		// Failed to get the download link
+		return;
+	}
 
 #ifdef DOWNLOAD_SUBS
 	file_downloader->download( QUrl(download_link) );
@@ -508,6 +516,7 @@ void FindSubtitlesWindow::itemActivated(const QModelIndex & index ) {
 #else
 	QDesktopServices::openUrl( QUrl(download_link) );
 #endif
+	status->setText(tr("Remaining downloads: %1").arg(remaining_downloads));
 }
 
 void FindSubtitlesWindow::download() {
@@ -521,9 +530,21 @@ void FindSubtitlesWindow::copyLink() {
 	qDebug("FindSubtitlesWindow::copyLink");
 	if (view->currentIndex().isValid()) {
 		const QModelIndex & index = view->currentIndex();
-		QString download_link = table->item(proxy_model->mapToSource(index).row(), COL_NAME)->data().toString();
-		qDebug("FindSubtitlesWindow::copyLink: link: '%s'", download_link.toLatin1().constData());
-		qApp->clipboard()->setText(download_link);
+		QStandardItem * item = table->item(proxy_model->mapToSource(index).row(), COL_NAME);
+		QString download_link = item->data().toString();
+		QString file_id = item->data(DATA_FILE_ID).toString();
+		qDebug() << "FindSubtitlesWindow::copyLink: file_id:" << file_id;
+
+		int remaining_downloads;
+		if (download_link.isEmpty()) {
+			download_link = osclient->getDownloadLink(file_id, &remaining_downloads);
+			item->setData(download_link);
+		}
+		qDebug() << "FindSubtitlesWindow::copyLink: link:" << download_link;
+		if (!download_link.isEmpty()) {
+			qApp->clipboard()->setText(download_link);
+			status->setText(tr("Remaining downloads: %1").arg(remaining_downloads));
+		}
 	}
 }
 
@@ -547,6 +568,8 @@ void FindSubtitlesWindow::changeEvent(QEvent *e) {
 
 void FindSubtitlesWindow::archiveDownloaded(const QByteArray & buffer) {
 	qDebug("FindSubtitlesWindow::archiveDownloaded");
+
+	#if 0
 	QByteArray uncompress_data = gUncompress(buffer);
 	//qDebug("uncompress_data: %s", uncompress_data.constData());
 
@@ -554,13 +577,14 @@ void FindSubtitlesWindow::archiveDownloaded(const QByteArray & buffer) {
 		status->setText(tr("Download failed"));
 		return;
 	}
+	#endif
 
 	QString lang = "unknown";
 	QString extension = "unknown";
 	if (view->currentIndex().isValid()) {
 		const QModelIndex & index = view->currentIndex();
 		lang = table->item(proxy_model->mapToSource(index).row(), COL_LANG)->data(Qt::UserRole).toString();
-		extension = table->item(proxy_model->mapToSource(index).row(), COL_FORMAT)->text();
+		extension = "srt";
 	}
 
 	QString output_file;
@@ -590,7 +614,11 @@ void FindSubtitlesWindow::archiveDownloaded(const QByteArray & buffer) {
 	if (!output_file.isEmpty()) {
 		QFile file(output_file);
 		file.open(QIODevice::WriteOnly);
+		#if 0
 		bool error = (file.write(uncompress_data) == -1);
+		#else
+		bool error = (file.write(buffer) == -1);
+		#endif
 		file.close();
 
 		if (error) {
@@ -718,7 +746,10 @@ void FindSubtitlesWindow::on_configure_button_clicked() {
 		proxy_type = d.proxyType();
 		#endif
 
+		#ifdef FS_USE_SERVER_CONFIG
 		osclient->setServer(os_server);
+		#endif
+
 		#ifdef FS_USE_PROXY
 		setupProxy();
 		#endif

@@ -99,12 +99,15 @@ contains( DEFINES, NO_MPV ) {
 	DEFINES -= MPV_SUPPORT
 }
 
-isEqual(QT_MAJOR_VERSION, 5) {
+greaterThan(QT_MAJOR_VERSION, 4) {
 	QT += widgets gui
 	#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x040000
 	win32 {
 		#DEFINES -= MPRIS2
 	}
+}
+greaterThan(QT_MAJOR_VERSION,5) {
+	QT+=core5compat
 }
 
 contains(QT_VERSION, ^4\\.[0-3]\\..*) {
@@ -400,16 +403,24 @@ contains( DEFINES, FIND_SUBTITLES ) {
 	INCLUDEPATH += findsubtitles
 	DEPENDPATH += findsubtitles
 
-	INCLUDEPATH += findsubtitles/maia
-	DEPENDPATH += findsubtitles/maia
+	INCLUDEPATH += findsubtitles/qrestapi
+	DEPENDPATH += findsubtitles/qrestapi
 
 	HEADERS += findsubtitles/findsubtitlesconfigdialog.h findsubtitles/findsubtitleswindow.h
 	SOURCES += findsubtitles/findsubtitlesconfigdialog.cpp findsubtitles/findsubtitleswindow.cpp
 	FORMS += findsubtitles/findsubtitleswindow.ui findsubtitles/findsubtitlesconfigdialog.ui
 
-	# xmlrpc client code to connect to opensubtitles.org
-	HEADERS += findsubtitles/maia/maiaObject.h findsubtitles/maia/maiaFault.h findsubtitles/maia/maiaXmlRpcClient.h findsubtitles/osclient.h
-	SOURCES += findsubtitles/maia/maiaObject.cpp findsubtitles/maia/maiaFault.cpp findsubtitles/maia/maiaXmlRpcClient.cpp findsubtitles/osclient.cpp
+	HEADERS += findsubtitles/qrestapi/qRestAPI_Export.h findsubtitles/qrestapi/qRestAPI.h \
+               findsubtitles/qrestapi/qRestAPI_p.h findsubtitles/qrestapi/qRestResult.h \
+               findsubtitles/qrestapi/qGirderAPI.h findsubtitles/osclient.h
+	SOURCES += findsubtitles/qrestapi/qRestAPI.cpp findsubtitles/qrestapi/qRestResult.cpp \
+               findsubtitles/qrestapi/qGirderAPI.cpp findsubtitles/osclient.cpp
+
+	isEqual(QT_MAJOR_VERSION, 5) {
+		QT += qml
+	} else {
+		QT += script
+	}
 }
 
 # Download subtitles
@@ -583,6 +594,18 @@ contains( DEFINES, CHROMECAST_SUPPORT ) {
 }
 
 contains( DEFINES, SCREENSAVER_OFF ) {
+	unix:!macx {
+		DEFINES += USE_POWERSAVING
+	}
+	win32 {
+		DEFINES += USE_POWERSAVING
+	}
+	mac {
+		DEFINES += USE_POWERSAVING
+	}
+}
+
+contains( DEFINES, USE_POWERSAVING ) {
 	HEADERS += screensaver.h
 	SOURCES += screensaver.cpp
 	unix:!macx {

@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ QString applicationPath() {
 QString hdpiConfig() {
 #ifdef PORTABLE_APP
 	// We can't use QCoreApplication::applicationDirPath() here
-	return applicationPath();
+	return applicationPath() + "/config";
 #else
 	return Paths::configPath();
 #endif // PORTABLE_APP
@@ -58,6 +58,14 @@ QString hdpiConfig() {
 
 int main( int argc, char ** argv )
 {
+#ifdef Q_OS_LINUX
+	#if QT_VERSION >= 0x050600
+	if (qgetenv("QT_QPA_PLATFORM").isEmpty()) {
+		qputenv("QT_QPA_PLATFORM", QByteArray("xcb"));
+	}
+	#endif
+#endif
+
 #ifdef HDPI_SUPPORT
 	QString hdpi_config_path = hdpiConfig();
 	HDPISupport * hdpi = 0;
@@ -100,7 +108,7 @@ int main( int argc, char ** argv )
 	QString config_path;
 
 #ifdef PORTABLE_APP
-	config_path = a.applicationDirPath();
+	config_path = a.applicationDirPath() + "/config";
 #else
 	// If a smplayer.ini exists in the app path, will use that path
 	// for the config file by default

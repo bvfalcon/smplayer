@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ TimeDialog::TimeDialog( QWidget* parent, Qt::WindowFlags f )
 
 	setWindowTitle(tr("SMPlayer - Seek"));
 	time_label->setObjectName("jump_to_label");
-	time_edit->setDisplayFormat("H:mm:ss");
+	time_edit->setDisplayFormat("HH:mm:ss");
 }
 
 TimeDialog::~TimeDialog() {

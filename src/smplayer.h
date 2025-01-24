@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -49,9 +49,9 @@ private slots:
 private:
 	BaseGui * createGUI(QString gui_name);
 	void deleteGUI();
-#ifndef PORTABLE_APP
+//#ifndef PORTABLE_APP
 	void createConfigDirectory();
-#endif
+//#endif
 	void showInfo();
 	void deleteConfig();
 #ifdef FONTS_HACK

@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
     umplayer, Copyright (C) 2010 Ori Rejwan
 
     This program is free software; you can redistribute it and/or modify
@@ -117,23 +117,25 @@ void PanelSeeker::mousePressEvent(QMouseEvent *m)
         #else
         QPointF pos = m->posF();
         #endif
-        if(knobRect.contains(pos))
-        {
-            isPressed = true;
-            mousePressPos = pos;
-            mousePressDifference = pos.x() - knobRect.center().x();
-            setSliderDown(true);
-            setState(Pressed, true);
-        }
-        else
-        {
-            isPressed = false;
+
+        if (!knobRect.contains(pos)) {
+            // Only move slider to mouse position if user didn't click
+            // on the slider. E.g. user clicked on a blank space on the
+            // timeline bar to seek to that time in the video.
             #if QT_VERSION >= 0x050000
             knobAdjust( m->localPos().x() - knobRect.center().x(), true);
             #else
             knobAdjust( m->posF().x() - knobRect.center().x(), true);
             #endif
         }
+
+        // Putting the slider into pressed state allows the user to keep
+        // holding down the mouse button and move the mouse to keep seeking.
+        isPressed = true;
+        mousePressPos = pos;
+        mousePressDifference = pos.x() - knobRect.center().x();
+        setSliderDown(true);
+        setState(Pressed, true);
     }
 }
 

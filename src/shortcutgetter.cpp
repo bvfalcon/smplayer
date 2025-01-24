@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -267,7 +267,7 @@ ShortcutGetter::ShortcutGetter(QWidget *parent) : QDialog(parent)
 	setWindowTitle(tr("Modify shortcut"));
 
 	QVBoxLayout *vbox = new QVBoxLayout(this);
-	vbox->setMargin(2);
+	vbox->setContentsMargins(2, 2, 2, 2);
 	vbox->setSpacing(4);
 
 	// List and buttons added by rvm

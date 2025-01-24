@@ -14,8 +14,10 @@ jobs:
       matrix:
         config:
           - { container: 'wachii/debian-qt:10.9', qt: 5 }
-          - { container: 'wachii/ubuntu-qt:21.04', qt: 5 }
+          - { container: 'wachii/debian-qt:11.7', qt: 5 }
+          #- { container: 'wachii/ubuntu-qt:21.04', qt: 5 }
           - { container: 'wachii/ubuntu-qt:16.04', qt: 4 }
+          - { container: 'wachii/ubuntu-qt:18.04', qt: 5 }
 
     runs-on: ubuntu-latest
     container: ${{ matrix.config.container }}
@@ -55,14 +57,14 @@ jobs:
 
       - name: Create artifact
         if: github.event_name != 'release'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PACKAGEFILENAME }}
           path: ./${{ env.app-name }}_*.deb
 
       - name: Upload package to release
         if: github.event_name == 'release'
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./${{ env.app-name }}_*.deb

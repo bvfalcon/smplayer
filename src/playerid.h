@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ class PlayerID
 public:
 	enum Player { MPLAYER = 0, MPV = 1 };
 	static Player player(const QString & player_bin);
+	static QString playerName(const QString & player_bin);
 };
 
 #endif

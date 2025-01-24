@@ -1,3 +1,31 @@
+smplayer (24.5.0) jammy; urgency=medium
+
+  * Bug fixes.
+  * The Windows portable version now saves the configuration files in
+    the folder "config".
+
+ -- Ricardo Villalba <ricardo@smplayer.info>  Mon, 13 May 2024 13:40:56 +0200
+
+smplayer (23.12.0) jammy; urgency=medium
+
+  * Implemented support for the new Opensubtitles API.
+  * Fix play/pause with mpv 0.37.
+  * Fix loading playlists with extension m3u8.
+  * Fix video jitter/shudder when clicking on timeline bar.
+  * Other small fixes.
+
+ -- Ricardo Villalba <ricardo@smplayer.info>  Tue, 26 Dec 2023 13:54:27 +0100
+
+smplayer (23.6.0) xenial; urgency=medium
+
+  * Fix the issue with YouTube playback limited to 720p.
+  * Update mpv and mplayer.
+  * New option in preferences to keep the playback speed for all videos.
+  * Fix the AppImage package.
+  * Other bug fixes.
+
+ -- Ricardo Villalba <ricardo@smplayer.info>  Fri, 30 Jun 2023 14:56:48 +0200
+
 smplayer (22.7.0) xenial; urgency=medium
 
   * Better statistic info in the OSD.

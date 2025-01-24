@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -54,6 +54,7 @@ PrefNetwork::PrefNetwork(QWidget * parent, Qt::WindowFlags f)
 
 #ifndef YOUTUBE_SUPPORT
 	youtube_box->hide();
+	youtube_app_box->hide();
 #endif
 
 #ifndef CONVERT_TO_VTT
@@ -94,10 +95,10 @@ void PrefNetwork::retranslateStrings() {
 	streaming_type_combo->addItem(tr("Auto"), Preferences::StreamingAuto);
 	#endif
 	#ifdef YOUTUBE_SUPPORT
-	streaming_type_combo->addItem("YouTube", Preferences::StreamingYT);
+	streaming_type_combo->addItem(tr("Internal YouTube support"), Preferences::StreamingYT);
 	#endif
 	#ifdef MPV_SUPPORT
-	streaming_type_combo->addItem("mpv + youtube-dl", Preferences::StreamingYTDL);
+	streaming_type_combo->addItem("mpv", Preferences::StreamingYTDL);
 	#endif
 	streaming_type_combo->setCurrentIndex(streaming_item);
 
@@ -329,20 +330,20 @@ void PrefNetwork::createHelp() {
 		"<ul>"
 		"<li><b>" + tr("Disabled") +":</b> " + tr("support for video sites is turned off") +"</li>"+
 		#ifdef MPV_SUPPORT
-		"<li><b>" + tr("Auto") +":</b> " + tr("it will try to use mpv + youtube-dl only for the sites that require it") +"</li>"+
+		"<li><b>" + tr("Auto") +":</b> " + tr("it will try to use mpv with yt-dlp (or youtube-dl) only for the sites that require it") +"</li>"+
 		#endif
 		#ifdef YOUTUBE_SUPPORT
-		"<li><b>YouTube:</b> " + tr("only the internal support for YouTube will be used") +"</li>"+
+		"<li><b>" + tr("Internal YouTube support") +":</b> " + tr("only the internal support for YouTube will be used") +"</li>"+
 		#endif
 		#ifdef MPV_SUPPORT
-		"<li><b>mpv + youtube-dl:</b> " +tr("uses mpv + youtube-dl for all sites") +"</li>"+
+		"<li><b>mpv:</b> " +tr("uses mpv with yt-dlp (or youtube-dl) for all sites") +"</li>"+
 		#endif
 		"</ul>"
 	);
 
 #ifdef MPV_SUPPORT
 	setWhatsThis(ytdl_quality_combo, tr("Preferred quality"),
-		tr("This option specifies the preferred quality for the video streams handled by youtube-dl.") +
+		tr("This option specifies the preferred quality for the video streams handled by yt-dlp or youtube-dl.") +
 		"<ul>"
 		"<li><b>" + tr("Best video and audio") +":</b> " + tr("selects the best video and audio streams available") +"</li>"
 		"<li><b>" + tr("Best") +":</b> " + tr("selects the best quality format available as a single file") +"</li>"
@@ -377,7 +378,7 @@ void PrefNetwork::createHelp() {
 	setWhatsThis(streaming_check, tr("Enable mpv's support for streaming sites"),
 		tr("If this option is checked, SMPlayer will try to play videos from "
            "streaming sites like Youtube, Dailymotion, Vimeo, Vevo, etc.") + "<br>"+
-		tr("Requires mpv and youtube-dl.") );
+		tr("Requires mpv and yt-dlp/youtube-dl.") );
 	*/
 #endif
 

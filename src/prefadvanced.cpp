@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -55,6 +55,10 @@ PrefAdvanced::PrefAdvanced(QWidget * parent, Qt::WindowFlags f)
 
 #ifndef MPLAYER_SUPPORT
 	use_playlist_check->hide();
+#endif
+
+#ifndef Q_OS_LINUX
+	use_stopscreensaver->hide();
 #endif
 
 #if !defined(LOG_MPLAYER) && !defined(LOG_SMPLAYER)
@@ -152,6 +156,10 @@ void PrefAdvanced::setData(Preferences * pref) {
 #ifdef MPLAYER_SUPPORT
 	use_playlist_check->setChecked(pref->use_playlist_option);
 #endif
+
+#ifdef Q_OS_LINUX
+	use_stopscreensaver->setChecked(pref->use_stopscreensaver);
+#endif
 }
 
 void PrefAdvanced::getData(Preferences * pref) {
@@ -227,6 +235,10 @@ void PrefAdvanced::getData(Preferences * pref) {
 
 #ifdef MPLAYER_SUPPORT
 	pref->use_playlist_option = use_playlist_check->isChecked();
+#endif
+
+#ifdef Q_OS_LINUX
+	pref->use_stopscreensaver = use_stopscreensaver->isChecked();
 #endif
 }
 

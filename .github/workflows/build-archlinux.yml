@@ -21,7 +21,10 @@ jobs:
         run: sudo pacman -Syu --noconfirm
 
       - name: Checkout
-        run: svn co https://github.com/smplayer-dev/smplayer-build.git/trunk/archlinux
+        #run: svn co https://github.com/smplayer-dev/smplayer-build.git/trunk/archlinux
+        run: |
+            git clone --depth=1 https://github.com/smplayer-dev/smplayer-build.git
+            mv smplayer-build/archlinux archlinux
       
       - name: Build smplayer
         run: |
@@ -30,7 +33,7 @@ jobs:
                   
       - name: Create artifact
         if: github.event_name != 'release'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: smplayer-archlinux
           path: archlinux/*.pkg.tar.zst

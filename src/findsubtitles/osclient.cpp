@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,222 +19,234 @@
 #include "osclient.h"
 #include "version.h"
 
-OSClient::OSClient(QObject* parent) : 
-	QObject(parent)
-	, logged_in(false)
-	, search_size(0) 
-#ifdef OS_SEARCH_WORKAROUND
-	, best_search_count(0)
-	, search_retries(8)
-#endif
-	, search_method(HashAndFilename)
+#include "qrestapi/qGirderAPI.h"
+#include "qrestapi/qRestResult.h"
+
+#include <QRegExp>
+#include <QDebug>
+
+#define API_SERVER "https://api.opensubtitles.com/api/v1"
+#define API_KEY "jdXcE3ZTnuKJu6IrrX7XoJJRfsQ43fwM"
+
+OSClient::OSClient(QObject* parent) :
+	QObject(parent),
+	search_method(Hash),
+	logged_in(false)
 {
-	rpc = new MaiaXmlRpcClient(QUrl("https://api.opensubtitles.org/xml-rpc"), this);
+	headers["Accept"] = "application/json";
+	headers["Api-Key"] = API_KEY;
+	headers["Content-Type"] = "application/json";
+	headers["User-Agent"] = "SMPlayer v" + Version::stable().toLatin1();
+	qDebug() << headers;
+
+	api = new qGirderAPI();
+	//api->setSuppressSslErrors(false);
+	api->setServerUrl(API_SERVER);
+	api->setDefaultRawHeaders(headers);
 }
 
-void OSClient::setServer(const QString & server) {
-	rpc->setUrl(QUrl(server));
-}
-
-#ifdef FS_USE_PROXY
 void OSClient::setProxy(const QNetworkProxy & proxy) {
-	rpc->setProxy(proxy);
+	api->setHttpNetworkProxy(proxy);
 }
-#endif
 
 void OSClient::login() {
-	qDebug("OSClient::login");
+	qDebug() << "OSClient::login";
 
-	QString user_agent = "SMPlayer v" + Version::stable();
-	qDebug() << "OSClient::login: user agent:" << user_agent;
+	qRestAPI::Parameters par;
+	par["username"] = os_username;
+	par["password"] = os_password;
 
-	QVariantList args;
+	QUuid query_id = api->post("/login", par);
+	qDebug() << "OSClient::login: query_id:" << query_id;
 
-	args << os_username << os_password << "" << user_agent;
+	QList<QVariantMap> result;
+	bool ok = api->sync(query_id, result);
 
-	rpc->call("LogIn", args,
-			  this, SLOT(responseLogin(QVariant &)),
-			  this, SLOT(gotFault(int, const QString &)));
-}
-
-void OSClient::search(const QString & hash, qint64 file_size, const QString & filename) {
-	qDebug() << "OSClient::search: hash:" << hash << "file_size:" << file_size << "filename:" << filename;
-
-	search_hash = hash;
-	search_size = file_size;
-	search_filename = filename;
-
-	disconnect(this, SIGNAL(loggedIn()), this, SLOT(doSearch()));
-
-	#if 0
-	if (logged_in) {
-		doSearch();
-	} else {
-		connect(this, SIGNAL(loggedIn()), this, SLOT(doSearch()));
-		login();
+	if (!ok) {
+		qDebug() << "OSClient::login: error code:" << api->error();
+		qDebug() << "OSClient::login: error:" << api->errorString();
+		emit loginFailed();
+		emit errorFound(api->error(), api->errorString());
+		return;
 	}
-	#else
-	connect(this, SIGNAL(loggedIn()), this, SLOT(doSearch()));
-	login();
-	#endif
 
+	if (result.count() > 0) {
+		QVariantMap map = result[0];
+		if (map.contains("token")) {
+			os_token = map["token"].toByteArray();
+			logged_in = true;
+			emit loggedIn();
+			qDebug() << "OSClient::login: token:" << os_token;
+		}
+	}
+}
+
+void OSClient::search(const QString & hash, qint64 file_size, QString search_term, QString languages) {
+	qDebug() << "OSClient::search: hash:" << hash << "file_size:" << file_size << "search_term:" << search_term << "languages:" << languages;
 	emit connecting();
-}
 
-#ifdef OS_SEARCH_WORKAROUND
-void OSClient::doSearch() {
-	best_search_count = -1;
-	for (int n = 1; n <= search_retries; n++) doSearch(n);
-}
+	qRestAPI::Parameters par;
+	//par["ai_translated"] = "exclude";
+	par["order_by"] = "upload_date";
 
-void OSClient::doSearch(int nqueries) {
-#else
-void OSClient::doSearch() {
-#endif
-	qDebug("OSClient::doSearch");
+	if (!languages.isEmpty()) {
+		par["languages"] = languages;
+	}
 
-	QVariantList list;
+	search_term = search_term.replace(" ", "+").toLower();
 
-	QVariantMap m;
-	m["sublanguageid"] = "all";
+	if (!search_term.isEmpty()) {
+		QRegExp regex("(?:S(\\d{1,2})E(\\d{1,2})|(\\d{1,2})x(\\d{1,2}))", Qt::CaseInsensitive);
+		int pos = regex.indexIn(search_term);
+		if (pos > -1) {
+			QString season = regex.cap(1).isEmpty() ? regex.cap(3) : regex.cap(1);
+			QString episode = regex.cap(2).isEmpty() ? regex.cap(4) : regex.cap(2);
+			par["season_number"] = season;
+			par["episode_number"] = episode;
+		}
+	}
 
 	switch (search_method) {
 		case Filename:
-			m["query"] = search_filename;
+			par["query"] = search_term;
 			break;
 		case Hash:
-			m["moviehash"] = search_hash;
-			m["moviebytesize"] = QString::number(search_size);
+			par["moviehash"] = hash;
 			break;
 		case HashAndFilename:
-			m["moviehash"] = search_hash;
-			m["moviebytesize"] = QString::number(search_size);
-			QVariantMap m2;
-			m2["sublanguageid"] = "all";
-			m2["query"] = search_filename;
-			list.append(m2);
+			par["query"] = search_term;
+			if (!hash.isEmpty()) {
+				par["moviehash"] = hash;
+			}
+			break;
+		default:
+			return;
 	}
 
-#ifdef OS_SEARCH_WORKAROUND
-	// Sometimes opensubtitles return 0 subtitles
-	// A workaround seems to add the query several times
-	qDebug("OSClient::doSearch: nqueries: %d", nqueries);
-	for (int count = 0; count < nqueries; count++) list.append(m);
-	//qDebug("OSClient::doSearch: list count: %d", list.count());
-#else
-	list.append(m);
-#endif
-
-	QVariantList args;
-	args << token << QVariant(list);
-
-	/*
-	for (int n=0; n < args.count(); n++) {
-		qDebug("%d = %d (%s)", n, args[n].type(), args[n].typeName());
+	#if 1
+	QString par_str;
+	foreach(const QString &key, par.keys()) {
+		par_str += key + ": '" + par.value(key) + "', ";
 	}
-	*/
+	qDebug() << "OSClient::search: parameters:" << par_str;
+	#endif
 
-	rpc->call("SearchSubtitles", args,
-			  this, SLOT(responseSearch(QVariant &)),
-			  this, SLOT(gotFault(int, const QString &)));
-}
+	QUuid query_id = api->get("/subtitles", par);
+	qDebug() << "OSClient::search: query_id:" << query_id;
 
-void OSClient::responseLogin(QVariant &arg) {
-	qDebug("OSClient::responseLogin");
+	QList<QVariantMap> result;
+	bool ok = api->sync(query_id, result);
 
-	QVariantMap m = arg.toMap();
-	QString status = m["status"].toString();
-	QString t = m["token"].toString();
-
-	qDebug() << "OSClient::responseLogin: status:" << status << "token:" << t;
-
-	if (status == "200 OK") {
-		token = t;
-		logged_in = true;
-		emit loggedIn();
-	} else {
-		emit loginFailed();
-	}
-}
-
-void OSClient::responseSearch(QVariant &arg) {
-	qDebug("OSClient::responseSearch");
-
-	QVariantMap m = arg.toMap();
-	QString status = m["status"].toString();
-
-	qDebug() << "OSClient::responseSearch: status:" << status;
-	//qDebug("count: %d", m.count());
-
-	/*
-	QMapIterator<QString, QVariant> i(m);
-	 while (i.hasNext()) {
-		i.next();
-		qDebug("key: %s", i.key().toLatin1().constData());
-	}
-	*/
-
-	if (status != "200 OK") {
+	if (!ok) {
+		qDebug() << "OSClient::search: error code:" << api->error();
+		qDebug() << "OSClient::search: error:" << api->errorString();
 		emit searchFailed();
+		emit errorFound(api->error(), api->errorString());
 		return;
 	}
 
-	s_list.clear();
+	sub_list.clear();
 
-	QVariantList data = m["data"].toList();
-	qDebug() << "OSClient::responseSearch: data count:" << data.count();
+	foreach (const QVariantMap &map, result) {
+		if (map.contains("data")) {
+			QVariantList data = map["data"].toList();
+			foreach(const QVariant &variant, data) {
+				QVariantMap item = variant.toMap();
+				QVariantMap att = item["attributes"].toMap();
+				QVariantMap det = att["feature_details"].toMap();
+				QVariantMap uploader = att["uploader"].toMap();
+				QList<QVariant> files = att["files"].toList();
 
-#ifdef OS_SEARCH_WORKAROUND
-	if (best_search_count >= data.count()) {
-		qDebug("OSClient::responseSearch: we already have a better search (%d). Ignoring this one.", best_search_count);
-		return;
+				//qDebug() << att["language"];
+				//qDebug() << att["feature_details"];
+				//qDebug() << att["release"];
+				//qDebug() << att["files"];
+
+				for (int n=0; n < files.count(); n++) {
+					OSSubtitle sub;
+					QVariantMap file = files[n].toMap();
+
+					sub.releasename = att["release"].toString();
+					sub.movie = det["movie_name"].toString();
+					if (files.count() > 1) sub.movie += QString(" (CD %1)").arg(file["cd_number"].toString());
+					sub.link = "";
+					sub.file_id = file["file_id"].toString();
+					sub.date = att["upload_date"].toString();
+					sub.iso639 = att["language"].toString();
+					sub.rating = att["ratings"].toString();
+					sub.comments = att["comments"].toString();
+					sub.format = "srt";
+					sub.language = sub.iso639;
+					sub.user = uploader["name"].toString();
+					sub.files = "1"; //QString::number(files.count());
+
+					sub_list.append(sub);
+
+					#if 0
+					qDebug() << "Release:" << sub.releasename;
+					qDebug() << "Name:" << sub.movie;
+					qDebug() << "Date:" << sub.date;
+					qDebug() << "ISO639:" << sub.iso639;
+					qDebug() << "Rating:" << sub.rating;
+					qDebug() << "Comments:" << sub.comments;
+					qDebug() << "Uploader:" << sub.user;
+					qDebug() << "File ID:" << sub.file_id;
+					qDebug() << "=========";
+					#endif
+				}
+			}
+		}
 	}
-	best_search_count = data.count();
-#endif
-
-	for (int n = 0; n < data.count(); n++) {
-		OSSubtitle sub;
-
-		//qDebug("%d: type: %d (%s)", n, data[n].type(), data[n].typeName());
-		QVariantMap m = data[n].toMap();
-
-		sub.releasename = m["MovieReleaseName"].toString();
-		sub.movie = m["MovieName"].toString();
-		sub.link = m["SubDownloadLink"].toString();
-		sub.date = m["SubAddDate"].toString();
-		sub.iso639 = m["ISO639"].toString();
-		sub.rating = m["SubRating"].toString();
-		sub.comments = m["SubAuthorComment"].toString();
-		sub.format = m["SubFormat"].toString();
-		sub.language = m["LanguageName"].toString();
-		sub.user = m["UserNickName"].toString();
-		sub.files = "1";
-
-		s_list.append(sub);
-
-		/*
-		qDebug("MovieName: %s", sub.movie.toLatin1().constData());
-		qDebug("MovieReleaseName: %s", sub.releasename.toLatin1().constData());
-		//qDebug("SubFileName: %s", m["SubFileName"].toString().toLatin1().constData());
-		//qDebug("SubDownloadLink: %s", m["SubDownloadLink"].toString().toLatin1().constData());
-		qDebug("ZipDownloadLink: %s", sub.link.toLatin1().constData());
-		qDebug("SubAddDate: %s", sub.date.toLatin1().constData());
-		qDebug("ISO639: %s", sub.iso639.toLatin1().constData());
-		qDebug("SubRating: %s", sub.rating.toLatin1().constData());
-		qDebug("SubAuthorComment: %s", sub.comments.toLatin1().constData());
-		qDebug("SubFormat: %s", sub.format.toLatin1().constData());
-		qDebug("LanguageName: %s", sub.language.toLatin1().constData());
-		qDebug("UserNickName: %s", sub.user.toLatin1().constData());
-		qDebug("=======");
-		*/
-	}
-
 	emit searchFinished();
 }
 
-void OSClient::gotFault(int error, const QString &message) {
-	qDebug() << "OSClient::gotFault: error:" << error << "message:" << message;
-	emit errorFound(error, message);
+QString OSClient::getDownloadLink(const QString & file_id, int * remaining_downloads) {
+	qDebug() << "OSClient::getDownloadLink:" << file_id;
+
+	// Try to login
+	if (!logged_in && !os_username.isEmpty() && ! os_password.isEmpty()) {
+		login();
+	}
+
+	QString link;
+
+	qRestAPI::Parameters par;
+	par["file_id"] = file_id;
+	par["sub_format"] = "srt";
+
+	qRestAPI::RawHeaders header;
+	if (!os_token.isEmpty()) {
+		header["Authorization"] = "Bearer " + os_token;
+	}
+
+	QUuid query_id = api->post("/download", par, header);
+	qDebug() << "OSClient::getDownloadLink: query_id:" << query_id;
+
+	QList<QVariantMap> result;
+	bool ok = api->sync(query_id, result);
+
+	if (!ok) {
+		qDebug() << "OSClient::getDownloadLink: error code:" << api->error();
+		qDebug() << "OSClient::getDownloadLink: error:" << api->errorString();
+		emit getDownloadLinkFailed();
+		emit errorFound(api->error(), api->errorString());
+		return link;
+	}
+
+	qDebug() << "OSClient::getDownloadLink: result:" << result;
+
+	if (result.count() > 0) {
+		QVariantMap map = result[0];
+		if (map.contains("link")) {
+			link = map["link"].toString();
+			qDebug() << "OSClient::getDownloadLink: remaining:" << map["remaining"].toInt();
+			if (remaining_downloads) {
+				*remaining_downloads = map["remaining"].toInt();
+			}
+		}
+	}
+
+	return link;
 }
 
 #include "moc_osclient.cpp"

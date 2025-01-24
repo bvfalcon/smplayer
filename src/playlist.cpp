@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -446,6 +446,15 @@ void Playlist::updateWindowTitle() {
 	if (title.isEmpty()) title = tr("Untitled playlist");
 	if (modified) title += " (*)";
 
+	if (automatically_get_info) {
+		int total_duration = 0;
+		for (int n = 0; n < count(); n++) {
+			PLItem * i = itemData(n);
+			total_duration += i->duration();
+		}
+		title += " [" + Helper::formatTime(total_duration) + "]";
+	}
+
 	qDebug() << "Playlist::updateWindowTitle:" << title;
 
 	setWindowTitle(title);
@@ -532,6 +541,9 @@ void Playlist::createTable() {
 
 	connect(listView, SIGNAL(activated(const QModelIndex &)),
 			this, SLOT(itemActivated(const QModelIndex &)) );
+
+	connect(listView->horizontalHeader(), SIGNAL(sectionClicked(int)),
+            this, SLOT(headerClicked(int)));
 
 	setFilenameColumnVisible(false);
 	setShuffleColumnVisible(false);
@@ -1503,7 +1515,7 @@ void Playlist::load() {
 				loadXSPF(s);
 			}
 			else
-			if (suffix == "m3u") {
+			if (suffix == "m3u" || suffix == "m3u8") {
 				load_m3u(s);
 			}
 			else {
@@ -2421,6 +2433,16 @@ void Playlist::saveSettings() {
 	if (save_playlist_in_config) {
 		//Save current list
 		set->beginGroup("playlist_contents");
+
+		// Remove all previous items
+		QStringList keys = set->allKeys();
+		foreach (const QString& key, keys) {
+			//qDebug() << key;
+			if (key.startsWith("items")) {
+				set->remove(key);
+			}
+		}
+
 		set->beginWriteArray("items");
 		//set->setValue( "count", count() );
 		for (int n = 0; n < count(); n++ ) {
@@ -2709,6 +2731,11 @@ int Playlist::maxItemsUrlHistory() {
 	return history_urls->maxItems();
 }
 #endif
+
+void Playlist::headerClicked(int index) {
+	qDebug() << "Playlist::headerClicked:" << index;
+	shuffleAct->setChecked(false);
+}
 
 // Language change stuff
 void Playlist::changeEvent(QEvent *e) {

@@ -1,7 +1,12 @@
 name: Build SMPlayer on Mac OS
 env:
-  mplayer-url: https://github.com/smplayer-dev/mplayer-mod/releases/download/v1.4-84/mplayer-macos-10.14-av.tar.bz2
-  mpv-url: https://github.com/smplayer-dev/mpv/releases/download/v0.34.0-mod/mpv-macos-10.14-av.tar.bz2
+  #mplayer-url: https://github.com/smplayer-dev/mplayer-mod/releases/download/v1.4-84/mplayer-macos-10.14-av.tar.bz2
+  mplayer-url: https://github.com/smplayer-dev/mplayer-mod/releases/download/v1.5-110/mplayer-macos-10.15-av.tar.bz2
+  #mpv-url: https://github.com/smplayer-dev/mpv/releases/download/v0.34.0-mod/mpv-macos-10.14-av.tar.bz2
+  #mpv-url: https://github.com/smplayer-dev/mpv/releases/download/v0.35.1-mod/mpv-macos-11.tar.bz2
+  #mpv-url: https://github.com/smplayer-dev/mpv/releases/download/v0.35.1-mod/mpv-macos-10.15-av.tar.bz2
+  #mpv-url: https://github.com/smplayer-dev/mpv/releases/download/v0.35.1-mod-2/mpv-macos-10.15-av.tar.bz2
+  mpv-url: https://github.com/smplayer-dev/mpv/releases/download/v0.36.0/mpv-macos-10.15-av.tar.bz2
 
 on: 
   workflow_dispatch:
@@ -10,11 +15,14 @@ on:
 
 jobs:
   build:
-    runs-on: macos-10.15
+    #runs-on: macos-10.15
+    #runs-on: macos-11
+    #runs-on: macos-12
+    runs-on: macos-13
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           path: packages/smplayer
@@ -30,18 +38,20 @@ jobs:
         run: brew install create-dmg
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           #version: '5.12.11'
           version: '5.15.2'
           host: 'mac'
 
       - name: Install QtWebkit
+        if: ${{false}}
         run: |
             wget https://github.com/qtwebkit/qtwebkit/releases/download/qtwebkit-5.212.0-alpha4/qtwebkit-MacOS-MacOS_10_13-Clang-MacOS-MacOS_10_13-X86_64.7z -O qtwebkit.7z
             7z x qtwebkit.7z -o$Qt5_Dir
 
       - name: Install smtube sources
+        if: ${{false}}
         run: git clone https://github.com/smplayer-dev/smtube.git packages/smtube
 
       - name: Set xcode
@@ -89,7 +99,7 @@ jobs:
 
       - name: Create artifact
         if: github.event_name != 'release'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: smplayer-${{env.VERSION}}
           path: packages/smplayer/package/*.dmg

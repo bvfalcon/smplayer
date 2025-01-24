@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -136,7 +136,7 @@
   #endif
 #endif
 
-#ifdef USE_SMTUBE_LIB
+#if defined(SMTUBE_ACTION) && defined(USE_SMTUBE_LIB)
 #include "../smtube/browserwindow.h"
 #endif
 
@@ -179,7 +179,7 @@ BaseGui::BaseGui( QWidget* parent, Qt::WindowFlags flags )
 	, delayed_seek_timer(0)
 	, delayed_seek_value(0)
 #endif
-#ifdef USE_SMTUBE_LIB
+#if defined(SMTUBE_ACTION) && defined(USE_SMTUBE_LIB)
 	, browser_window(0)
 #endif
 	, was_maximized(false)
@@ -386,7 +386,7 @@ BaseGui::~BaseGui() {
 	}
 #endif
 
-#if defined(YOUTUBE_SUPPORT) && defined(USE_SMTUBE_LIB)
+#if defined(SMTUBE_ACTION) && defined(USE_SMTUBE_LIB)
 	if (browser_window) delete browser_window;
 #endif
 
@@ -421,9 +421,11 @@ void BaseGui::createActions() {
 	connect( openDVDAct, SIGNAL(triggered()),
              this, SLOT(openDVD()) );
 
+	/*
 	openDVDFolderAct = new MyAction( this, "open_dvd_folder" );
 	connect( openDVDFolderAct, SIGNAL(triggered()),
              this, SLOT(openDVDFromFolder()) );
+	*/
 
 	// Bluray section.
 #ifdef BLURAY_SUPPORT
@@ -431,9 +433,11 @@ void BaseGui::createActions() {
 	connect( openBluRayAct, SIGNAL(triggered()),
              this, SLOT(openBluRay()));
 
+	/*
 	openBluRayFolderAct = new MyAction( this, "open_bluray_folder" );
 	connect( openBluRayFolderAct, SIGNAL(triggered()),
              this, SLOT(openBluRayFromFolder()));
+	*/
 #endif
 
 	openURLAct = new MyAction( QKeySequence("Ctrl+U"), this, "open_url" );
@@ -731,7 +735,7 @@ void BaseGui::createActions() {
              this, SLOT(showAudioEqualizer(bool)) );
 
 	muteAct = new MyAction( Qt::Key_M, this, "mute" );
-	muteAct->addShortcut(Qt::Key_VolumeMute); // MCE remote key
+	//muteAct->addShortcut(Qt::Key_VolumeMute); // MCE remote key
 	muteAct->setCheckable( true );
 	connect( muteAct, SIGNAL(toggled(bool)),
              core, SLOT(mute(bool)) );
@@ -739,7 +743,7 @@ void BaseGui::createActions() {
 #if USE_MULTIPLE_SHORTCUTS
 	decVolumeAct = new MyAction( this, "decrease_volume" );
 	decVolumeAct->setShortcuts( ActionsEditor::stringToShortcuts("9,/") );
-	decVolumeAct->addShortcut(Qt::Key_VolumeDown); // MCE remote key
+	//decVolumeAct->addShortcut(Qt::Key_VolumeDown); // MCE remote key
 #else
 	decVolumeAct = new MyAction( Qt::Key_9, this, "dec_volume" );
 #endif
@@ -749,7 +753,7 @@ void BaseGui::createActions() {
 #if USE_MULTIPLE_SHORTCUTS
 	incVolumeAct = new MyAction( this, "increase_volume" );
 	incVolumeAct->setShortcuts( ActionsEditor::stringToShortcuts("0,*") );
-	incVolumeAct->addShortcut(Qt::Key_VolumeUp); // MCE remote key
+	//incVolumeAct->addShortcut(Qt::Key_VolumeUp); // MCE remote key
 #else
 	incVolumeAct = new MyAction( Qt::Key_0, this, "inc_volume" );
 #endif
@@ -892,7 +896,7 @@ void BaseGui::createActions() {
 	connect( showPreferencesAct, SIGNAL(triggered()),
              this, SLOT(showPreferencesDialog()) );
 
-#ifdef YOUTUBE_SUPPORT
+#ifdef SMTUBE_ACTION
 	showTubeBrowserAct = new MyAction( Qt::Key_F11, this, "show_tube_browser" );
 	connect( showTubeBrowserAct, SIGNAL(triggered()),
              this, SLOT(showTubeBrowser()) );
@@ -1719,10 +1723,10 @@ void BaseGui::retranslateStrings() {
 	openVCDAct->change( Images::icon("vcd"), tr("V&CD") );
 	openAudioCDAct->change( Images::icon("cdda"), tr("&Audio CD") );
 	openDVDAct->change( Images::icon("dvd"), tr("&DVD from drive") );
-	openDVDFolderAct->change( Images::icon("dvd_hd"), tr("D&VD from folder...") );
+	//openDVDFolderAct->change( Images::icon("dvd_hd"), tr("D&VD from folder...") );
 #ifdef BLURAY_SUPPORT
 	openBluRayAct->change( Images::icon("bluray"), tr("&Blu-ray from drive") );
-	openBluRayFolderAct->change( Images::icon("bluray_hd"), tr("Blu-&ray from folder...") );
+	//openBluRayFolderAct->change( Images::icon("bluray_hd"), tr("Blu-&ray from folder...") );
 #endif
 	openURLAct->change( Images::icon("url"), tr("&URL...") );
 	exitAct->change( Images::icon("close"), tr("C&lose") );
@@ -1866,8 +1870,8 @@ void BaseGui::retranslateStrings() {
 	subVisibilityAct->change( Images::icon("sub_visibility"), tr("Subtitle &visibility") );
 
 #ifdef FIND_SUBTITLES
-	showFindSubtitlesDialogAct->change( Images::icon("download_subs"), tr("Find subtitles at &OpenSubtitles.org...") );
-	openUploadSubtitlesPageAct->change( Images::icon("upload_subs"), tr("Upload su&btitles to OpenSubtitles.org...") );
+	showFindSubtitlesDialogAct->change( Images::icon("download_subs"), tr("D&ownload subtitles from %1...").arg("OpenSubtitles.com") );
+	openUploadSubtitlesPageAct->change( Images::icon("upload_subs"), tr("Upload su&btitles to %1...").arg("OpenSubtitles.com") );
 #endif
 
 	ccNoneAct->change( tr("&Off", "closed captions menu") );
@@ -1888,13 +1892,13 @@ void BaseGui::retranslateStrings() {
 	showPlaylistAct->change( Images::icon("playlist"), tr("&Playlist") );
 	showPropertiesAct->change( Images::icon("info"), tr("&Information and properties...") );
 	showPreferencesAct->change( Images::icon("prefs"), tr("P&references") );
-#ifdef YOUTUBE_SUPPORT
+#ifdef SMTUBE_ACTION
 	showTubeBrowserAct->change( Images::icon("tubebrowser"), tr("&YouTube%1 browser").arg(QChar(0x2122)) );
 #endif
 
 	// Submenu Logs
 #ifdef LOG_MPLAYER
-	showLogMplayerAct->change(tr("%1 log").arg(PLAYER_NAME));
+	showLogMplayerAct->change(tr("%1 log").arg(PlayerID::playerName(pref->mplayer_bin)));
 #endif
 #ifdef LOG_SMPLAYER
 	showLogSmplayerAct->change(tr("SMPlayer log"));
@@ -2239,7 +2243,7 @@ void BaseGui::retranslateStrings() {
 
 	// Other things
 #ifdef LOG_MPLAYER
-	mplayer_log_window->setWindowTitle( tr("%1 log").arg(PLAYER_NAME) );
+	mplayer_log_window->setWindowTitle( tr("%1 log").arg(PlayerID::playerName(pref->mplayer_bin)) );
 #endif
 #ifdef LOG_SMPLAYER
 	smplayer_log_window->setWindowTitle( tr("SMPlayer log") );
@@ -2417,7 +2421,7 @@ void BaseGui::createMplayerWindow() {
 
 	QVBoxLayout * layout = new QVBoxLayout;
 	layout->setSpacing(0);
-	layout->setMargin(0);
+	layout->setContentsMargins(0, 0, 0, 0);
 	layout->addWidget(mplayerwindow);
 	panel->setLayout(layout);
 
@@ -2586,10 +2590,10 @@ void BaseGui::createMenus() {
 	disc_menu = new QMenu(this);
 	disc_menu->menuAction()->setObjectName("disc_menu");
 	disc_menu->addAction(openDVDAct);
-	disc_menu->addAction(openDVDFolderAct);
+	//disc_menu->addAction(openDVDFolderAct);
 	#ifdef BLURAY_SUPPORT
 	disc_menu->addAction(openBluRayAct);
-	disc_menu->addAction(openBluRayFolderAct);
+	//disc_menu->addAction(openBluRayFolderAct);
 	#endif
 	disc_menu->addAction(openVCDAct);
 	disc_menu->addAction(openAudioCDAct);
@@ -3036,7 +3040,7 @@ void BaseGui::populateMainMenu() {
 	// VIEW MENU
 	viewMenu->addAction(showPropertiesAct);
 	viewMenu->addAction(showPlaylistAct);
-	#ifdef YOUTUBE_SUPPORT
+	#ifdef SMTUBE_ACTION
 	if (!pref->tablet_mode) {
 		viewMenu->addAction(showTubeBrowserAct);
 	}
@@ -4365,9 +4369,7 @@ void BaseGui::configureDiscDevices() {
 void BaseGui::openVCD() {
 	qDebug("BaseGui::openVCD");
 
-	if ( (pref->dvd_device.isEmpty()) || 
-         (pref->cdrom_device.isEmpty()) )
-	{
+	if (pref->cdrom_device.isEmpty()) {
 		configureDiscDevices();
 	} else {
 		if (playlist->maybeSave()) {
@@ -4379,9 +4381,7 @@ void BaseGui::openVCD() {
 void BaseGui::openAudioCD() {
 	qDebug("BaseGui::openAudioCD");
 
-	if ( (pref->dvd_device.isEmpty()) || 
-         (pref->cdrom_device.isEmpty()) )
-	{
+	if (pref->cdrom_device.isEmpty()) {
 		configureDiscDevices();
 	} else {
 		if (playlist->maybeSave()) {
@@ -4393,23 +4393,22 @@ void BaseGui::openAudioCD() {
 void BaseGui::openDVD() {
 	qDebug("BaseGui::openDVD");
 
-	if ( (pref->dvd_device.isEmpty()) || 
-         (pref->cdrom_device.isEmpty()) )
-	{
+	if (pref->dvd_device.isEmpty()) {
 		configureDiscDevices();
 	} else {
 		if (playlist->maybeSave()) {
-#if DVDNAV_SUPPORT
+			#if DVDNAV_SUPPORT
 			int first_title = 0;
 			if (!pref->use_dvdnav) first_title = core->firstDVDTitle();
-			core->openDVD( DiscName::joinDVD(first_title, pref->dvd_device, pref->use_dvdnav) );
-#else
-			core->openDVD( DiscName::joinDVD(core->firstDVDTitle(), pref->dvd_device, false) );
-#endif
+			core->openDVD( DiscName::joinDVD(0 /*first_title*/, pref->dvd_device, pref->use_dvdnav) );
+			#else
+			core->openDVD( DiscName::joinDVD(0 /*core->firstDVDTitle()*/, pref->dvd_device, false) );
+			#endif
 		}
 	}
 }
 
+/*
 void BaseGui::openDVDFromFolder() {
 	qDebug("BaseGui::openDVDFromFolder");
 
@@ -4436,17 +4435,9 @@ void BaseGui::openDVDFromFolder(QString directory) {
 	core->openDVD( DiscName::joinDVD(core->firstDVDTitle(), directory, false) );
 #endif
 }
+*/
 
 #ifdef BLURAY_SUPPORT
-/**
- * Minimal BaseGui abstraction for calling openBluRay. It's called from
- * OpenBluRayFromFolder()
- */
-void BaseGui::openBluRayFromFolder(QString directory) {
-	pref->last_dvd_directory = directory;
-	core->openBluRay( DiscName::join(DiscName::BLURAY, core->firstBlurayTitle(), directory) );
-}
-
 /**
  * Attempts to open a bluray from pref->bluray_device. If not set, calls configureDiscDevices.
  * If successful, calls Core::OpenBluRay(QString)
@@ -4454,13 +4445,21 @@ void BaseGui::openBluRayFromFolder(QString directory) {
 void BaseGui::openBluRay() {
 	qDebug("BaseGui::openBluRay");
 
-	if ( (pref->dvd_device.isEmpty()) || 
-         (pref->cdrom_device.isEmpty()) || pref->bluray_device.isEmpty())
-	{
+	if (pref->bluray_device.isEmpty()) {
 		configureDiscDevices();
 	} else {
-		core->openBluRay( DiscName::join(DiscName::BLURAY, core->firstBlurayTitle(), pref->bluray_device) );
+		core->openBluRay( DiscName::join(DiscName::BLURAY, 0 /*core->firstBlurayTitle()*/, pref->bluray_device) );
 	}
+}
+
+/**
+ * Minimal BaseGui abstraction for calling openBluRay. It's called from
+ * OpenBluRayFromFolder()
+ */
+/*
+void BaseGui::openBluRayFromFolder(QString directory) {
+	pref->last_dvd_directory = directory;
+	core->openBluRay( DiscName::join(DiscName::BLURAY, core->firstBlurayTitle(), directory) );
 }
 
 void BaseGui::openBluRayFromFolder() {
@@ -4474,6 +4473,7 @@ void BaseGui::openBluRayFromFolder() {
 		}
 	}
 }
+*/
 #endif
 
 void BaseGui::openDirectory() {
@@ -6153,17 +6153,18 @@ void BaseGui::askForMplayerVersion(QString line) {
 
 void BaseGui::showExitCodeFromMplayer(int exit_code) {
 	qDebug("BaseGui::showExitCodeFromMplayer: %d", exit_code);
+	QString player_name = PlayerID::playerName(pref->mplayer_bin);
 
 	if (!pref->report_mplayer_crashes) {
 		qDebug("BaseGui::showExitCodeFromMplayer: not displaying error dialog");
-		statusBar()->showMessage(tr("%1 has finished unexpectedly.").arg(PLAYER_NAME) +" "+ tr("More info in the log."));
+		statusBar()->showMessage(tr("%1 has finished unexpectedly.").arg(player_name) +" "+ tr("More info in the log."));
 		return;
 	}
 
 	if (exit_code != 255 ) {
 		ErrorDialog d(this);
-		d.setWindowTitle(tr("%1 Error").arg(PLAYER_NAME));
-		QString text = tr("%1 has finished unexpectedly.").arg(PLAYER_NAME) + " " + 
+		d.setWindowTitle(tr("%1 Error").arg(player_name));
+		QString text = tr("%1 has finished unexpectedly.").arg(player_name) + " " + 
 					   tr("Exit code: %1").arg(exit_code);
 		
 		#if defined(Q_OS_WIN) && defined(LOG_MPLAYER)
@@ -6206,21 +6207,22 @@ void BaseGui::showExitCodeFromMplayer(int exit_code) {
 
 void BaseGui::showErrorFromMplayer(QProcess::ProcessError e) {
 	qDebug("BaseGui::showErrorFromMplayer");
+	QString player_name = PlayerID::playerName(pref->mplayer_bin);
 
 	if (!pref->report_mplayer_crashes) {
 		qDebug("BaseGui::showErrorFromMplayer: not displaying error dialog");
-		statusBar()->showMessage(tr("%1 failed to start.").arg(PLAYER_NAME) +" "+ tr("More info in the log."));
+		statusBar()->showMessage(tr("%1 failed to start.").arg(player_name) +" "+ tr("More info in the log."));
 		return;
 	}
 
 	if ((e == QProcess::FailedToStart) || (e == QProcess::Crashed)) {
 		ErrorDialog d(this);
-		d.setWindowTitle(tr("%1 Error").arg(PLAYER_NAME));
+		d.setWindowTitle(tr("%1 Error").arg(player_name));
 		if (e == QProcess::FailedToStart) {
-			d.setText(tr("%1 failed to start.").arg(PLAYER_NAME) + " " + 
-                         tr("Please check the %1 path in preferences.").arg(PLAYER_NAME));
+			d.setText(tr("%1 failed to start.").arg(player_name) + " " + 
+                         tr("Please check the %1 path in preferences.").arg(player_name));
 		} else {
-			d.setText(tr("%1 has crashed.").arg(PLAYER_NAME) + " " + 
+			d.setText(tr("%1 has crashed.").arg(player_name) + " " + 
                       tr("See the log for more info."));
 		}
 #ifdef LOG_MPLAYER
@@ -6250,7 +6252,7 @@ void BaseGui::showFindSubtitlesDialog() {
 }
 
 void BaseGui::openUploadSubtitlesPage() {	
-	QDesktopServices::openUrl( QUrl("http://www.opensubtitles.org/upload") );
+	QDesktopServices::openUrl( QUrl("https://www.opensubtitles.com/upload") );
 }
 #endif
 
@@ -6291,7 +6293,7 @@ void BaseGui::showVideoPreviewDialog() {
 }
 #endif
 
-#ifdef YOUTUBE_SUPPORT
+#ifdef SMTUBE_ACTION
 void BaseGui::showTubeBrowser() {
 	qDebug("BaseGui::showTubeBrowser");
 #ifdef USE_SMTUBE_LIB

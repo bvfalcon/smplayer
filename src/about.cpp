@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ About::About(QWidget * parent, Qt::WindowFlags f)
 	QString mplayer_version = tr("Using %1").arg(i->playerVersion());
 
 	info->setText(
-		"<b>SMPlayer</b> &copy; 2006-2021 Ricardo Villalba &lt;ricardo@smplayer.info&gt;<br><br>"
+		"<b>SMPlayer</b> &copy; 2006-2024 Ricardo Villalba &lt;ricardo@smplayer.info&gt;<br><br>"
 		"<b>" + tr("Version: %1").arg(Version::printable()) + "</b>" +
 		(Version::is_unstable() ? "<br><i>" + tr("Development version") +"</i>" : "") +
 #if PORTABLE_APP
@@ -165,7 +165,7 @@ QString About::getTranslators() {
 	return QString(
 		 tr("Many people contributed with translations.") +" "+
 		 tr("You can also help to translate SMPlayer into your own language.") +"<p>"+
-		 tr("Visit %1 and join a translation team.").arg("<a href=\"http://www.transifex.com/projects/p/smplayer/\">http://www.transifex.com/projects/p/smplayer/</a>") +
+		 tr("Visit %1 and join a translation team.").arg("<a href=\"https://explore.transifex.com/rvm/smplayer/\">https://explore.transifex.com/rvm/smplayer/</a>") +
 		"<p><a href=\"" URL_TRANSLATORS "\">" +
 		 tr("Click here to know the translators from the transifex teams") +
 		"</a>");

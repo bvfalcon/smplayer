@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -101,16 +101,16 @@ void Preferences::reset() {
 	screenshot_format = "jpg";
 #endif
 	screenshot_directory="";
-#ifdef PORTABLE_APP
-	screenshot_directory= "./screenshots";
-#else
+//#ifdef PORTABLE_APP
+//	screenshot_directory= "./screenshots";
+//#else
 	#if QT_VERSION < 0x040400
 	QString default_screenshot_path = Paths::configPath() + "/screenshots";
 	if (QFile::exists(default_screenshot_path)) {
 		screenshot_directory = default_screenshot_path;
 	}
 	#endif
-#endif
+//#endif
 
 #ifdef CAPTURE_STREAM
 	capture_directory = "";
@@ -145,6 +145,9 @@ void Preferences::reset() {
 #if defined(Q_OS_WIN) && defined(AVOID_SCREENSAVER)
 	avoid_screensaver = true;
 #endif
+#ifdef Q_OS_LINUX
+	use_stopscreensaver = false;
+#endif
 
 #ifdef OS_UNIX_NOT_MAC
 	wayland_workarounds = true;
@@ -166,11 +169,7 @@ void Preferences::reset() {
 	softvol_max = 110; // 110 = default value in mplayer
 	use_scaletempo = Detect;
 	use_hwac3 = false;
-#ifdef Q_OS_WIN
-	use_audio_equalizer = true;
-#else
 	use_audio_equalizer = false;
-#endif
 
 	global_volume = true;
 	volume = 50;
@@ -178,6 +177,9 @@ void Preferences::reset() {
 
 	global_audio_equalizer = true;
 	audio_equalizer << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0; // FIXME: use initial_audio_equalizer (but it's set later)
+
+	global_speed = false;
+	speed = 1.0;
 
 	autosync = false;
 	autosync_factor = 100;
@@ -449,7 +451,7 @@ void Preferences::reset() {
 
 	drag_function = MoveWindow;
 
-	seeking1 = 10;
+	seeking1 = 5;
 	seeking2 = 60;
 	seeking3 = 10*60;
 	seeking4 = 30;
@@ -729,6 +731,9 @@ void Preferences::save() {
 #if defined(Q_OS_WIN) && defined(AVOID_SCREENSAVER)
 	set->setValue("avoid_screensaver", avoid_screensaver);
 #endif
+#ifdef Q_OS_LINUX
+	set->setValue("use_stopscreensaver", use_stopscreensaver);
+#endif
 
 #ifdef OS_UNIX_NOT_MAC
 	set->setValue("wayland_workarounds", wayland_workarounds);
@@ -754,6 +759,9 @@ void Preferences::save() {
 
 	set->setValue("global_audio_equalizer", global_audio_equalizer);
 	set->setValue("audio_equalizer", audio_equalizer);
+
+	set->setValue("global_speed", global_speed);
+	set->setValue("speed", speed);
 
 	set->setValue("autosync", autosync);
 	set->setValue("autosync_factor", autosync_factor);
@@ -1324,6 +1332,9 @@ void Preferences::load() {
 #if defined(Q_OS_WIN) && defined(AVOID_SCREENSAVER)
 	avoid_screensaver = set->value("avoid_screensaver", avoid_screensaver).toBool();
 #endif
+#ifdef Q_OS_LINUX
+	use_stopscreensaver = set->value("use_stopscreensaver", use_stopscreensaver).toBool();
+#endif
 
 #ifdef OS_UNIX_NOT_MAC
 	wayland_workarounds = set->value("wayland_workarounds", wayland_workarounds).toBool();
@@ -1349,6 +1360,9 @@ void Preferences::load() {
 
 	global_audio_equalizer = set->value("global_audio_equalizer", global_audio_equalizer).toBool();
 	audio_equalizer = set->value("audio_equalizer", audio_equalizer).toList();
+
+	global_speed = set->value("global_speed", global_speed).toBool();
+	speed = set->value("speed", speed).toDouble();
 
 	autosync = set->value("autosync", autosync).toBool();
 	autosync_factor = set->value("autosync_factor", autosync_factor).toInt();

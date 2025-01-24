@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -87,9 +87,9 @@ SMPlayer::SMPlayer(const QString & config_path, QObject * parent )
 
 	Paths::setAppPath( qApp->applicationDirPath() );
 
-#ifndef PORTABLE_APP
+//#ifndef PORTABLE_APP
 	if (config_path.isEmpty()) createConfigDirectory();
-#endif
+//#endif
 	global_init(config_path);
 
 	// Application translations
@@ -514,7 +514,7 @@ void SMPlayer::start() {
 	}
 }
 
-#ifndef PORTABLE_APP
+//#ifndef PORTABLE_APP
 void SMPlayer::createConfigDirectory() {
 	// Create smplayer config directory
 	if (!QFile::exists(Paths::configPath())) {
@@ -531,7 +531,7 @@ void SMPlayer::createConfigDirectory() {
 		#endif
 	}
 }
-#endif
+//#endif
 
 #ifdef FONTS_HACK
 void SMPlayer::createFontFile() {
@@ -678,6 +678,8 @@ void SMPlayer::myMessageOutput( QtMsgType type, const char *msg ) {
 	orig_line = QString::fromUtf8(msg);
 	#endif
 #endif
+
+	if (orig_line.contains("IGNORE_THIS")) return;
 
 	switch ( type ) {
 		case QtDebugMsg:

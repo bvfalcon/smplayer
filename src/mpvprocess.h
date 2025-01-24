@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -44,7 +44,10 @@ public:
 };
 #endif
 
+#if QT_VERSION < 0x060000
 class QStringList;
+#endif
+
 class QLocalSocket;
 
 class MPVProcess : public PlayerProcess
@@ -178,6 +181,7 @@ protected slots:
 	void gotError(QProcess::ProcessError);
 	void requestChapterInfo();
 	/* void requestBitrateInfo(); */
+	void socketReadyRead();
 
 #ifdef OSD_WITH_TIMER
 	void displayInfoOnOSD();
@@ -264,6 +268,11 @@ private:
 	int dvd_current_title;
 	int br_current_title;
 
+	//int dwidth;
+	//int dheight;
+	int duration;
+	bool idle;
+
 	#ifndef USE_FILTER_LABELS
 	QString previous_eq;
 	AudioEqualizerList previous_eq_list;
@@ -291,35 +300,13 @@ private:
 	bool use_osd_in_commands;
 
 	// Regular expressions
-	QRegExp rx_av;
-	QRegExp rx_dsize;
-	QRegExp rx_vo;
-	QRegExp rx_ao;
-	QRegExp rx_paused;
-	QRegExp rx_endoffile;
-
-	QRegExp rx_audio;
-	QRegExp rx_subs;
-
-	QRegExp rx_videocodec;
-	QRegExp rx_audiocodec;
-
-#if !NOTIFY_VIDEO_CHANGES
-	QRegExp rx_video;
-#endif
-
 	QRegExp rx_chaptername;
 	QRegExp rx_trackinfo;
-	QRegExp rx_forbidden;
-
-#if DVDNAV_SUPPORT
-	QRegExp rx_switch_title;
-#endif
-
-	QRegExp rx_playing;
-	QRegExp rx_generic;
-	QRegExp rx_stream_title;
-	QRegExp rx_debug;
+	QRegExp rx_dsize;
+	QRegExp rx_notification;
+	QRegExp rx_endfile;
+	QRegExp rx_dvdtitles;
+	QRegExp rx_brtitles;
 
 	void initializeRX();
 

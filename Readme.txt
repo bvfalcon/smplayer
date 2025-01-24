@@ -1,5 +1,5 @@
     SMPlayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -41,9 +41,9 @@
        url: http://qt.gitorious.org/qt-solutions
        license: BSD (see src/qtsingleapplication/qtsingleapplication.h)
 
-     * libmaia by Sebastian Wiedenroth
-       url: https://github.com/wiedi/libmaia
-       license: Simplified BSD License (see src/findsubtitles/maia/LICENSE)
+     * RestAPI by Jean-Christophe Fillion-Robin, Kitware Inc.
+       url: https://github.com/commontk/qRestAPI
+       license: Apache License
 
      * qt-json
        url: https://github.com/qt-json/qt-json

@@ -13,14 +13,16 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { name: 'bionic', os: 'ubuntu-18.04', qt: 5 }
+          #- { name: 'bionic', os: 'ubuntu-18.04', qt: 5 }
           - { name: 'focal', os: 'ubuntu-20.04', qt: 5 }
+          - { name: 'jammy', os: 'ubuntu-22.04', qt: 5 }
+          - { name: 'noble', os: 'ubuntu-24.04', qt: 5 }
 
     runs-on: ${{ matrix.config.os }}
 
     steps:
       - name: Install sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: ${{ env.app-name }}
           fetch-depth: 0
@@ -36,7 +38,7 @@ jobs:
 
       - name: Install Qt 5
         run: |
-            sudo apt-get -y install qtbase5-dev qt5-qmake qtscript5-dev qttools5-dev-tools qtbase5-private-dev
+            sudo apt-get -y install qtbase5-dev qt5-qmake qtscript5-dev qttools5-dev-tools qtbase5-private-dev qtdeclarative5-dev
             echo "QT_SELECT=qt5" >> $GITHUB_ENV
         if: ${{ matrix.config.qt == 5 }}
 
@@ -63,7 +65,7 @@ jobs:
 
       - name: Create artifact
         if: github.event_name != 'release'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PACKAGEFILENAME }}
           path: ./${{ env.app-name }}_*.deb

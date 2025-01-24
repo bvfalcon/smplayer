@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,12 +22,12 @@
 #define USE_SVN_VERSIONS 1
 #define DEVELOPMENT_VERSION 1
 
-#define VERSION "22.7.0"
+#define VERSION "24.5.0"
 
 #if USE_SVN_VERSIONS && DEVELOPMENT_VERSION
 #include "svn_revision.h"
 #else
-#define SVN_REVISION "10091"
+#define SVN_REVISION "10277"
 #endif
 
 #ifdef Q_OS_WIN

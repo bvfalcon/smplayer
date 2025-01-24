@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -50,4 +50,8 @@ PlayerID::Player PlayerID::player(const QString & player_bin) {
 	return MPLAYER;
 	#endif
 #endif
+}
+
+QString PlayerID::playerName(const QString & player_bin) {
+	if (player(player_bin) == MPLAYER) return "MPlayer"; else return "MPV";
 }

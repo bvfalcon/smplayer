@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -65,6 +65,9 @@ protected:
 
 protected slots:
 	void on_check_drives_button_clicked();
+	void on_cd_button_clicked();
+	void on_dvd_button_clicked();
+	void on_br_button_clicked();
 
 protected:
 	virtual void retranslateStrings();

@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ class PlayerProcess;
 class MplayerWindow;
 class QSettings;
 
-#ifdef SCREENSAVER_OFF
+#ifdef USE_POWERSAVING
 class ScreenSaver;
 #endif
 
@@ -456,9 +456,9 @@ protected slots:
 	void updateChapterInfo(const Chapters &);
 #endif
 
+	void durationChanged(double);
 #if DVDNAV_SUPPORT
 	void dvdTitleChanged(int);
-	void durationChanged(double);
 	void askForInfo();
 	void dvdnavUpdateMousePos(QPoint);
 	void dvdTitleIsMenu();
@@ -474,7 +474,7 @@ protected slots:
 	void YTNoVideoUrl();
 #endif
 
-#ifdef SCREENSAVER_OFF
+#ifdef USE_POWERSAVING
 	void enableScreensaver();
 	void disableScreensaver();
 #endif
@@ -568,7 +568,7 @@ protected:
 	FileSettingsBase * tv_settings;
 #endif
 
-#ifdef SCREENSAVER_OFF
+#ifdef USE_POWERSAVING
 	ScreenSaver * screensaver;
 #endif
 

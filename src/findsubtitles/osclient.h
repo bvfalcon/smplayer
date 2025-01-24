@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,32 +19,31 @@
 #ifndef OSCLIENT_H
 #define OSCLIENT_H
 
-#include "maiaXmlRpcClient.h"
+#include <QObject>
+#include <QString>
+#include "qrestapi/qRestAPI.h"
 
 class OSSubtitle {
 public:
 	QString movie, releasename, link, iso639, language, date;
 	QString format, comments, detail, rating, files, user;
+	QString file_id;
 };
 
 class OSClient : public QObject {
 	Q_OBJECT
 
 public:
-	 enum SearchMethod { Hash = 0, Filename = 1, HashAndFilename = 2 };
+	enum SearchMethod { Hash = 0, Filename = 1, HashAndFilename = 2 };
 
 	OSClient(QObject* parent = 0);
+	QList<OSSubtitle> subtitleList() { return sub_list; };
 
-	QList<OSSubtitle> subtitleList() { return s_list; };
-
-#ifdef FS_USE_PROXY
 	void setProxy(const QNetworkProxy & proxy);
-#endif
 
-#ifdef OS_SEARCH_WORKAROUND
-	void setRetries(int n) { search_retries = n; };
-	int retries() { return search_retries; };
-#endif
+	#ifdef FS_USE_SERVER_CONFIG
+	void setServer(const QString & server) {};
+	#endif
 
 	void setSearchMethod(SearchMethod m) { search_method = m; };
 	int searchMethod() { return search_method; };
@@ -55,21 +54,11 @@ public:
 	void setPassword(QString password) { os_password = password; };
 	QString password() { return os_password; };
 
+	QString getDownloadLink(const QString & file_id, int * remaining_downloads = 0);
+
 public slots:
-	void setServer(const QString & server);
-	void search(const QString & hash, qint64 file_size, const QString & filename = QString());
-
-private slots:
+	void search(const QString & hash, qint64 file_size, QString search_term = QString(), QString languages = QString());
 	void login();
-	void doSearch();
-#ifdef OS_SEARCH_WORKAROUND
-	void doSearch(int nqueries);
-#endif
-
-	void gotFault(int, const QString &);
-
-	void responseLogin(QVariant &);
-	void responseSearch(QVariant &);
 
 signals:
 	void connecting();
@@ -77,24 +66,18 @@ signals:
 	void loginFailed();
 	void searchFinished();
 	void searchFailed();
+	void getDownloadLinkFailed();
 	void errorFound(int, const QString &);
 
 private:
-	MaiaXmlRpcClient *rpc;
-	QString token;
-	bool logged_in;
-	QString search_hash;
-	qint64 search_size;
-	QString search_filename;
-#ifdef OS_SEARCH_WORKAROUND
-	int best_search_count;
-	int search_retries;
-#endif
-	QList <OSSubtitle> s_list;
-
+	qRestAPI::RawHeaders headers;
+	qRestAPI * api;
+	QList <OSSubtitle> sub_list;
 	int search_method;
 	QString os_username;
 	QString os_password;
+	QByteArray os_token;
+	bool logged_in;
 };
 
 #endif

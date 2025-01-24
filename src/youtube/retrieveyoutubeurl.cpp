@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -214,10 +214,10 @@ void RetrieveYoutubeUrl::runYtdl(const QString & url) {
 		format = user_format;
 	} else {
 		if (use_dash) {
-			format = "bestvideo" + resolution +"[protocol!=http_dash_segments]";
+			format = "bestvideo" + resolution; // +"[protocol!=http_dash_segments]";
 			if (!use_60fps) format += "[fps!=60]";
 			if (!use_av1) format += "[vcodec!*=av01]";
-			format += ",bestaudio[protocol!=http_dash_segments]";
+			format += ",bestaudio"; //[protocol!=http_dash_segments]";
 			format += "/best" + resolution;
 		} else {
 			format = "best" + resolution;

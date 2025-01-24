@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,6 +43,10 @@
 #define NUMPAD_WORKAROUND
 #endif
 
+#ifdef YOUTUBE_SUPPORT
+//#define SMTUBE_ACTION
+#endif
+
 class QWidget;
 class QMenu;
 class LogWindow;
@@ -62,7 +66,7 @@ class FindSubtitlesWindow;
 class VideoPreview;
 #endif
 
-#ifdef USE_SMTUBE_LIB
+#if defined(SMTUBE_ACTION) && defined(USE_SMTUBE_LIB)
 class BrowserWindow;
 #endif
 
@@ -119,12 +123,12 @@ public slots:
 	virtual void openVCD();
 	virtual void openAudioCD();
 	virtual void openDVD();
-	virtual void openDVDFromFolder();
-	virtual void openDVDFromFolder(QString directory);
+	//virtual void openDVDFromFolder();
+	//virtual void openDVDFromFolder(QString directory);
 #ifdef BLURAY_SUPPORT
 	void openBluRay();
-	void openBluRayFromFolder();
-	void openBluRayFromFolder(QString directory);
+	//void openBluRayFromFolder();
+	//void openBluRayFromFolder(QString directory);
 #endif
 	virtual void openDirectory();
 	virtual void openDirectory(QString directory);
@@ -159,7 +163,7 @@ public slots:
 	virtual void showVideoPreviewDialog();
 #endif
 
-#ifdef YOUTUBE_SUPPORT
+#ifdef SMTUBE_ACTION
 	virtual void showTubeBrowser();
 #endif
 
@@ -456,10 +460,10 @@ protected:
 	MyAction * openVCDAct;
 	MyAction * openAudioCDAct;
 	MyAction * openDVDAct;
-	MyAction * openDVDFolderAct;
+	//MyAction * openDVDFolderAct;
 #ifdef BLURAY_SUPPORT
 	MyAction * openBluRayAct;
-	MyAction * openBluRayFolderAct;
+	//MyAction * openBluRayFolderAct;
 #endif
 	MyAction * openURLAct;
 	MyAction * exitAct;
@@ -568,7 +572,7 @@ protected:
 	MyAction * showPlaylistAct;
 	MyAction * showPropertiesAct;
 	MyAction * showPreferencesAct;
-#ifdef YOUTUBE_SUPPORT
+#ifdef SMTUBE_ACTION
 	MyAction * showTubeBrowserAct;
 #endif
 #ifdef LOG_MPLAYER
@@ -916,7 +920,7 @@ protected:
 	int delayed_seek_value;
 #endif
 
-#ifdef USE_SMTUBE_LIB
+#if defined(SMTUBE_ACTION) && defined(USE_SMTUBE_LIB)
 	BrowserWindow * browser_window;
 #endif
 

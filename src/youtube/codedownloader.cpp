@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -194,23 +194,25 @@ void CodeDownloader::askAndDownload(QWidget * parent, ErrorMessage e, const QStr
 		#if defined(_WIN64)
 		url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe";
 		#else
-		url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_x86.exe";
+		url = "https://github.com/nicolaasjan/yt-dlp/releases/latest/download/yt-dlp_win7.exe";
 		#endif
 		output_file = "yt-dlp.exe";
 	} else {
-		url = "https://youtube-dl.org/downloads/latest/youtube-dl.exe";
+		url = "https://github.com/ytdl-org/ytdl-nightly/releases/latest/download/youtube-dl.exe";
 		output_file = "youtube-dl.exe";
 	}
 	#else
 	if (app_basename == "yt-dlp") {
 		#ifdef Q_OS_MACX
 		url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos";
+		#elif defined(Q_OS_LINUX)
+		url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux";
 		#else
 		url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp";
 		#endif
 		output_file = "yt-dlp";
 	} else {
-		url = "https://youtube-dl.org/downloads/latest/youtube-dl";
+		url = "https://github.com/ytdl-org/ytdl-nightly/releases/latest/download/youtube-dl";
 		output_file = "youtube-dl";
 	}
 	#endif

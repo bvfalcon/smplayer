@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@
 #include <QSysInfo> // To get Windows version
 #endif
 
-#ifdef SCREENSAVER_OFF
+#ifdef USE_POWERSAVING
 #include "screensaver.h"
 #endif
 
@@ -225,11 +225,12 @@ Core::Core( MplayerWindow *mpw, QWidget* parent )
              this, SLOT(updateChapterInfo(const Chapters &)), Qt::QueuedConnection );
 #endif
 
+	connect( proc, SIGNAL(receivedDuration(double)), 
+             this, SLOT(durationChanged(double)), Qt::QueuedConnection );
+
 #if DVDNAV_SUPPORT
 	connect( proc, SIGNAL(receivedDVDTitle(int)), 
              this, SLOT(dvdTitleChanged(int)), Qt::QueuedConnection );
-	connect( proc, SIGNAL(receivedDuration(double)), 
-             this, SLOT(durationChanged(double)), Qt::QueuedConnection );
 
 	QTimer * ask_timer = new QTimer(this);
 	connect( ask_timer, SIGNAL(timeout()), this, SLOT(askForInfo()) );
@@ -267,7 +268,7 @@ Core::Core( MplayerWindow *mpw, QWidget* parent )
 #endif
 	mplayerwindow->setMonitorAspect( pref->monitor_aspect_double() );
 
-#ifdef SCREENSAVER_OFF
+#ifdef USE_POWERSAVING
 	screensaver = new ScreenSaver(this);
 	connect( this, SIGNAL(aboutToStartPlaying()), this, SLOT(disableScreensaver()) );
 	connect( proc, SIGNAL(processExited()), this, SLOT(enableScreensaver()) );
@@ -334,6 +335,8 @@ QString Core::stateToString() {
 	if (state()==Stopped) return "Stopped";
 	else
 	if (state()==Paused) return "Paused";
+	else
+	if (state()==Buffering) return "Buffering";
 	else
 	return "Unknown";
 }
@@ -411,6 +414,8 @@ void Core::restoreSettingsForMedia(const QString & name, int type) {
 		emit needResize(mset.win_width, mset.win_height);
 		changeAspectRatio(mset.aspect_ratio_id);
 	}
+
+	if (mset.current_sec > 1) mset.current_sec -= 1;
 
 	if (!pref->remember_time_pos) {
 		mset.current_sec = 0;
@@ -582,7 +587,7 @@ void Core::YTNoVideoUrl() {
 }
 #endif
 
-#ifdef SCREENSAVER_OFF
+#ifdef USE_POWERSAVING
 void Core::enableScreensaver() {
 	qDebug("Core::enableScreensaver");
 	if (pref->disable_screensaver) {
@@ -759,7 +764,7 @@ void Core::openAudioCD(int title) {
 }
 
 void Core::openDVD(QString dvd_url) {
-	qDebug("Core::openDVD: '%s'", dvd_url.toUtf8().data());
+	qDebug() << "Core::openDVD:" << dvd_url;
 
 	//Checks
 	DiscData disc_data = DiscName::split(dvd_url);
@@ -809,7 +814,7 @@ void Core::openDVD(QString dvd_url) {
  * Opens a BluRay, taking advantage of mplayer's capabilities to do so.
  */
 void Core::openBluRay(QString bluray_url) {
-	qDebug("Core::openBluRay: '%s'", bluray_url.toUtf8().data());
+	qDebug() << "Core::openBluRay:" << bluray_url;
 
 	//Checks
 	DiscData disc_data = DiscName::split(bluray_url);
@@ -822,7 +827,7 @@ void Core::openBluRay(QString bluray_url) {
 	}
 
 	QFileInfo fi(folder);
-	if ( (!fi.exists()) || (!fi.isDir()) ) {
+	if ( (!fi.exists()) /*|| (!fi.isDir())*/ ) {
 		qWarning("Core::openBluRay: folder invalid, not playing bluray");
 		return;
 	}
@@ -1500,10 +1505,9 @@ void Core::goToPosition(int value) {
 
 	if (pref->relative_seeking) {
 		goToPos( (double) value / (SEEKBAR_RESOLUTION / 100) );
-	}
-	else {
+	} else {
 		if (mdat.duration > 0) {
-			int jump_time = (int) mdat.duration * value / SEEKBAR_RESOLUTION;
+			int jump_time = (double) mdat.duration * value / SEEKBAR_RESOLUTION;
 			goToSec(jump_time);
 		}
 	}
@@ -1545,6 +1549,7 @@ void Core::startMplayer( QString file, double seek, double end ) {
 #endif
 
 	// DVD
+	#if 0
 	QString dvd_folder;
 	int dvd_title = -1;
 	if (mdat.type==TYPE_DVD) {
@@ -1555,6 +1560,7 @@ void Core::startMplayer( QString file, double seek, double end ) {
 		file = disc_data.protocol + "://";
 		if (dvd_title > -1) file += QString::number(dvd_title);
 	}
+	#endif
 
 	// Check URL playlist
 	bool url_is_playlist = false;
@@ -1841,8 +1847,12 @@ void Core::startMplayer( QString file, double seek, double end ) {
 	proc->setOption("dr", pref->use_direct_rendering);
 	proc->setOption("double", pref->use_double_buffer);
 
-#if defined(Q_WS_X11) && defined(SCREENSAVER_OFF)
-	proc->setOption("stop-xscreensaver", pref->disable_screensaver);
+#if defined(SCREENSAVER_OFF) && defined(Q_OS_LINUX)
+	#ifdef USE_POWERSAVING
+	  proc->setOption("stop-xscreensaver", pref->use_stopscreensaver ? pref->disable_screensaver : false);
+	#else
+	  proc->setOption("stop-xscreensaver", pref->disable_screensaver);
+	#endif
 #endif
 
 	if (display_screen != 0) {
@@ -2005,6 +2015,9 @@ void Core::startMplayer( QString file, double seek, double end ) {
 			int real_id = mset.subs.IDAt(mset.current_subtitle_track);
 			proc->setOption("sid", QString::number(real_id));
 		}
+		else {
+			proc->setOption("sid", "auto");
+		}
 
 		if (mset.current_secondary_subtitle_track != MediaSettings::NoneSelected) {
 			int real_id = mset.subs.IDAt(mset.current_secondary_subtitle_track);
@@ -2138,7 +2151,7 @@ void Core::startMplayer( QString file, double seek, double end ) {
 		proc->setOption("mute");
 	}
 
-
+	#if 0
 	if (mdat.type==TYPE_DVD) {
 		if (!dvd_folder.isEmpty()) {
 			#ifdef Q_OS_WIN
@@ -2152,6 +2165,7 @@ void Core::startMplayer( QString file, double seek, double end ) {
 			qWarning("Core::startMplayer: dvd device is empty!");
 		}
 	}
+	#endif
 
 	if ((mdat.type==TYPE_VCD) || (mdat.type==TYPE_AUDIO_CD)) {
 		if (!pref->cdrom_device.isEmpty()) {
@@ -2190,8 +2204,9 @@ void Core::startMplayer( QString file, double seek, double end ) {
 		proc->setOption("cache", QString::number(cache));
 	}
 
-	if (mset.speed != 1.0) {
-		proc->setOption("speed", QString::number(mset.speed));
+	double speed = pref->global_speed ? pref->speed : mset.speed;
+	if (speed != 1.0) {
+		proc->setOption("speed", QString::number(speed));
 	}
 
 	if (mdat.type != TYPE_TV) {
@@ -2515,8 +2530,10 @@ void Core::startMplayer( QString file, double seek, double end ) {
 
 #ifdef MPV_SUPPORT
 	if (mdat.type == TYPE_STREAM) {
+		#ifdef YOUTUBE_SUPPORT
 		QString ytdl_bin = pref->yt_ytdl_bin;
 		if (ytdl_bin.isEmpty()) ytdl_bin = YTDL_DEFAULT_BIN;
+		#endif
 		if (pref->streaming_type == Preferences::StreamingAuto) {
 			bool is_youtube = false;
 			#ifdef YOUTUBE_SUPPORT
@@ -2539,10 +2556,12 @@ void Core::startMplayer( QString file, double seek, double end ) {
 			proc->setOption("enable_streaming_sites_support", enable_sites);
 			if (enable_sites) {
 				proc->setOption("ytdl_quality", pref->ytdl_quality);
+				#ifdef YOUTUBE_SUPPORT
 				#ifdef YT_BIN_ON_CONFIG_DIR
 				proc->setOption("ytdl_path", RetrieveYoutubeUrl::ytdlBin());
 				#else
 				proc->setOption("ytdl_path", ytdl_bin);
+				#endif
 				#endif
 			}
 		} else {
@@ -2550,10 +2569,12 @@ void Core::startMplayer( QString file, double seek, double end ) {
 			proc->setOption("enable_streaming_sites_support", enable_sites);
 			if (enable_sites) {
 				proc->setOption("ytdl_quality", pref->ytdl_quality);
+				#ifdef YOUTUBE_SUPPORT
 				#ifdef YT_BIN_ON_CONFIG_DIR
 				proc->setOption("ytdl_path", RetrieveYoutubeUrl::ytdlBin());
 				#else
 				proc->setOption("ytdl_path", ytdl_bin);
+				#endif
 				#endif
 			}
 		}
@@ -3363,7 +3384,11 @@ void Core::setSpeed( double value ) {
 	if (value < 0.10) value = 0.10;
 	if (value > 100) value = 100;
 
-	mset.speed = value;
+	if (pref->global_speed) {
+		pref->speed = value;
+	} else{
+		mset.speed = value;
+	}
 	proc->setSpeed(value);
 
 	displayMessage( tr("Speed: %1").arg(value) );
@@ -3371,42 +3396,50 @@ void Core::setSpeed( double value ) {
 
 void Core::incSpeed10() {
 	qDebug("Core::incSpeed10");
-	setSpeed( (double) mset.speed + 0.1 );
+	double speed = pref->global_speed ? pref->speed : mset.speed;
+	setSpeed( (double) speed + 0.1 );
 }
 
 void Core::decSpeed10() {
 	qDebug("Core::decSpeed10");
-	setSpeed( (double) mset.speed - 0.1 );
+	double speed = pref->global_speed ? pref->speed : mset.speed;
+	setSpeed( (double) speed - 0.1 );
 }
 
 void Core::incSpeed4() {
 	qDebug("Core::incSpeed4");
-	setSpeed( (double) mset.speed + 0.04 );
+	double speed = pref->global_speed ? pref->speed : mset.speed;
+	setSpeed( (double) speed + 0.04 );
 }
 
 void Core::decSpeed4() {
 	qDebug("Core::decSpeed4");
-	setSpeed( (double) mset.speed - 0.04 );
+	double speed = pref->global_speed ? pref->speed : mset.speed;
+	setSpeed( (double) speed - 0.04 );
 }
 
 void Core::incSpeed1() {
 	qDebug("Core::incSpeed1");
-	setSpeed( (double) mset.speed + 0.01 );
+	double speed = pref->global_speed ? pref->speed : mset.speed;
+	setSpeed( (double) speed + 0.01 );
 }
 
 void Core::decSpeed1() {
 	qDebug("Core::decSpeed1");
-	setSpeed( (double) mset.speed - 0.01 );
+	double speed = pref->global_speed ? pref->speed : mset.speed;
+	setSpeed( (double) speed - 0.01 );
 }
 
 void Core::doubleSpeed() {
 	qDebug("Core::doubleSpeed");
-	setSpeed( (double) mset.speed * 2 );
+	double speed = pref->global_speed ? pref->speed : mset.speed;
+	setSpeed( (double) speed * 2 );
 }
 
 void Core::halveSpeed() {
 	qDebug("Core::halveSpeed");
-	setSpeed( (double) mset.speed / 2 );
+	double speed = pref->global_speed ? pref->speed : mset.speed;
+	setSpeed( (double) speed / 2 );
 }
 
 void Core::normalSpeed() {
@@ -3797,7 +3830,7 @@ void Core::changeCurrentSec(double sec) {
 
 	if (state() != Playing) {
 		setState(Playing);
-		qDebug("Core::changeCurrentSec: mplayer reports that now it's playing");
+		qDebug("Core::changeCurrentSec: player is now playing");
 		//emit mediaStartPlay();
 		//emit stateChanged(state());
 	}
@@ -3815,7 +3848,7 @@ void Core::changeCurrentSec(double sec) {
 	if ( (mdat.duration > 1) && (mset.current_sec > 1) &&
          (mdat.duration > mset.current_sec) )
 	{
-		value = ( (int) mset.current_sec * SEEKBAR_RESOLUTION) / (int) mdat.duration;
+		value = ( (double) mset.current_sec * SEEKBAR_RESOLUTION) / (int) mdat.duration;
 	}
 	emit positionChanged(value);
 #else
@@ -3866,7 +3899,7 @@ void Core::gotDemuxRotation(int r) {
 
 void Core::changePause() {
 	qDebug("Core::changePause");
-	qDebug("Core::changePause: mplayer reports that it's paused");
+	qDebug("Core::changePause: player is now paused");
 	setState(Paused);
 	//emit stateChanged(state());
 }
@@ -3938,7 +3971,9 @@ void Core::prevSubtitle() {
 	qDebug("Core::prevSubtitle");
 
 	if (mset.subs.numItems() > 0) {
-		if (mset.current_subtitle_track == MediaSettings::SubNone) {
+		if (mset.current_subtitle_track == MediaSettings::SubNone ||
+            mset.current_subtitle_track == MediaSettings::NoneSelected)
+		{
 			changeSubtitle(mset.subs.numItems() - 1);
 		} else {
 			int item = mset.current_subtitle_track - 1;
@@ -3952,7 +3987,9 @@ void Core::nextSubtitle() {
 	qDebug("Core::nextSubtitle");
 
 	if (mset.subs.numItems() > 0) {
-		if (mset.current_subtitle_track == MediaSettings::SubNone) {
+		if (mset.current_subtitle_track == MediaSettings::SubNone ||
+            mset.current_subtitle_track == MediaSettings::NoneSelected)
+		{
 			changeSubtitle(0);
 		} else {
 			int item = mset.current_subtitle_track + 1;
@@ -4764,8 +4801,8 @@ void Core::sendMediaInfo() {
 
 //!  Called when the state changes
 void Core::watchState(Core::State state) {
-#ifdef SCREENSAVER_OFF
-	#if 0
+#ifdef USE_POWERSAVING
+	#if 1
 	qDebug("Core::watchState: %d", state);
 	//qDebug("Core::watchState: has video: %d", !mdat.novideo);
 
@@ -5125,17 +5162,17 @@ void Core::updateChapterInfo(const Chapters & chapters) {
 }
 #endif
 
-#if DVDNAV_SUPPORT
-void Core::dvdTitleChanged(int title) {
-	qDebug("Core::dvdTitleChanged: %d", title);
-}
-
 void Core::durationChanged(double length) {
 	qDebug("Core::durationChanged: %f", length);
 	if (mdat.duration != length) {
 		mdat.duration = length;
 		emit newDuration(length);
 	}
+}
+
+#if DVDNAV_SUPPORT
+void Core::dvdTitleChanged(int title) {
+	qDebug("Core::dvdTitleChanged: %d", title);
 }
 
 void Core::askForInfo() {

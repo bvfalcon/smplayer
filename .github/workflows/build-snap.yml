@@ -7,10 +7,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: 'smplayer-dev/snap-builds'
 
@@ -18,20 +18,21 @@ jobs:
         id: snapcraft
         uses: snapcore/action-build@v1
         with:
-          path: smplayer
+          path: smplayer/core22
   
       - name: Create artifact
         #if: github.event_name != 'release'
         if: ${{false}}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: smplayer-snap
           path: ${{ steps.snapcraft.outputs.snap }}
 
       - name: Publish
         uses: snapcore/action-publish@v1
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
         with:
-          store_login: ${{ secrets.STORE_LOGIN }}
           snap: ${{steps.snapcraft.outputs.snap }}
           release: edge
 

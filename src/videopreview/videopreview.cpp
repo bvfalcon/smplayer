@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -58,6 +58,7 @@
 #define FONT_STYLE "font-family:ubuntu,verdana,arial;"
 #define HEADER_STYLE "style=\"" FONT_STYLE " font-size:16px\""
 #define FOOTER_STYLE HEADER_STYLE
+#define COLOR_STYLE "color: black; background-color: white;"
 
 VideoPreview::VideoPreview(QString mplayer_path, QWidget * parent) : QWidget(parent, Qt::Window)
 {
@@ -158,6 +159,10 @@ VideoPreview::VideoPreview(QString mplayer_path, QWidget * parent) : QWidget(par
 	toggleInfoAct->setShortcut( QKeySequence("Ctrl+H") );
 	connect( toggleInfoAct, SIGNAL(toggled(bool)), this, SLOT(showInfo(bool)) );
 	addAction(toggleInfoAct);
+
+	info->setStyleSheet(COLOR_STYLE);
+	title->setStyleSheet(COLOR_STYLE);
+	foot->setStyleSheet(COLOR_STYLE);
 }
 
 VideoPreview::~VideoPreview() {
@@ -324,7 +329,15 @@ bool VideoPreview::runPlayer(double seek, double aspect_ratio) {
 		args << "--frames=" + QString::number(N_OUTPUT_FRAMES);
 		args << "--framedrop=no" << "--start=" + QString::number(seek);
 		if (aspect_ratio != 0) {
-			args << "--video-aspect=" + QString::number(aspect_ratio);
+			#if defined(Q_OS_UNIX) && !defined(NO_SMPLAYER_SUPPORT)
+			if (isOptionAvailableinMPV("--video-aspect-override")) {
+				args << "--video-aspect-override=" + QString::number(aspect_ratio);
+			} else {
+				args << "--video-aspect=" + QString::number(aspect_ratio);
+			}
+			#else
+			args << "--video-aspect-override=" + QString::number(aspect_ratio);
+			#endif
 		}
 		if (!prop.dvd_device.isEmpty()) args << "--dvd-device=" + prop.dvd_device;
 		if (!use_new_options) {

@@ -1,5 +1,24 @@
 # Changelog
 
+## [24.05] - 2024-05-13
+ * Bug fixes.
+ * The Windows portable version now saves the configuration files in
+   the folder "config".
+
+## [23.12] - 2023-12-26
+ * Implemented support for the new Opensubtitles API.
+ * Fix play/pause with mpv 0.37.
+ * Fix loading playlists with extension m3u8.
+ * Fix video jitter/shudder when clicking on timeline bar.
+ * Other small fixes.
+
+## [23.6] - 2023-06-30
+ * Fix the issue with YouTube playback limited to 720p.
+ * Update mpv and mplayer.
+ * New option in preferences to keep the playback speed for all videos.
+ * Fix the AppImage package.
+ * Other bug fixes.
+
 ## [22.7] - 2022-07-10
  * Better statistic info in the OSD (Shift + I).
  * Bug fixes regarding MPRIS2.

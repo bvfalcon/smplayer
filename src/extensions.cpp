@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2021 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -64,14 +64,14 @@ Extensions::Extensions()
            << "ts" << "rmvb" << "dvr-ms" << "m2t" << "m2ts" << "mts" << "rec" << "wtv"
            << "f4v" << "hdmov" << "webm" << "vp8"
            << "bik" << "smk" << "m4b" << "wtv"
-           << "part";
+           << "part" << "mxf";
 
 	_audio << "mp2" << "mp3" << "mpc" << "ogg" << "oga" << "wav" << "wma" <<  "aac"
 	   << "ac3" << "dts" << "ra" << "ape" << "flac" << "thd" << "mka" << "m4a" 
 	   << "wv" << "shn" << "opus";
 
 	_subtitles << "srt" << "sub" << "ssa" << "ass" << "idx" << "txt" << "smi"
-               << "rt" << "utf" << "aqt" << "vtt" << "mpsub";
+               << "rt" << "utf" << "aqt" << "vtt" << "webvtt" << "mpsub";
 
 	_playlist << "m3u" << "m3u8" << "pls" << "xspf";
 
