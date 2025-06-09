@@ -11,10 +11,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { sdk: '5.15', image: 'wachii/fedora-flatpak-kde:5.15'}
+          - { sdk: '5.15', image: 'wachii/fedora-flatpak-kde:5.15-24-08'}
           - { sdk: '5.12', image: 'wachii/fedora-flatpak-kde:5.12' }
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     container:
       image: ${{matrix.config.image}}
       options: --privileged
@@ -27,6 +27,7 @@ jobs:
 
       - name: Get version
         run: |
+            git config --global --add safe.directory .
             ./get_version.sh
             VERSION=`cat version`
             echo "VERSION=$VERSION" >> $GITHUB_ENV
@@ -37,7 +38,8 @@ jobs:
            repository: 'smplayer-dev/flatpak-builds'
 
       - name: Patch
-        if: ${{matrix.config.sdk == '5.15'}}
+        #if: ${{matrix.config.sdk == '5.15'}}
+        if: ${{false}}
         working-directory: '5.15'
         run: sed -e 's/USE_SHM/USE_SHM DEFINES+=USE_GL_WINDOW/' -i info.smplayer.SMPlayer.yml
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## [25.06] - 2025-06-08
+ * Fix play/pause button.
+ * Some fixes to stop the screensaver on Linux.
+ * Fixed some issues related to disc playback.
+ * Various bug fixes and stability improvements.
+
 ## [24.05] - 2024-05-13
  * Bug fixes.
  * The Windows portable version now saves the configuration files in

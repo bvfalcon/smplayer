@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 #include <QObject>
 #include <QList>
 
+#define SWAYIDLE_SUPPORT
+
 class QDBusInterface;
 
 class PowerSaving : public QObject
@@ -37,8 +39,12 @@ public slots:
 	void uninhibit();
 
 protected:
+	bool is_inhibited;
 	QDBusInterface * interface;
 	QList<uint> cookies;
+	#ifdef SWAYIDLE_SUPPORT
+	QStringList swayidle_args;
+	#endif
 };
 
 #endif

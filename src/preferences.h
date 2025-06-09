@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -123,8 +123,6 @@ public:
 #endif
 
 #ifdef OS_UNIX_NOT_MAC
-	bool wayland_workarounds;
-
 	struct VDPAU_settings {
 		bool ffh264vdpau;
 		bool ffmpeg12vdpau;

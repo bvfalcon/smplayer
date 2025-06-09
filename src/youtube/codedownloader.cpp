@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -206,7 +206,11 @@ void CodeDownloader::askAndDownload(QWidget * parent, ErrorMessage e, const QStr
 		#ifdef Q_OS_MACX
 		url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos";
 		#elif defined(Q_OS_LINUX)
-		url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux";
+			#if defined(__aarch64__)
+			url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux_aarch64";
+			#else
+			url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux";
+			#endif
 		#else
 		url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp";
 		#endif

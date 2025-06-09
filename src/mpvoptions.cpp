@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2024 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -360,6 +360,8 @@ void MPVProcess::setOption(const QString & option_name, const QVariant & value) 
 	else
 	if (option_name == "ass-line-spacing") {
 		QString line_spacing = "--ass-line-spacing";
+		if (isOptionAvailable("--sub-line-spacing")) line_spacing = "--sub-line-spacing";
+		else
 		if (isOptionAvailable("--sub-ass-line-spacing")) line_spacing = "--sub-ass-line-spacing";
 		arg << line_spacing + "=" + value.toString();
 	}
