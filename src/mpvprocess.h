@@ -90,6 +90,7 @@ public:
 	void setSecondarySubtitle(int ID);
 	void disableSecondarySubtitles();
 	void setSubtitlesVisibility(bool b);
+	void setSecondarySubtitlesVisibility(bool b);
 	void seek(double secs, int mode, bool precise);
 	void mute(bool b);
 	void setPause(bool b);
@@ -303,6 +304,7 @@ private:
 	QRegExp rx_chaptername;
 	QRegExp rx_trackinfo;
 	QRegExp rx_dsize;
+	QRegExp rx_vo;
 	QRegExp rx_notification;
 	QRegExp rx_endfile;
 	QRegExp rx_dvdtitles;
