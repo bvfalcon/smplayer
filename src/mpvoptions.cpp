@@ -107,6 +107,20 @@ void MPVProcess::setMedia(const QString & media, bool is_playlist) {
 
 			"INFO_MEDIA_TITLE=${=media-title:}\n"
 			"INFO_STREAM_PATH=${stream-path}\n";
+#else
+	arg << "--term-playing-msg="
+			"MPV_VERSION=${=mpv-version:}\n"
+			"INFO_LENGTH=${=duration:${=length}}\n"
+			#ifdef USE_OLD_TRACKS_COUNT
+			"INFO_TRACKS_COUNT=${=track-list/count}\n"
+			#endif
+			"METADATA_TITLE=${metadata/by-key/title:}\n"
+			"METADATA_ARTIST=${metadata/by-key/artist:}\n"
+			"METADATA_ALBUM=${metadata/by-key/album:}\n"
+			"METADATA_GENRE=${metadata/by-key/genre:}\n"
+			"METADATA_DATE=${metadata/by-key/date:}\n"
+			"METADATA_TRACK=${metadata/by-key/track:}\n"
+			"METADATA_COPYRIGHT=${metadata/by-key/copyright:}\n";
 #endif
 
 #ifndef Q_OS_WIN
@@ -641,7 +655,7 @@ void MPVProcess::setOption(const QString & option_name, const QVariant & value) 
 	    option_name == "dvd-device" || option_name == "cdrom-device" ||
 	    option_name == "demuxer" ||
 	    option_name == "frames" ||
-	    option_name == "user-agent" || option_name == "referrer" ||
+	    option_name == "user-agent" || option_name == "referrer" || option_name == "http-header-fields" ||
 	    option_name == "ab-loop-a" || option_name == "ab-loop-b" ||
 	    option_name == "gpu-context")
 	{
@@ -1230,7 +1244,11 @@ void MPVProcess::discButtonPressed(const QString & button_name) {
 #endif
 
 void MPVProcess::setAspect(double aspect) {
-	sendCommand("set video-aspect " + QString::number(aspect));
+	if (isOptionAvailable("--video-aspect-override")) {
+		sendCommand("set video-aspect-override " + QString::number(aspect));
+	} else {
+		sendCommand("set video-aspect " + QString::number(aspect));
+	}
 }
 
 void MPVProcess::setFullscreen(bool b) {

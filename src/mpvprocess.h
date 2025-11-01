@@ -32,6 +32,8 @@
 
 #define USE_IPC
 
+#define USE_OLD_TRACKS_COUNT
+
 #ifndef USE_OLD_VIDEO_EQ
 class SoftVideoEq
 {
@@ -309,6 +311,7 @@ private:
 	QRegExp rx_endfile;
 	QRegExp rx_dvdtitles;
 	QRegExp rx_brtitles;
+	QRegExp rx_generic;
 
 	void initializeRX();
 
