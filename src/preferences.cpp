@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2026 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,6 +32,10 @@
 #include <QDir>
 #include <QLocale>
 #include <QNetworkProxy>
+
+#ifdef Q_OS_MACX
+#include <QCoreApplication>
+#endif
 
 #if QT_VERSION >= 0x050000
 #include <QStandardPaths>
@@ -522,6 +526,8 @@ void Preferences::reset() {
 #if LOGO_ANIMATION
 	animated_logo = true;
 #endif
+
+	show_thumbnails = true;
 
 
     /* ********
@@ -1075,6 +1081,8 @@ void Preferences::save() {
 #if LOGO_ANIMATION
 	set->setValue("animated_logo", animated_logo);
 #endif
+
+	set->setValue("show_thumbnails", show_thumbnails);
 
 	set->endGroup(); // gui
 
@@ -1682,6 +1690,8 @@ void Preferences::load() {
 	animated_logo = set->value("animated_logo", animated_logo).toBool();
 #endif
 
+	show_thumbnails = set->value("show_thumbnails", show_thumbnails).toBool();
+
 	set->endGroup(); // gui
 
 
@@ -1973,6 +1983,17 @@ void Preferences::load() {
 		}
 	}
 	#endif
+#endif
+
+#ifdef Q_OS_MACX
+	if (!QFile::exists(mplayer_bin)) {
+		QString app_dir = QCoreApplication::applicationDirPath();
+		QString bundled_mpv = app_dir + "/mpv";
+		if (QFile::exists(bundled_mpv)) {
+			mplayer_bin = bundled_mpv;
+			qDebug("Preferences::load: using bundled mpv: %s", mplayer_bin.toLatin1().constData());
+		}
+	}
 #endif
 }
 

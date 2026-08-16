@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2026 Ricardo Villalba <ricardo@smplayer.info>
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -124,6 +124,33 @@ public:
 	}
 };
 #endif
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 2, 0)
+#include <QCollator>
+
+class PlaylistSortProxy : public QSortFilterProxyModel {
+public:
+	explicit PlaylistSortProxy(QObject *parent = nullptr)
+		: QSortFilterProxyModel(parent)
+	{
+		collator.setNumericMode(true);                  // ORDEN NATURAL
+		collator.setCaseSensitivity(Qt::CaseInsensitive);
+	}
+
+protected:
+	bool lessThan(const QModelIndex &left,
+				  const QModelIndex &right) const override
+	{
+		QString l = sourceModel()->data(left, sortRole()).toString();
+		QString r = sourceModel()->data(right, sortRole()).toString();
+		return collator.compare(l, r) < 0;
+	}
+
+private:
+	mutable QCollator collator;
+};
+#endif
+
 
 /* ----------------------------------------------------------- */
 
@@ -415,6 +442,7 @@ Playlist::Playlist(QWidget * parent, Qt::WindowFlags f)
 }
 
 Playlist::~Playlist() {
+	savePosition();
 	saveSettings();
 	if (set) delete set;
 
@@ -479,7 +507,11 @@ void Playlist::createTable() {
 	table->setColumnCount(COL_SHUFFLE + 1);
 	//table->setSortRole(Qt::UserRole + 1);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 2, 0)
+	proxy = new PlaylistSortProxy(this);
+#else
 	proxy = new QSortFilterProxyModel(this);
+#endif
 	proxy->setSourceModel(table);
 	proxy->setSortRole(Qt::UserRole + 1);
 	proxy->setFilterRole(Qt::UserRole + 1);
@@ -566,6 +598,9 @@ void Playlist::createActions() {
 
 	playAct = new MyAction(this, "pl_play", false);
 	connect( playAct, SIGNAL(triggered()), this, SLOT(playCurrent()) );
+
+	pauseAct = new MyAction(this, "pl_pause", false);
+	connect( pauseAct, SIGNAL(triggered()), this, SIGNAL(pause()) );
 
 	nextAct = new MyAction(Qt::Key_N /*Qt::Key_Greater*/, this, "pl_next", false);
 	connect( nextAct, SIGNAL(triggered()), this, SLOT(playNext()) );
@@ -726,6 +761,7 @@ void Playlist::createToolbar() {
 
 	toolbar->addSeparator();
 	toolbar->addAction(playAct);
+	toolbar->addAction(pauseAct);
 	toolbar->addAction(prevAct);
 	toolbar->addAction(nextAct);
 #ifdef PLAYLIST_DOUBLE_TOOLBAR
@@ -797,11 +833,13 @@ void Playlist::retranslateStrings() {
 	saveAsAct->change( Images::icon("save"), tr("Save &as...") );
 
 	playAct->change( tr("&Play") );
+	pauseAct->change( tr("Pau&se") );
 
 	nextAct->change( tr("&Next") );
 	prevAct->change( tr("Pre&vious") );
 
 	playAct->setIcon( Images::icon("play") );
+	pauseAct->setIcon( Images::icon("pause") );
 	nextAct->setIcon( Images::icon("next") );
 	prevAct->setIcon( Images::icon("previous") );
 
@@ -1517,6 +1555,7 @@ bool Playlist::saveXSPF(const QString & filename) {
 
 
 void Playlist::load() {
+	savePosition();
 	if (maybeSave()) {
 		Extensions e;
 		QString s = MyFileDialog::getOpenFileName(
@@ -1560,6 +1599,7 @@ bool Playlist::saveCurrentPlaylist() {
 
 bool Playlist::save(const QString & filename) {
 	qDebug() << "Playlist::save:" << filename;
+	savePosition();
 
 	QString s = filename;
 
@@ -1696,7 +1736,7 @@ void Playlist::showPopup(const QPoint & pos) {
 }
 
 void Playlist::startPlay() {
-	playItem(0);
+	playItem(loadPosition());
 }
 
 void Playlist::playItem(int n, bool later) {
@@ -1905,6 +1945,7 @@ void Playlist::addFiles(QStringList files, AutoGetInfo auto_get_info) {
 	MediaData data;
 	setCursor(Qt::WaitCursor);
 	#endif
+	listView->setSortingEnabled(false);
 
 	QString initial_file;
 	int new_current_item = -1;
@@ -1945,7 +1986,13 @@ void Playlist::addFiles(QStringList files, AutoGetInfo auto_get_info) {
 	#endif
 
 	if (new_current_item != -1) setCurrentItem(new_current_item);
-	if (shuffleAct->isChecked()) shuffle(true);
+
+	listView->setSortingEnabled(true);
+	if (shuffleAct->isChecked()) {
+		shuffle(true);
+	} else {
+		resort();
+	}
 	qDebug() << "Playlist::addFiles: latest_dir:" << latest_dir;
 }
 
@@ -2778,6 +2825,39 @@ void Playlist::changeEvent(QEvent *e) {
 	} else {
 		QWidget::changeEvent(e);
 	}
+}
+
+void Playlist::resort() {
+	if (!listView->isSortingEnabled()) return;
+	int col = listView->horizontalHeader()->sortIndicatorSection();
+	Qt::SortOrder order = listView->horizontalHeader()->sortIndicatorOrder();
+	listView->sortByColumn(col, order);
+}
+
+void Playlist::savePosition() {
+	qDebug() << "Playlist::savePosition:" << playlist_filename;
+	if (set && !playlist_filename.isEmpty() && !isEmpty()) {
+		QString key = playlist_filename.toUtf8().toBase64();
+		int current_position = findCurrentItem();
+		qDebug() << "Playlist::savePosition: key:" << key << "position:" << current_position;
+		set->beginGroup("playlist_positions");
+		set->setValue(key, current_position);
+		set->endGroup();
+	}
+}
+
+int Playlist::loadPosition() {
+	int position = 0;
+	if (set) {
+		set->beginGroup("playlist_positions");
+		QString key = playlist_filename.toUtf8().toBase64();
+		qDebug() << "Playlist::loadPosition: key:" << key;
+		int saved_pos = set->value(key, -1).toInt();
+		set->endGroup();
+		if (saved_pos >= 0 && saved_pos < count()) position = saved_pos;
+	}
+	qDebug() << "Playlist::loadPosition:" << playlist_filename << "position:" << position;
+	return position;
 }
 
 #include "moc_playlist.cpp"

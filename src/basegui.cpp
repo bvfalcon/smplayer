@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2026 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -2537,6 +2537,8 @@ void BaseGui::createPlaylist() {
             core, SLOT(openStream(const QString &, QStringList)));
 
 	connect(playlist, SIGNAL(requestToAddCurrentFile()), this, SLOT(addToPlaylistCurrentFile()));
+
+	connect(playlist, SIGNAL(pause()), core, SLOT(pause()));
 
 	connect( core, SIGNAL(mediaFinished()), playlist, SLOT(playNextAuto()), Qt::QueuedConnection );
 

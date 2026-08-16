@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2026 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,6 +31,8 @@
 
 #include "widgetactions.h"
 #include "myactiongroup.h"
+#include "thumbnailgenerator.h"
+#include "thumbnailpreview.h"
 
 #include <QMenu>
 #include <QCloseEvent>
@@ -94,6 +96,9 @@ BaseGuiPlus::BaseGuiPlus( QWidget * parent, Qt::WindowFlags flags)
 	, compact_playlist_was_visible(false)
 	, ignore_playlist_events(false)
 #endif
+	, thumbnail_generator(0)
+	, thumbnail_preview(0)
+	, timeslider_action_for_thumbnails(0)
 {
 	// Initialize variables
 	//infowindow_visible = false;
@@ -238,6 +243,18 @@ BaseGuiPlus::BaseGuiPlus( QWidget * parent, Qt::WindowFlags flags)
 #ifdef CHECK_SHORTCUT_EVENTS
 	installFilterOnActions();
 #endif
+
+	// Seek bar thumbnail preview
+	thumbnail_generator = new ThumbnailGenerator(this);
+	thumbnail_preview = new ThumbnailPreview(this);
+
+	connect(thumbnail_generator, SIGNAL(thumbnailReady(QPixmap, double, QPoint)),
+	        this, SLOT(displayThumbnail(QPixmap, double, QPoint)));
+	connect(core, SIGNAL(mediaLoaded()), this, SLOT(updateThumbnailAvailability()));
+	// Also re-check right away when the user toggles the option (or changes
+	// the player) in the preferences dialog, instead of only on the next
+	// file load.
+	connect(this, SIGNAL(preferencesChanged()), this, SLOT(updateThumbnailAvailability()));
 
 #ifdef PLAYLIST_DOCKABLE
 	if (!playlist->isWindow()) { // Dockable
@@ -884,7 +901,46 @@ TimeSliderAction * BaseGuiPlus::createTimeSliderAction(QWidget * parent) {
 
 	connect(core, SIGNAL(newDuration(double)), timeslider_action, SLOT(setDuration(double)));
 
+	connect(timeslider_action, SIGNAL(thumbnailRequested(double, QPoint)),
+	        this, SLOT(requestThumbnail(double, QPoint)));
+	connect(timeslider_action, SIGNAL(thumbnailCancelled()),
+	        this, SLOT(hideThumbnail()));
+
+	timeslider_action_for_thumbnails = timeslider_action;
+	// Apply the current state in case the media was already loaded
+	// before this particular toolbar/timeslider was created.
+	updateThumbnailAvailability();
+
 	return timeslider_action;
+}
+
+void BaseGuiPlus::updateThumbnailAvailability() {
+	// Only local files: reopening a network stream on every hover would
+	// be slow, and for live streams seeking doesn't make sense at all.
+	bool enabled = pref->show_thumbnails && (core->mdat.type == TYPE_FILE);
+
+	if (timeslider_action_for_thumbnails) {
+		timeslider_action_for_thumbnails->setThumbnailsEnabled(enabled);
+	}
+
+	thumbnail_generator->setPlayerBin(pref->mplayer_bin);
+	thumbnail_generator->setFilename(enabled ? core->mdat.filename : QString());
+
+	if (!enabled) hideThumbnail();
+}
+
+void BaseGuiPlus::requestThumbnail(double time, QPoint pos) {
+	thumbnail_generator->requestThumbnail(time, pos);
+}
+
+void BaseGuiPlus::displayThumbnail(QPixmap pixmap, double time, QPoint pos) {
+	Q_UNUSED(time)
+	thumbnail_preview->showThumbnail(pixmap, pos);
+}
+
+void BaseGuiPlus::hideThumbnail() {
+	thumbnail_generator->cancel();
+	thumbnail_preview->hideThumbnail();
 }
 
 VolumeSliderAction * BaseGuiPlus::createVolumeSliderAction(QWidget * parent) {

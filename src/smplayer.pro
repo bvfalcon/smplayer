@@ -149,7 +149,7 @@ contains( DEFINES, GLOBALSHORTCUTS ) {
 macx {
 	DEFINES -= GLOBALSHORTCUTS
 	DEFINES -= AUTO_SHUTDOWN_PC
-	DEFINES -= SINGLE_INSTANCE
+	#DEFINES -= SINGLE_INSTANCE
 	#DEFINES -= MPRIS2
 	DEFINES += USE_SHM
 	DEFINES += USE_COREVIDEO_BUFFER
@@ -259,6 +259,8 @@ HEADERS += guiconfig.h \
 	clhelp.h \
 	cleanconfig.h \
 	smplayer.h \
+	thumbnailgenerator.h \
+	thumbnailpreview.h \
 	myapplication.h
 
 
@@ -359,6 +361,8 @@ SOURCES	+= version.cpp \
 	clhelp.cpp \
 	cleanconfig.cpp \
 	smplayer.cpp \
+	thumbnailgenerator.cpp \
+	thumbnailpreview.cpp \
 	myapplication.cpp \
 	main.cpp
 

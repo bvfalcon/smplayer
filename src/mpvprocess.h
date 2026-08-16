@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2026 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -311,6 +311,7 @@ private:
 	QRegExp rx_endfile;
 	QRegExp rx_dvdtitles;
 	QRegExp rx_brtitles;
+	QRegExp rx_stream_title;
 	QRegExp rx_generic;
 
 	void initializeRX();

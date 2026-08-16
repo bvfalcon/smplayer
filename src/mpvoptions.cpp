@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2026 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -1474,19 +1474,23 @@ QString MPVProcess::lavfi(const QString & filter_name, const QVariant & option) 
 	}
 	else
 	if (filter_name == "deblock") {
-		f = "pp=" + option.toString();
+		//f = "pp=" + option.toString();
+		f = "deblock=alpha=1:beta=1";
 	}
 	else
 	if (filter_name == "dering") {
-		f = "pp=dr";
+		//f = "pp=dr";
+		f = "hqdn3d=4:3:6:4";
 	}
 	else
 	if (filter_name == "postprocessing") {
-		f = "pp";
+		//f = "pp";
+		f = "deblock, hqdn3d=4:3:6:4, eq=contrast=1.1:brightness=0.05";
 	}
 	else
 	if (filter_name == "lb" || filter_name == "l5") {
-		f = "pp=" + filter_name;
+		//f = "pp=" + filter_name;
+		f = "yadif=mode=1";
 	}
 	else
 

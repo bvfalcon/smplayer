@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2026 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -501,6 +501,8 @@ public:
 #if LOGO_ANIMATION
 	bool animated_logo;
 #endif
+
+	bool show_thumbnails;
 
 
     /* ********

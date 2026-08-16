@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2026 Ricardo Villalba <ricardo@smplayer.info>
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -261,6 +261,7 @@ signals:
 	void visibilityChanged(bool visible);
 	void modifiedChanged(bool);
 	void windowTitleChanged(const QString & title);
+	void pause();
 
 protected:
 	void setCurrentItem(int current);
@@ -321,6 +322,10 @@ protected:
 	void createTable();
 	void createActions();
 	void createToolbar();
+	void resort();
+
+	int loadPosition();
+	void savePosition();
 
 protected:
 	void retranslateStrings();
@@ -363,6 +368,7 @@ protected:
 	MyAction * saveAct;
 	MyAction * saveAsAct;
 	MyAction * playAct;
+	MyAction * pauseAct;
 	MyAction * prevAct;
 	MyAction * nextAct;
 	MyAction * repeatAct;

@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2026 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -60,9 +60,7 @@ int main( int argc, char ** argv )
 {
 #ifdef Q_OS_LINUX
 	#if QT_VERSION >= 0x050600
-	if (qgetenv("QT_QPA_PLATFORM").isEmpty()) {
-		qputenv("QT_QPA_PLATFORM", QByteArray("xcb"));
-	}
+	qputenv("QT_QPA_PLATFORM", QByteArray("xcb"));
 	#endif
 #endif
 

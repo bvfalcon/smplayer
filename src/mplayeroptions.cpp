@@ -1,5 +1,5 @@
 /*  smplayer, GUI front-end for mplayer.
-    Copyright (C) 2006-2025 Ricardo Villalba <ricardo@smplayer.info>
+    Copyright (C) 2006-2026 Ricardo Villalba <ricardo@smplayer.info>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -414,7 +414,8 @@ void MplayerProcess::setSubtitlesVisibility(bool b) {
 #ifdef MPV_SUPPORT
 void MplayerProcess::setSecondarySubtitlesVisibility(bool /*value*/) {
 	/* Not supported */
-	showOSDText(tr("This option is not supported by MPlayer"), 3000, 1);
+	//showOSDText(tr("This option is not supported by MPlayer"), 3000, 1);
+	qDebug("MplayerProcess::setSecondarySubtitlesVisibility: this option is not supported by MPlayer");
 };
 #endif
 
